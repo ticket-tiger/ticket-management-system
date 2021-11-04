@@ -1,3 +1,10 @@
 {
-  "type": "module"
+  "main": "src/server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node ."
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
