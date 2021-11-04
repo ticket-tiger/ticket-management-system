@@ -2,9 +2,14 @@
   "main": "src/server.js",
   "type": "module",
   "scripts": {
-    "start": "node ."
+    "start": "node .",
+    "test": "jest"
   },
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "mongodb": "^4.1.4"
+  },
+  "devDependencies": {
+    "jest": "^27.3.1"
   }
 }
