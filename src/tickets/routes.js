@@ -1,14 +1,15 @@
-import express from 'express'
+import express from 'express';
 
-const router = express.Router()
+const router = express.Router();
 
 router.get('/get-tickets', (req, res) => {
-    console.log("Received GET request.")
-    res.end()
-})
+  console.log('Received GET request.');
+  res.end();
+});
 
 router.post('/create-ticket', (req, res) => {
-    console.log("Received POST request.")
-})
+  console.log('Received POST request.');
+  res.end();
+});
 
-export default router
+export default router;
