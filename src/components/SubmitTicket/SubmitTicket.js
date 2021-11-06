@@ -1,6 +1,7 @@
 import React from 'react';
+import axios from 'axios';
 import './SubmitTicket.css';
-import FormTicket from './FormTicket';
+
 const SubmitTicket = () => 
 {
    const clickHandler =() => 
@@ -9,14 +10,16 @@ const SubmitTicket = () =>
    };
    return (
       <div className = 'submit-ticket'>
-         <div>What is the issue you are currently having?
-            <FormTicket/>
+            <form>What is the issue you are currently having?
+               <label>
+                  <textarea type = "text" />
+               </label>
+            </form>
             <button
                //className = 'submit-ticket__button' 
                onClick ={{clickHandler}}>
                Submit
             </button>
-         </div>
       </div>
    );
 }
