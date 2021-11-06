@@ -13,7 +13,7 @@ const SubmitTicket = () =>
             <FormTicket/>
             <button
                //className = 'submit-ticket__button' 
-               onClick ={() =>{clickHandler()}}>
+               onClick ={{clickHandler}}>
                Submit
             </button>
          </div>
