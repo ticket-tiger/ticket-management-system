@@ -8,6 +8,8 @@ config.express = {
 config.mongodb = {
   port: process.env.MONGODB_PORT || 27017,
   host: process.env.MONGODB_HOST || 'localhost',
+  cluster: process.env.MONGODB_CLUSTER || 'devconnector.6uznf.mongodb.net',
+  database: process.env.MONGODB_DATABASE || 'tms',
 };
 
 export default config;

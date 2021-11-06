@@ -1,20 +1,78 @@
 import { MongoClient } from 'mongodb';
+import config from './config.js';
 import localConfig from './localConfig.js';
 
-const uri = `mongodb+srv://${localConfig.mongodb.username}:${localConfig.mongodb.password}@cluster0.yiifk.mongodb.net/sample_airbnb?retryWrites=true&w=majority`;
+const uri = `mongodb+srv://${localConfig.mongodb.username}:${localConfig.mongodb.password}@${config.mongodb.cluster}/${config.mongodb.database}?retryWrites=true&w=majority`;
 
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
-async function run() {
+export const createTicket = async (ticket) => {
   try {
     await client.connect();
-    console.log('Connect was successful!');
+
+    const result = await client.db(config.mongodb.database).collection('tickets').insertOne(ticket);
+
+    return result;
   } finally {
-    // Ensures that the client will close when you finish/error
     await client.close();
   }
-}
+};
 
-// run().catch(console.dir);
+const createTickets = async (tickets) => {
+  try {
+    await client.connect();
 
-export default run;
+    const result = await client.db(config.mongodb.database).collection('tickets').insertMany(tickets);
+
+    return result;
+  } finally {
+    await client.close();
+  }
+};
+
+const deleteAllTickets = async () => {
+  try {
+    await client.connect();
+
+    const result = await client.db(config.mongodb.database).collection('tickets').deleteMany({});
+
+    return result;
+  } finally {
+    await client.close();
+  }
+};
+
+export const getTickets = async () => {
+  try {
+    await client.connect();
+
+    const result = await client.db(config.mongodb.database).collection('tickets').find().toArray();
+
+    return result;
+  } finally {
+    await client.close();
+  }
+};
+
+const tickets = [
+  {
+    description: 'The login button doesn\x27t work.  I keep clicking it after I input my credentials and nothing happens.',
+    dateCreated: new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }),
+  },
+  {
+    description: 'The screen freezes when I run a file called malware.exe.',
+    dateCreated: new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }),
+  },
+  {
+    description: 'I received bad customer service the last time I called you.  I want to be speak to your manager.',
+    dateCreated: new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }),
+  }];
+
+const testDB = async () => {
+  await deleteAllTickets().catch(console.dir);
+  await createTickets(tickets).catch(console.dir);
+  const returnedTickets = await getTickets().catch(console.dir);
+  console.log(returnedTickets);
+};
+
+testDB();
