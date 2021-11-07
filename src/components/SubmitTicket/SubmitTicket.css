@@ -1,27 +1,74 @@
 .submit-ticket
 {
-   display: flex;
-  justify-content: space-between;
+  position: absolute;
+  top: 50%; right: 50%;
+  transform: translate(50%,-50%);
+  justify-content: center;
+  text-align: center;
   align-items: center;
+  width: 20%;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
   padding: 0.5rem;
   margin: 1rem 0;
   border-radius: 12px;
-  background-color: #4b4b4b;
+  background-color: #000000;
+  border: black 2px solid;
+
 }
-/* .submit-ticket__button
+
+
+.title {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  color: white;
+  align-items: center;
+  margin-bottom: 3vh; margin-top: 3vh;
+  font-size: 20px;
+  background: red;
+  background: -webkit-linear-gradient(left, orange , yellow, green, cyan, blue, violet);
+  background: -o-linear-gradient(right, orange, yellow, green, cyan, blue, violet);
+  background: -moz-linear-gradient(right, orange, yellow, green, cyan, blue, violet);
+  background: linear-gradient(to right, orange , yellow, green, cyan, blue, violet);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+
+}
+
+.submit-ticket__button
 {
-   align-items: right;
-   font-size: 1rem;
-   font-weight: bold;
-   color: white;
-   background-color: #40005d;
-   border: 1px solid white;
-   padding: 0.5rem;
-   border-radius: 12px;
-   cursor: pointer; 
+
+  align-items: center;
+  position: relative;
+  font-size: 1rem;
+  font-weight: bold;
+  color: white;
+  background-color: #40005d;
+  border: 1px solid white;
+  padding: 0.5rem;
+  border-radius: 12px;
+  cursor: pointer; 
+  opacity: .8;
+  margin-bottom: 1vh; margin-top: 2vh;
  }
- */
+
+ .submit-ticket__button:hover {
+  color: #40005d;
+  background-color: white;
+  opacity: 1;
+  
+ }
+
+
+.submit-ticket__button:hover {
+  color: #40005d;
+  background-color: white;
+  opacity: 1;
+}
+
+.submit-ticket__button:active {
+  transform: scale(.97);
+}
+
  @media (min-width: 580px)
  {
    /* .submit-ticket__button
