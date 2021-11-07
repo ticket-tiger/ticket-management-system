@@ -1,16 +1,10 @@
 import React,{useState} from 'react';
 import axios from 'axios';
 import './SubmitTicket.css';
+import TicketLog from '../TicketLog/TicketLog';
 
 const SubmitTicket = () => 
 {
-   // const sendTicketText = async () =>
-   // {
-   //    const response = await axios.get('http://localhost:3001/api/get-tickets',
-   //    {
-         
-   //    })
-   // };
    const[ticketText, setTicketText] = useState('');
    
    const clickHandler =() => 
@@ -24,6 +18,10 @@ const SubmitTicket = () =>
          console.log(error);
        });
    };
+   const clickHandler2 = () =>
+   {
+      
+   }
    return (
       <div className = 'submit-ticket'>
             <form>What is the issue you are currently having?
@@ -31,11 +29,16 @@ const SubmitTicket = () =>
                   <textarea type = "text" onInput = {e => setTicketText(e.target.value)}/>
                </label>
             </form>
-            <button
-               //className = 'submit-ticket__button' 
-               onClick ={{clickHandler}}>
-               Submit
-            </button>
+            <div>
+               <button onClick = {clickHandler2}>
+                  Cancel
+               </button>
+               <button
+                  //className = 'submit-ticket__button' 
+                  onClick ={{clickHandler}}>
+                  Submit
+               </button>
+            </div>
       </div>
    );
 }
