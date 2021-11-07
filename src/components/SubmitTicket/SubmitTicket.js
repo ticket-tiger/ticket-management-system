@@ -24,12 +24,13 @@ const SubmitTicket = () => {
   return (
     <div className="submit-ticket">
       <form>
-        What is the issue you are currently having?
+        <p>What is the issue you are currently having?</p>
         <label>
           <textarea type="text" onInput={(e) => setTicketText(e.target.value)} />
         </label>
       </form>
       <button
+        type="submit"
                // className = 'submit-ticket__button'
         onClick={{ clickHandler }}
       >
