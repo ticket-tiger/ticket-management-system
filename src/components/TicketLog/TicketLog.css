@@ -1,0 +1,16 @@
+table 
+{
+   border: 1px solid;
+   width: 100%;
+ }
+ 
+ table td, table th 
+ {
+   text-align: left;
+   padding: 10px;
+ }
+ 
+ table th 
+ {
+   background-color: rgb(145, 34, 248);
+ }

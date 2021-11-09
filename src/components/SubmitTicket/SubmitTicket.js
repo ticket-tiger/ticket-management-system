@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './SubmitTicket.css';
-// import TicketLog from '../TicketLog/TicketLog';
+import TicketLog from '../TicketLog/TicketLog';
 
 const SubmitTicket = () => {
   const [ticketText, setTicketText] = useState('');
@@ -20,11 +20,17 @@ const SubmitTicket = () => {
   };
   return (
     <div className="submit-ticket">
+      <TicketLog />
       <form>
         What is the issue you are currently having?
         <label>
           <textarea type="text" rows="10" cols="25" onInput={(e) => setTicketText(e.target.value)} />
         </label>
+        <select>
+          <option value="Low">Low</option>
+          <option value="Medium">Medium</option>
+          <option value="High">High</option>
+        </select>
       </form>
       <div>
         <button type="submit" onClick={clickHandler2}>
