@@ -1,18 +1,23 @@
 {
   "main": "src/server.js",
   "type": "module",
+  "jest": {
+    "preset": "@shelf/jest-mongodb"
+  },
   "scripts": {
     "start": "node .",
-    "test": "jest"
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
   },
   "dependencies": {
     "express": "^4.17.1",
     "mongodb": "^4.1.4"
   },
   "devDependencies": {
+    "@shelf/jest-mongodb": "^2.1.0",
     "eslint": "^7.32.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-jest": "^25.2.3",
     "jest": "^27.3.1"
   }
 }
