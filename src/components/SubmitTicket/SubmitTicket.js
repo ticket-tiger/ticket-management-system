@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './SubmitTicket.css';
-import TicketLog from '../TicketLog/TicketLog';
 
 const SubmitTicket = () => {
   const [ticketText, setTicketText] = useState('');
@@ -19,32 +18,38 @@ const SubmitTicket = () => {
 
   };
   return (
-    <div className="submit-ticket">
-      <TicketLog />
-      <form>
-        <p>What is the issue you are currently having?</p>
-        <label>
-          <textarea type="text" rows="10" cols="25" onInput={(e) => setTicketText(e.target.value)} />
-        </label>
-        <select>
-          <option value="Low">Low</option>
-          <option value="Medium">Medium</option>
-          <option value="High">High</option>
-        </select>
-      </form>
-      <div>
-        <button type="submit" onClick={clickHandler2}>
-          Cancel
-        </button>
-        <button
-          type="submit"
+    <table>
+
+      <tr>What is the issue you are currently having?</tr>
+      <td>
+        <textarea type="text" onInput={(e) => setTicketText(e.target.value)} />
+      </td>
+      <tr />
+      <td>
+        <div className="submit-ticket__priority-level">
+          <div className="priority-level__texts">Priority Level</div>
+          <select className="priority-select">
+            <option value="Low">Low</option>
+            <option value="Medium">Medium</option>
+            <option value="High">High</option>
+          </select>
+        </div>
+      </td>
+      <tr>
+        <div>
+          <button type="submit" onClick={clickHandler2}>
+            Cancel
+          </button>
+          <button
+            type="submit"
                   // className = 'submit-ticket__button'
-          onClick={{ clickHandler }}
-        >
-          Submit
-        </button>
-      </div>
-    </div>
+            onClick={{ clickHandler }}
+          >
+            Submit
+          </button>
+        </div>
+      </tr>
+    </table>
   );
 };
 export default SubmitTicket;
