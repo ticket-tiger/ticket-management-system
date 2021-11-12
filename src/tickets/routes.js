@@ -1,11 +1,11 @@
 import express from 'express';
-import { createTicket, getTickets } from '../db.js';
+import { createTicket, getTicketCollection } from '../db.js';
 
 const router = express.Router();
 
 router.get('/get-tickets', async (req, res) => {
   console.log('Received GET request.');
-  const result = await getTickets();
+  const result = await getTicketCollection();
   res.send(result);
   res.end();
 });
