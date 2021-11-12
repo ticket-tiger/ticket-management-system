@@ -5,7 +5,7 @@ import './SubmitTicket.css';
 const SubmitTicket = () => {
   const [ticketText, setTicketText] = useState('');
 
-  const clickHandler = () => {
+  const submitHandler = () => {
     console.log('Clicked');
     axios.post('http://localhost:3001/api/create-ticket', ticketText,
       {
@@ -22,7 +22,7 @@ const SubmitTicket = () => {
 
       <tr>What is the issue you are currently having?</tr>
       <td>
-        <textarea type="text" onInput={(e) => setTicketText(e.target.value)} />
+        <textarea type="text" onInput={(e) => setTicketText(e.target.value)} value ="text-description" />
       </td>
       <tr />
       <td>
@@ -43,7 +43,7 @@ const SubmitTicket = () => {
           <button
             type="submit"
                   // className = 'submit-ticket__button'
-            onClick={{ clickHandler }}
+            onClick={{ submitHandler }}
           >
             Submit
           </button>
