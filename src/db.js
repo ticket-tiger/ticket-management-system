@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import { MongoClient } from 'mongodb';
 import config from './config.js';
 import localConfig from './localConfig.js';
@@ -30,29 +31,29 @@ export const getTickets = async () => {
   }
 };
 
-const createTickets = async (tickets) => {
-  try {
-    await client.connect();
+// const createTickets = async (tickets) => {
+//   try {
+//     await client.connect();
 
-    const result = await client.db(config.mongodb.database).collection('tickets').insertMany(tickets);
+//     const result = await client.db(config.mongodb.database).collection('tickets').insertMany(tickets);
 
-    return result;
-  } finally {
-    await client.close();
-  }
-};
+//     return result;
+//   } finally {
+//     await client.close();
+//   }
+// };
 
-const deleteAllTickets = async () => {
-  try {
-    await client.connect();
+// const deleteAllTickets = async () => {
+//   try {
+//     await client.connect();
 
-    const result = await client.db(config.mongodb.database).collection('tickets').deleteMany({});
+//     const result = await client.db(config.mongodb.database).collection('tickets').deleteMany({});
 
-    return result;
-  } finally {
-    await client.close();
-  }
-};
+//     return result;
+//   } finally {
+//     await client.close();
+//   }
+// };
 
 // const tickets = [
 //   {
