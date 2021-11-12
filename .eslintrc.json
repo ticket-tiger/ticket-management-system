@@ -14,7 +14,8 @@
     "rules": {
         "no-console": "off",
         "no-unused-vars": "warn",
-        "import/extensions": ["error", "ignorePackages"]
+        "import/extensions": ["error", "ignorePackages"],
+        "linebreak-style": "off"
     },
     "plugins": ["jest"]
 }
