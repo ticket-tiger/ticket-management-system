@@ -13,9 +13,11 @@ router.get('/get-ticket-collection', async (req, res) => {
 router.post('/create-ticket', async (req, res) => {
   console.log('Received POST request.');
   const ticket = {
+    category: req.body.category,
     title: req.body.title,
     description: req.body.description,
     priority: req.body.priority,
+    urgency: req.body.urgency,
     date: new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }),
   };
   const result = await createTicket(ticket);
