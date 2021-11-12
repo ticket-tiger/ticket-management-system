@@ -9,6 +9,7 @@
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
   },
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "mongodb": "^4.1.4"
   },
