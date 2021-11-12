@@ -3,7 +3,7 @@ import { createTicket, getTicketCollection } from '../db.js';
 
 const router = express.Router();
 
-router.get('/get-tickets', async (req, res) => {
+router.get('/get-ticket-collection', async (req, res) => {
   console.log('Received GET request.');
   const result = await getTicketCollection();
   res.send(result);
