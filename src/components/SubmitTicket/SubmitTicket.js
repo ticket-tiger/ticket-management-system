@@ -3,11 +3,19 @@ import axios from 'axios';
 import './SubmitTicket.css';
 
 const SubmitTicket = () => {
-  const [ticketText, setTicketText] = useState('');
+  // const [ticketText, setTicketText] = useState('');
   const [responseStatus, setResponseStatus] = useState(null);
 
   const sendPostRequest = async () => {
-    const response = await axios.post('http://localhost:3001/api/create-ticket', ticketText);
+    const ticket = {
+      category: 'category1',
+      title: 'test1',
+      description: 'The login button doesn\x27t work.',
+      priority: 'Low',
+      urgency: 'High',
+    };
+    console.log('Ticket sent');
+    const response = await axios.post('http://localhost:3001/api/create-ticket', ticket);
     return response.status;
   };
 
@@ -27,7 +35,7 @@ const SubmitTicket = () => {
           <tr>
             <th>What is the issue you are currently having?</th>
             <td>
-              <textarea type="text" onInput={(e) => setTicketText(e.target.value)} />
+              {/* <textarea type="text" onInput={(e) => setTicketText(e.target.value)} /> */}
             </td>
           </tr>
         </thead>
