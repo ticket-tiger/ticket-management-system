@@ -21,7 +21,6 @@
         "jest"
     ],
     "rules": {
-        "linebreak-style": "off",
         "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
         "no-console": "off",
         "jsx-a11y/label-has-associated-control": ["error", {
@@ -33,6 +32,7 @@
             "required": {
               "some": ["nesting", "id"]
             }
-          }]
+          }],
+          "linebreak-style": "off"
     }
 }
