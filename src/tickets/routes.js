@@ -5,7 +5,13 @@ const router = express.Router();
 
 router.get('/get-tickets', async (req, res) => {
   console.log('Received GET request.');
-  const ticket = {
+  
+  res.end();
+});
+
+router.post('/create-ticket', (req, res) => {
+   console.log('Received POST request.');
+   const ticket = {
    title: req.body.title,
    description: req.body.description,
    priority: req.body.priority,
@@ -13,11 +19,6 @@ router.get('/get-tickets', async (req, res) => {
   };
   const result = await createTicket(ticket);
   res.send(result);
-  res.end();
-});
-
-router.post('/create-ticket', (req, res) => {
-  console.log('Received POST request.');
   res.end();
 });
 

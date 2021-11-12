@@ -5,6 +5,7 @@ import ticketsRouter from './tickets/routes.js';
 
 const app = express();
 
+app.use(express.json());
 app.use('/api', ticketsRouter);
 
 app.listen(config.express.port, config.express.ip, () => {
