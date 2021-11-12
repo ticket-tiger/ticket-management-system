@@ -23,7 +23,7 @@ export const getTicketCollection = async () => {
   try {
     await client.connect();
 
-    const result = await client.db(config.mongodb.database).collection('tickets').find();
+    const result = client.db(config.mongodb.database).collection('tickets').find();
 
     return result;
   } finally {
