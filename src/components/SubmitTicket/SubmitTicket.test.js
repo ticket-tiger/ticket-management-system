@@ -5,11 +5,12 @@ import {
   render, fireEvent, waitFor, screen,
 } from '@testing-library/react';
 import '@testing-library/jest-dom';
+// import { act } from 'react-dom/test-utils';
 import SubmitTicket from './SubmitTicket';
 
 // Declares which API requests to mock
 const server = setupServer(
-  rest.post('/create-ticket', (req, res, ctx) => res(ctx.json({ greeting: 'hello there' }))),
+  rest.post('http://localhost:3001/api/create-ticket', (req, res, ctx) => res(ctx.status(200))),
 );
 
 // establish API mocking before all tests
@@ -29,25 +30,15 @@ test('handlers status OK', async () => {
   // the component calls setState and re-renders.
   // waitFor waits until the callback doesn't throw an error
 
-  await waitFor(() => screen.getByRole('heading'));
+  await waitFor(() => screen.findByTestId('responseStatus'));
 
   // assert that the alert message is correct using
   // toHaveTextContent, a custom matcher from jest-dom.
-  expect(screen.getByRole('alert')).toHaveTextContent('Opps, failed to fetch!');
+  await waitFor(() => expect(screen.getByTestId('responseStatus')).toHaveTextContent('200'));
 
-  // assert that the button is not disabled using
-  // toBeDisabled, a custom matcher from jest-dom.
-  expect(screen.getByRole('button')).not.toBeDisabled();
-
-  server.use(
-    // override the initial "POST /create-ticket" request handler
-    // to return a 200 Status OK
-    rest.post('/create-ticket', (req, res, ctx) => res(ctx.status(200))),
-  );
-});
-
-test('Submits a ticket to the backend', async () => {
-  // Arrange
-  // Act
-  // Asset
+  // server.use(
+  //   // override the initial "POST /create-ticket" request handler
+  //   // to return a 200 Status OK
+  //   rest.post('http://localhost:3001/api/create-ticket', (req, res, ctx) => res(ctx.status(200))),
+  // );
 });

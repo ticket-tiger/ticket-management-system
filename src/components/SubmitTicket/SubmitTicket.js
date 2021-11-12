@@ -4,52 +4,61 @@ import './SubmitTicket.css';
 
 const SubmitTicket = () => {
   const [ticketText, setTicketText] = useState('');
+  const [responseStatus, setResponseStatus] = useState('300');
 
-  const clickHandler = () => {
-    console.log('Clicked');
-    axios.post('http://localhost:3001/api/create-ticket', ticketText,
-      {
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  const sendPostRequest = async () => {
+    const response = await axios.post('http://localhost:3001/api/create-ticket', ticketText);
+    return response.status;
   };
+
+  const clickHandler = async () => {
+    setResponseStatus(await sendPostRequest());
+  };
+
   const clickHandler2 = () => {
-
+    setResponseStatus('300');
   };
-  return (
-    <table>
 
-      <tr>What is the issue you are currently having?</tr>
-      <td>
-        <textarea type="text" onInput={(e) => setTicketText(e.target.value)} />
-      </td>
-      <tr />
-      <td>
-        <div className="submit-ticket__priority-level">
-          <div className="priority-level__texts">Priority Level</div>
-          <select className="priority-select">
-            <option value="Low">Low</option>
-            <option value="Medium">Medium</option>
-            <option value="High">High</option>
-          </select>
-        </div>
-      </td>
-      <tr>
-        <div>
-          <button type="submit" onClick={clickHandler2}>
-            Cancel
-          </button>
-          <button
-            type="submit"
+  return (
+    <>
+      {responseStatus ? <p data-testid="responseStatus">{responseStatus}</p> : null}
+      <table>
+        <thead>
+          <tr>
+            <th>What is the issue you are currently having?</th>
+            <td>
+              <textarea type="text" onInput={(e) => setTicketText(e.target.value)} />
+            </td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <div className="submit-ticket__priority-level">
+                <div className="priority-level__texts">Priority Level</div>
+                <select className="priority-select">
+                  <option value="Low">Low</option>
+                  <option value="Medium">Medium</option>
+                  <option value="High">High</option>
+                </select>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div>
+        <button type="submit" onClick={() => clickHandler2()}>
+          Cancel
+        </button>
+        <button
+          type="submit"
                   // className = 'submit-ticket__button'
-            onClick={{ clickHandler }}
-          >
-            Submit
-          </button>
-        </div>
-      </tr>
-    </table>
+          onClick={() => clickHandler()}
+        >
+          Submit
+        </button>
+      </div>
+    </>
   );
 };
 export default SubmitTicket;
