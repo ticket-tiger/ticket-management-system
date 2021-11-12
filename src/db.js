@@ -54,25 +54,25 @@ export const getTickets = async () => {
   }
 };
 
-const tickets = [
-  {
-    title: "test1",
-    description: 'The login button doesn\x27t work.',
-    priority: 'Low',
-    dateCreated: new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }),
-  },
-  {
-    title:"test2",
-    description: 'The screen freezes when I run a file called malware.exe.',
-    priority: 'Medium',
-    dateCreated: new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }),
-  },
-  {
-    title:"test3",
-    description: 'I received bad customer service the last time I called you.',
-    priority: 'High',
-    dateCreated: new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }),
-  }];
+// const tickets = [
+//   {
+//     title: "test1",
+//     description: 'The login button doesn\x27t work.',
+//     priority: 'Low',
+//     dateCreated: new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }),
+//   },
+//   {
+//     title:"test2",
+//     description: 'The screen freezes when I run a file called malware.exe.',
+//     priority: 'Medium',
+//     dateCreated: new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }),
+//   },
+//   {
+//     title:"test3",
+//     description: 'I received bad customer service the last time I called you.',
+//     priority: 'High',
+//     dateCreated: new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }),
+//   }];
 
 const testDB = async () => {
   await deleteAllTickets().catch(console.dir);
