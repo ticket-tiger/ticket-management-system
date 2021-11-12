@@ -19,7 +19,7 @@ export const createTicket = async (ticket) => {
   }
 };
 
-export const getTickets = async () => {
+export const getTicketCollection = async () => {
   try {
     await client.connect();
 
