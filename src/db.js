@@ -18,6 +18,18 @@ export const createTicket = async (ticket) => {
   }
 };
 
+export const getTickets = async () => {
+  try {
+    await client.connect();
+
+    const result = await client.db(config.mongodb.database).collection('tickets').find().toArray();
+
+    return result;
+  } finally {
+    await client.close();
+  }
+};
+
 const createTickets = async (tickets) => {
   try {
     await client.connect();
@@ -35,18 +47,6 @@ const deleteAllTickets = async () => {
     await client.connect();
 
     const result = await client.db(config.mongodb.database).collection('tickets').deleteMany({});
-
-    return result;
-  } finally {
-    await client.close();
-  }
-};
-
-export const getTickets = async () => {
-  try {
-    await client.connect();
-
-    const result = await client.db(config.mongodb.database).collection('tickets').find().toArray();
 
     return result;
   } finally {
@@ -74,11 +74,11 @@ export const getTickets = async () => {
 //     dateCreated: new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }),
 //   }];
 
-const testDB = async () => {
-  await deleteAllTickets().catch(console.dir);
-  await createTickets(tickets).catch(console.dir);
-  const returnedTickets = await getTickets().catch(console.dir);
-  console.log(returnedTickets);
-};
+// const testDB = async () => {
+//   await deleteAllTickets().catch(console.dir);
+//   await createTickets(tickets).catch(console.dir);
+//   const returnedTickets = await getTickets().catch(console.dir);
+//   console.log(returnedTickets);
+// };
 
-testDB();
+// testDB();
