@@ -4,7 +4,7 @@ import './SubmitTicket.css';
 
 const SubmitTicket = () => {
   const [ticketText, setTicketText] = useState('');
-  const [responseStatus, setResponseStatus] = useState('300');
+  const [responseStatus, setResponseStatus] = useState(null);
 
   const sendPostRequest = async () => {
     const response = await axios.post('http://localhost:3001/api/create-ticket', ticketText);
@@ -16,7 +16,7 @@ const SubmitTicket = () => {
   };
 
   const clickHandler2 = () => {
-    setResponseStatus('300');
+
   };
 
   return (
