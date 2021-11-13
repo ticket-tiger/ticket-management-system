@@ -42,7 +42,7 @@ const SubmitTicket = () => {
           <tr>
             <th>Title</th>
             <td>
-              <textarea type="text" onInput={(e) => setTicketTitle(e.target.value)} value={ticketTitle} />
+              <input type="text" onInput={(e) => setTicketTitle(e.target.value)} value={ticketTitle} />
             </td>
           </tr>
           <tr>
