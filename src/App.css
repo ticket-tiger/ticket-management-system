@@ -2,6 +2,10 @@
   --purple: rgb(145, 34, 248);
 }
 
+.submit-ticket-container {
+  height: 100vh;
+}
+
 .submit-ticket-heading {
   position: relative;
   text-align: center;
@@ -10,24 +14,12 @@
 }
 
 .ticket-log-heading {
-  position: relative;
+  position: absolute;
   text-align: center;
   font-weight: 500;
-}
-
-.App {
-  position: relative;
-  /* top: 50%; right: 50%;
-  transform: translate(50%,-50%); */
-  justify-content: center;
-  align-items: center;
-  width: 40%;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
-  padding: 0.5rem;
-  margin: auto;
-  border-radius: 12px;
-  background-color: white;
-  /* border: black 2px solid; */
+  left: 50%;
+  transform: translate(-50%);
+  bottom: 1%;
 }
 
 /* .App-logo {

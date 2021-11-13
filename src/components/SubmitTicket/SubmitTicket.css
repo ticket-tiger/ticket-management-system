@@ -1,6 +1,15 @@
 .form {
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  width: 30%;
+  min-width: 450px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  margin: auto;
+  padding: 60px;
+  border-radius: 12px;
+  background-color: white;
   font-size: 25px;
-  padding: 50px;
 }
 
 .form-element {
@@ -10,6 +19,7 @@
 .form-label {
   display: block;
   text-align: left;
+  font-weight: 500;
 }
 
 .form-input {
@@ -20,11 +30,12 @@
   width: 100%;
   border: none;
   border-bottom: 2px solid black;
+  font-size: 18px;
 }
 
 .form-input:focus {
   border: none;
-  border-bottom: 2px solid black;
+  border-bottom: 2px solid var(--purple);
 }
 
 .form-textarea {
@@ -151,4 +162,10 @@
    color:cadetblue;
 
 
+ }
+
+ @media screen and (max-width: 768px) {
+   .form {
+     min-width: 350px;
+   }
  }

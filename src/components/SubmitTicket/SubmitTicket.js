@@ -4,7 +4,7 @@ import './SubmitTicket.css';
 
 const SubmitTicket = () => {
   const [ticketCategory, setTicketCategory] = useState('');
-  const [ticketName, setTicketName] = useState('');
+  const [ticketSubject, setTicketSubject] = useState('');
   const [ticketText, setTicketText] = useState('');
   const [ticketPriority, setTicketPriority] = useState('Low');
   const [ticketUrgency, setTicketUrgency] = useState('Low');
@@ -15,12 +15,12 @@ const SubmitTicket = () => {
     setTicketUrgency('Low');
     const ticket = {
       category: ticketCategory,
-      title: ticketName,
+      title: ticketSubject,
       description: ticketText,
       priority: ticketPriority,
       urgency: ticketUrgency,
     };
-    setTicketName('');
+    setTicketSubject('');
     setTicketText('');
 
     console.log('Ticket sent');
@@ -45,10 +45,10 @@ const SubmitTicket = () => {
       {responseStatus ? <p data-testid="responseStatus">{responseStatus}</p> : null}
       <form className="form">
         <div className="form-element">
-          <label className="form-label" htmlFor="name-input">
-            <div className="label-text">Name</div>
+          <label className="form-label" htmlFor="subject-input">
+            <div className="label-text">Subject</div>
           </label>
-          <input id="name-input" className="form-input" type="text" onInput={(e) => setTicketName(e.target.value)} value={ticketName} />
+          <input id="subject-input" className="form-input" type="text" onInput={(e) => setTicketSubject(e.target.value)} value={ticketSubject} />
         </div>
         <div className="form-element">
           <label className="form-label" htmlFor="category-dropdown">

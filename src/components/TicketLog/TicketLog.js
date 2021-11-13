@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 // import axios from 'axios';
 import './TicketLog.css';
+import Ticket from './Ticket';
 // import SubmitTicket from '../SubmitTicket/SubmitTicket';
 
 const TicketLog = () => {
@@ -15,18 +16,23 @@ const TicketLog = () => {
   //  };
   return (
   // This function is waiting for the server to send ticket data from the server
-    <table>
-      <thead>
-        <tr>
-          <th>Title</th>
-          <th>Description</th>
-          <th>Priority</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr />
-      </tbody>
-    </table>
+    <div className="ticket-log-container">
+      <table className="ticket-log-table">
+        <thead>
+          <tr>
+            <th>Subject</th>
+            <th>Description</th>
+            <th>Urgency</th>
+            <th>Priority</th>
+          </tr>
+        </thead>
+        <tbody>
+          <Ticket />
+          <Ticket />
+          <Ticket />
+        </tbody>
+      </table>
+    </div>
   );
 };
 export default TicketLog;

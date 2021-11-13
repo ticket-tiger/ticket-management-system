@@ -1,7 +1,9 @@
 table 
 {
-   border: 1px solid;
+   border: 1px solid black;
+   border-radius: 5px;
    width: 100%;
+   color: white;
  }
  
  table td, table th 
@@ -13,4 +15,13 @@ table
  table th 
  {
    background-color: var(--purple);
+ }
+
+ .ticket-log-container {
+   padding: 50px;
+ }
+
+ .ticket-log-table {
+  border-collapse:separate; 
+  border-spacing:5em;
  }
