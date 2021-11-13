@@ -1,16 +1,26 @@
+.submit-ticket-heading {
+  position: relative;
+  text-align: center;
+}
+
+.ticket-log-heading {
+  position: relative;
+  text-align: center;
+}
+
 .App {
-   position: absolute;
-  top: 50%; right: 50%;
-  transform: translate(50%,-50%);
+  position: relative;
+  /* top: 50%; right: 50%;
+  transform: translate(50%,-50%); */
   justify-content: center;
   text-align: center;
   align-items: center;
   width: 40%;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
   padding: 0.5rem;
-  margin: 1rem 0;
+  margin: auto;
   border-radius: 12px;
-  background-color: #000000;
+  background-color: white;
   border: black 2px solid;
 }
 

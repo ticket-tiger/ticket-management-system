@@ -1,3 +1,8 @@
+.form-label {
+  display: block;
+  text-align: left;
+}
+
 .textarea
 {
    border:1px solid #999999;
@@ -18,7 +23,7 @@
   padding: 0.5rem;
   margin: 1rem 0;
   border-radius: 12px;
-  background-color: #000000;
+  background-color: white;
   border: black 2px solid;
 }
 .title {

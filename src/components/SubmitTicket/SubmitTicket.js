@@ -34,6 +34,36 @@ const SubmitTicket = () => {
   return (
     <>
       {responseStatus ? <p data-testid="responseStatus">{responseStatus}</p> : null}
+      <form>
+        <label className="form-label">
+          Username
+          <input />
+        </label>
+        <label className="form-label">
+          Category
+          <select>
+            <option value="Low">Low</option>
+            <option value="Medium">Medium</option>
+            <option value="High">High</option>
+          </select>
+        </label>
+        <label className="form-label">
+          Description
+          <textarea />
+        </label>
+        <div>
+          <button type="submit" onClick={() => clickHandler2()}>
+            Cancel
+          </button>
+          <button
+            type="submit"
+                  // className = 'submit-ticket__button'
+            onClick={() => clickHandler()}
+          >
+            Submit
+          </button>
+        </div>
+      </form>
       <table>
         <thead>
           <tr>
@@ -58,18 +88,6 @@ const SubmitTicket = () => {
           </tr>
         </tbody>
       </table>
-      <div>
-        <button type="submit" onClick={() => clickHandler2()}>
-          Cancel
-        </button>
-        <button
-          type="submit"
-                  // className = 'submit-ticket__button'
-          onClick={() => clickHandler()}
-        >
-          Submit
-        </button>
-      </div>
     </>
   );
 };

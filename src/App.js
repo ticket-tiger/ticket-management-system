@@ -5,11 +5,15 @@ import './App.css';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header" />
+    <div>
+      <h1 className="submit-ticket-heading">Have an issue? Let us know.</h1>
+      <div className="App">
+        <header className="App-header" />
+        <SubmitTicket />
+        <p>Test</p>
+      </div>
+      <h3 className="ticket-log-heading">See our existing issues below...</h3>
       <TicketLog />
-      <SubmitTicket />
-      <p>Test</p>
     </div>
   );
 }
