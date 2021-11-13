@@ -10,7 +10,6 @@ function App() {
       <div className="App">
         <header className="App-header" />
         <SubmitTicket />
-        <p>Test</p>
       </div>
       <h3 className="ticket-log-heading">See our existing issues below...</h3>
       <TicketLog />

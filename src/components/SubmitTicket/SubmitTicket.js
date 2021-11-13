@@ -34,28 +34,35 @@ const SubmitTicket = () => {
   return (
     <>
       {responseStatus ? <p data-testid="responseStatus">{responseStatus}</p> : null}
-      <form>
-        <label className="form-label">
-          Username
-          <input />
-        </label>
-        <label className="form-label">
-          Category
-          <select>
+      <form className="form">
+        <div className="form-element">
+          <label className="form-label" htmlFor="name-input">
+            <div className="label-text">Name</div>
+          </label>
+          <input id="name-input" className="form-input" />
+        </div>
+        <div className="form-element">
+          <label className="form-label" htmlFor="category-dropdown">
+            <div className="label-text">Category</div>
+          </label>
+          <select id="category-dropdown" className="form-input">
             <option value="Low">Low</option>
             <option value="Medium">Medium</option>
             <option value="High">High</option>
           </select>
-        </label>
-        <label className="form-label">
-          Description
-          <textarea />
-        </label>
-        <div>
-          <button type="submit" onClick={() => clickHandler2()}>
+        </div>
+        <div className="form-element">
+          <label className="form-label" htmlFor="description-textarea">
+            <div className="label-text">Description</div>
+          </label>
+          <textarea id="description-textarea" className="form-input form-textarea" />
+        </div>
+        <div className="form-button-group">
+          <button className="form-button" type="submit" onClick={() => clickHandler2()}>
             Cancel
           </button>
           <button
+            className="form-button"
             type="submit"
                   // className = 'submit-ticket__button'
             onClick={() => clickHandler()}
@@ -64,13 +71,10 @@ const SubmitTicket = () => {
           </button>
         </div>
       </form>
-      <table>
+      {/* <table>
         <thead>
           <tr>
             <th>What is the issue you are currently having?</th>
-            <td>
-              {/* <textarea type="text" onInput={(e) => setTicketText(e.target.value)} /> */}
-            </td>
           </tr>
         </thead>
         <tbody>
@@ -87,7 +91,7 @@ const SubmitTicket = () => {
             </td>
           </tr>
         </tbody>
-      </table>
+      </table> */}
     </>
   );
 };

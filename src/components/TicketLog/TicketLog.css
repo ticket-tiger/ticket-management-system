@@ -12,5 +12,5 @@ table
  
  table th 
  {
-   background-color: rgb(145, 34, 248);
+   background-color: var(--purple);
  }

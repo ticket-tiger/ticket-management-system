@@ -1,6 +1,51 @@
+.form {
+  font-size: 25px;
+  padding: 50px;
+}
+
+.form-element {
+  margin-bottom: 50px;
+}
+
 .form-label {
   display: block;
   text-align: left;
+}
+
+.form-input {
+  text-align: left;
+  margin: 0;
+  padding: 0;
+  height: 40px;
+  width: 100%;
+  border: none;
+  border-bottom: 2px solid black;
+}
+
+.form-input:focus {
+  border: none;
+  border-bottom: 2px solid black;
+}
+
+.form-textarea {
+  height: 100px;
+}
+
+.form-button-group {
+  text-align: center;
+  display: flex;
+  justify-content: space-around;
+}
+
+.form-button {
+  height: 50px;
+  width: 150px;
+  border: none;
+  border-radius: 5px;
+  background: var(--purple);
+  font-size: 18px;
+  color: white;
+  cursor: pointer;
 }
 
 .textarea

@@ -1,11 +1,18 @@
+:root {
+  --purple: rgb(145, 34, 248);
+}
+
 .submit-ticket-heading {
   position: relative;
   text-align: center;
+  font-weight: 500;
+  font-size: 40px;
 }
 
 .ticket-log-heading {
   position: relative;
   text-align: center;
+  font-weight: 500;
 }
 
 .App {
@@ -13,7 +20,6 @@
   /* top: 50%; right: 50%;
   transform: translate(50%,-50%); */
   justify-content: center;
-  text-align: center;
   align-items: center;
   width: 40%;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
@@ -21,7 +27,7 @@
   margin: auto;
   border-radius: 12px;
   background-color: white;
-  border: black 2px solid;
+  /* border: black 2px solid; */
 }
 
 /* .App-logo {
