@@ -57,7 +57,7 @@ const SubmitTicket = () => {
             <td>
               <div className="submit-ticket__priority-level">
                 <div className="priority-level__texts">Category</div>
-                <select className="priority-select" onChange={(e) => setTicketCategory(e.target.value)} value={ticketCategory} selected="selected">
+                <select className="priority-select" onChange={(e) => setTicketCategory(e.target.value)} value={ticketCategory}>
                   <option value="" selected disabled hidden>Select Category</option>
                   <option value="Vendor Issues">Vendor Issues</option>
                   <option value="Pre-Order questions">Pre-order Questions</option>
