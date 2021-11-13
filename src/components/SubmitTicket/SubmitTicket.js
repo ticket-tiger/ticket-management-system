@@ -22,8 +22,12 @@ const SubmitTicket = () => {
     setTicketText('');
 
     console.log('Ticket sent');
-    const response = await axios.post('http://localhost:3001/api/create-ticket', ticket);
-    return response.status;
+    try {
+      const response = await axios.post('http://localhost:3001/api/create-ticket', ticket);
+      return response.status;
+    } catch (error) {
+      return error.response.status;
+    }
   };
 
   const clickHandler = async () => {
