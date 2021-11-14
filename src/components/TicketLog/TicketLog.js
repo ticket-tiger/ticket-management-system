@@ -1,19 +1,17 @@
-import React, { useEffect } from 'react';
-// import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import './TicketLog.css';
-import TicketLogRow from './TicketLogRow';
-// import SubmitTicket from '../SubmitTicket/SubmitTicket';
+// import TicketLogRow from './TicketLogRow';
 
 const TicketLog = () => {
-  useEffect(() => {
-    //   getTickets()
+  const [aTicket, setATicket] = useState(null);
+  useEffect(async () => {
+    const response = await axios.get('http://localhost:3001/api/get-ticket-collection');
+    console.log(response.data);
+    setATicket(response.data);
   }, []);
 
-  //   const sendTicketText = async () => {
-  //     const response = await axios.get('http://localhost:3001/api/get-tickets',{
-
-  //       });
-  //  };
+  if (!aTicket) return null;
   return (
   // This function is waiting for the server to send ticket data from the server
     <div className="ticket-log-container">
@@ -27,9 +25,15 @@ const TicketLog = () => {
           </tr>
         </thead>
         <tbody>
-          <TicketLogRow />
-          <TicketLogRow />
-          <TicketLogRow />
+          {aTicket.map((ticket) => (
+            <tr>
+              <td>{ticket.category}</td>
+              <td>{ticket.title}</td>
+              <td>{ticket.description}</td>
+              <td>{ticket.priority}</td>
+              <td>{ticket.urgency}</td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>
