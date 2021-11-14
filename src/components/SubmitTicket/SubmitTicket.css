@@ -20,6 +20,8 @@
   display: block;
   text-align: left;
   font-weight: 500;
+  width: fit-content;
+  color: var(--purple);
 }
 
 .form-input {
@@ -31,11 +33,16 @@
   border: none;
   border-bottom: 2px solid black;
   font-size: 18px;
+  box-sizing: border-box;
 }
 
 .form-input:focus {
-  border: none;
-  border-bottom: 2px solid var(--purple);
+  outline: none;
+  border-bottom: 4px solid var(--purple);
+}
+
+#category-dropdown {
+  background: none;
 }
 
 .form-textarea {

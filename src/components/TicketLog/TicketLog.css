@@ -1,6 +1,5 @@
 table 
 {
-   border: 1px solid black;
    border-radius: 5px;
    width: 100%;
    color: white;
@@ -10,11 +9,8 @@ table
  {
    text-align: left;
    padding: 10px;
- }
- 
- table th 
- {
-   background-color: var(--purple);
+   border-top: 1px solid black;
+   border-bottom: 1px solid black;
  }
 
  .ticket-log-container {
@@ -22,6 +18,11 @@ table
  }
 
  .ticket-log-table {
-  border-collapse:separate; 
-  border-spacing:5em;
+  border-collapse: separate;
+  border-spacing: 0 10px;
+ }
+
+ .ticket-log-table-header
+ {
+   background-color: var(--purple);
  }

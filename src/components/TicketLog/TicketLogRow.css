@@ -1,0 +1,21 @@
+.ticket-log-row {
+  color: black;
+  cursor: pointer;
+}
+
+.ticket-log-row:hover {
+  background: var(--purple);
+  color: white;
+  /* height: 50px;
+  position: absolute; */
+}
+
+.ticket-log-row .first-cell {
+  border-left: 1px solid black;
+  border-radius: 5px 0 0 5px;
+}
+
+.ticket-log-row .last-cell {
+  border-right: 1px solid black;
+  border-radius: 0 5px 5px 0;
+}

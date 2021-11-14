@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 // import axios from 'axios';
 import './TicketLog.css';
-import Ticket from './Ticket';
+import TicketLogRow from './TicketLogRow';
 // import SubmitTicket from '../SubmitTicket/SubmitTicket';
 
 const TicketLog = () => {
@@ -20,16 +20,16 @@ const TicketLog = () => {
       <table className="ticket-log-table">
         <thead>
           <tr>
-            <th>Subject</th>
-            <th>Description</th>
-            <th>Urgency</th>
-            <th>Priority</th>
+            <th className="ticket-log-table-header">Subject</th>
+            <th className="ticket-log-table-header">Description</th>
+            <th className="ticket-log-table-header">Urgency</th>
+            <th className="ticket-log-table-header">Priority</th>
           </tr>
         </thead>
         <tbody>
-          <Ticket />
-          <Ticket />
-          <Ticket />
+          <TicketLogRow />
+          <TicketLogRow />
+          <TicketLogRow />
         </tbody>
       </table>
     </div>
