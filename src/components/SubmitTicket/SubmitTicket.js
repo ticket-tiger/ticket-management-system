@@ -25,14 +25,16 @@ const SubmitTicket = () => {
 
     console.log('Ticket sent');
     try {
-      const response = await axios.post('http://localhost:3001/api/create-ticket', ticket);
+      // const response = await axios.post('http://localhost:3001/api/create-ticket', ticket);
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/create-ticket`, ticket);
       return response.status;
     } catch (error) {
       return error.response.status;
     }
   };
 
-  const clickHandler = async () => {
+  const clickHandler = async (e) => {
+    e.preventDefault();
     setResponseStatus(await sendPostRequest());
   };
 
@@ -77,7 +79,7 @@ const SubmitTicket = () => {
             className="form-button"
             type="submit"
                   // className = 'submit-ticket__button'
-            onClick={() => clickHandler()}
+            onClick={(e) => clickHandler(e)}
           >
             Submit
           </button>
