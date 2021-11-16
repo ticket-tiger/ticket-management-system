@@ -3,11 +3,14 @@ import axios from 'axios';
 import './SubmitTicket.css';
 
 const SubmitTicket = () => {
-  const [ticketCategory, setTicketCategory] = useState('');
-  const [ticketPriority, setTicketPriority] = useState('Low');
-  const [ticketUrgency, setTicketUrgency] = useState('Low');
+//   const [ticketCategory, setTicketCategory] = useState('');
+//   const [ticketPriority, setTicketPriority] = useState('Low');
+//   const [ticketUrgency, setTicketUrgency] = useState('Low');
   const [responseStatus, setResponseStatus] = useState(null);
   const [state, setState] = useState({
+    ticketCategory: '',
+    ticketPriority: 'Low',
+    ticketUrgency: 'Low',
     subjectText: '',
     descriptionText: '',
   });
@@ -20,14 +23,14 @@ const SubmitTicket = () => {
   };
 
   const sendPostRequest = async () => {
-    setTicketPriority('Low');
-    setTicketUrgency('Low');
+    // setState({ ticketCategory: 'Low' });
+    // setState({ ticketUrgency: 'Low' });
     const ticket = {
-      category: ticketCategory,
+      category: state.ticketCategory,
       title: state.subjectText,
       description: state.descriptionText,
-      priority: ticketPriority,
-      urgency: ticketUrgency,
+      priority: state.ticketPriority,
+      urgency: state.ticketUrgency,
     };
     setState({ subjectText: ' ' });
     setState({ descriptionText: ' ' });
@@ -65,7 +68,7 @@ const SubmitTicket = () => {
           <label className="form-label" htmlFor="category-dropdown">
             <div className="label-text">Category</div>
           </label>
-          <select id="category-dropdown" className="form-input" onChange={(e) => setTicketCategory(e.target.value)} value={ticketCategory}>
+          <select id="category-dropdown" className="form-input" name="ticketCategory" onChange={handleChange}>
             <option value="" selected disabled hidden>Select Category</option>
             <option value="Vendor Issues">Vendor Issues</option>
             <option value="Pre-Order questions">Pre-order Questions</option>
