@@ -18,6 +18,7 @@ const TicketLog = () => {
       <table className="ticket-log-table">
         <thead>
           <tr>
+            <th className="ticket-log-table-header">Category</th>
             <th className="ticket-log-table-header">Subject</th>
             <th className="ticket-log-table-header">Description</th>
             <th className="ticket-log-table-header">Urgency</th>

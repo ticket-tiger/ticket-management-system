@@ -11,8 +11,12 @@ table
    padding: 10px;
    border-top: 1px solid black;
    border-bottom: 1px solid black;
- }
 
+ }
+table tr
+{
+   color:black;
+}
  .ticket-log-container {
    padding: 50px;
  }

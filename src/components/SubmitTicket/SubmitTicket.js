@@ -4,24 +4,33 @@ import './SubmitTicket.css';
 
 const SubmitTicket = () => {
   const [ticketCategory, setTicketCategory] = useState('');
-  const [ticketSubject, setTicketSubject] = useState('');
-  const [ticketText, setTicketText] = useState('');
   const [ticketPriority, setTicketPriority] = useState('Low');
   const [ticketUrgency, setTicketUrgency] = useState('Low');
   const [responseStatus, setResponseStatus] = useState(null);
+  const [state, setState] = useState({
+    subjectText: '',
+    descriptionText: '',
+  });
+  const handleChange = (e) => {
+    const { value } = e.target;
+    setState({
+      ...state,
+      [e.target.name]: value,
+    });
+  };
 
   const sendPostRequest = async () => {
     setTicketPriority('Low');
     setTicketUrgency('Low');
     const ticket = {
       category: ticketCategory,
-      title: ticketSubject,
-      description: ticketText,
+      title: state.subjectText,
+      description: state.descriptionText,
       priority: ticketPriority,
       urgency: ticketUrgency,
     };
-    setTicketSubject('');
-    setTicketText('');
+    setState({ subjectText: ' ' });
+    setState({ descriptionText: ' ' });
 
     console.log('Ticket sent');
     try {
@@ -50,7 +59,7 @@ const SubmitTicket = () => {
           <label className="form-label" htmlFor="subject-input">
             <div className="label-text">Subject</div>
           </label>
-          <input id="subject-input" className="form-input" type="text" onInput={(e) => setTicketSubject(e.target.value)} value={ticketSubject} />
+          <input id="subject-input" className="form-input" type="text" name="subjectText" value={state.subjectText} onChange={handleChange} />
         </div>
         <div className="form-element">
           <label className="form-label" htmlFor="category-dropdown">
@@ -69,7 +78,7 @@ const SubmitTicket = () => {
           <label className="form-label" htmlFor="description-textarea">
             <div className="label-text">Description</div>
           </label>
-          <textarea id="description-textarea" className="form-input form-textarea" />
+          <textarea id="description-textarea" className="form-input form-textarea" name="descriptionText" value={state.descriptionText} onChange={handleChange} />
         </div>
         <div className="form-button-group">
           <button className="form-button" type="submit" onClick={() => clickHandler2()}>
