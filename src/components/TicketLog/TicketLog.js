@@ -11,7 +11,11 @@ const TicketLog = () => {
     setATicket(response.data);
   }, []);
 
-  if (!aTicket) return null;
+  if (!aTicket) {
+    return (
+      <h1>No tickets to see here!</h1>
+    );
+  }
   return (
   // This function is waiting for the server to send ticket data from the server
     <div className="ticket-log-container">

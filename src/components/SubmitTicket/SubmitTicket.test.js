@@ -10,7 +10,6 @@ import SubmitTicket from './SubmitTicket';
 
 // Declares which API requests to mock
 const server = setupServer();
-
 // establish API mocking before all tests
 beforeAll(() => server.listen());
 // reset any request handlers that are declared as a part of our tests
@@ -40,11 +39,6 @@ test('handlers status 500 server error', async () => {
   );
   render(<SubmitTicket />);
   fireEvent.click(screen.getByText('Submit'));
-  // wait until the post request promise resolves and
-  // the component calls setState and re-renders.
-  // waitFor waits until the callback doesn't throw an error
   await waitFor(() => screen.getByTestId('responseStatus'));
-  // assert that the alert message is correct using
-  // toHaveTextContent, a custom matcher from jest-dom.
   await waitFor(() => expect(screen.getByTestId('responseStatus')).toHaveTextContent('500'));
 });

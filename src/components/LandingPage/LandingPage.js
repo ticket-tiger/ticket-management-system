@@ -4,26 +4,26 @@ import './LandingPage.css';
 
 const LandingPage = () => (
   <div>
-    <button type="button">
-      <Link to="/create-account">
+    <Link to="/create-account">
+      <button type="button">
         Create Account
-      </Link>
-    </button>
-    <button type="button">
-      <Link to="/login">
+      </button>
+    </Link>
+    <Link to="/login">
+      <button type="button">
         Login
-      </Link>
-    </button>
-    <button type="button">
-      <Link to="/user">
+      </button>
+    </Link>
+    <Link to="/user">
+      <button type="button">
         Continue As Guest
-      </Link>
-    </button>
-    <button type="button">
-      <Link to="/employee">
+      </button>
+    </Link>
+    <Link to="/employee">
+      <button type="button">
         Continue As Employee
-      </Link>
-    </button>
+      </button>
+    </Link>
   </div>
 );
 
