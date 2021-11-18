@@ -23,8 +23,8 @@ const SubmitTicket = () => {
   };
 
   const sendPostRequest = async () => {
-    // setState({ ticketCategory: 'Low' });
-    // setState({ ticketUrgency: 'Low' });
+    setState({ ticketPriority: 'Low' });
+    setState({ ticketUrgency: 'Low' });
     const ticket = {
       category: state.ticketCategory,
       title: state.subjectText,
@@ -32,13 +32,13 @@ const SubmitTicket = () => {
       priority: state.ticketPriority,
       urgency: state.ticketUrgency,
     };
-    setState({ subjectText: ' ' });
-    setState({ descriptionText: ' ' });
-
     console.log('Ticket sent');
     try {
       // const response = await axios.post('http://localhost:3001/api/create-ticket', ticket);
       const response = await axios.post(`${process.env.REACT_APP_API_URL}/create-ticket`, ticket);
+      setState({ subjectText: ' ' });
+      setState({ descriptionText: ' ' });
+      setState({ ticketCategory: '' });
       return response.status;
     } catch (error) {
       return error.response.status;
@@ -62,14 +62,14 @@ const SubmitTicket = () => {
           <label className="form-label" htmlFor="subject-input">
             <div className="label-text">Subject</div>
           </label>
-          <input id="subject-input" className="form-input" type="text" name="subjectText" value={state.subjectText} onChange={handleChange} />
+          <input id="subject-input" className="form-input" type="text" name="subjectText" value={state.subjectText || ''} onChange={handleChange} />
         </div>
         <div className="form-element">
           <label className="form-label" htmlFor="category-dropdown">
             <div className="label-text">Category</div>
           </label>
-          <select id="category-dropdown" className="form-input" name="ticketCategory" onChange={handleChange}>
-            <option value="" selected disabled hidden>Select Category</option>
+          <select id="category-dropdown" className="form-input" name="ticketCategory" defaultValue={state.ticketCategory} onChange={handleChange}>
+            <option value="" disabled hidden>Select Category</option>
             <option value="Vendor Issues">Vendor Issues</option>
             <option value="Pre-Order questions">Pre-order Questions</option>
             <option value="Shipping">Shipping</option>

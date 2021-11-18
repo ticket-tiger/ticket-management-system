@@ -27,7 +27,8 @@ const TicketLog = () => {
         </thead>
         <tbody>
           {aTicket.map((ticket) => (
-            <tr>
+            // eslint-disable-next-line no-underscore-dangle
+            <tr key={ticket._id}>
               <td>{ticket.category}</td>
               <td>{ticket.title}</td>
               <td>{ticket.description}</td>
