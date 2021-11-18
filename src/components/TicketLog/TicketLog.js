@@ -10,12 +10,13 @@ const TicketLog = () => {
     console.log(response.data);
     setATicket(response.data);
   }, []);
-
+  const ticketDetails = () => {
+  };
   if (!aTicket) return null;
   return (
   // This function is waiting for the server to send ticket data from the server
     <div className="ticket-log-container">
-      <table className="ticket-log-table">
+      <table className="styled-table">
         <thead>
           <tr>
             <th className="ticket-log-table-header">Category</th>
@@ -23,6 +24,7 @@ const TicketLog = () => {
             <th className="ticket-log-table-header">Description</th>
             <th className="ticket-log-table-header">Urgency</th>
             <th className="ticket-log-table-header">Priority</th>
+            <th className="ticket-log-table-header2">Select Ticket</th>
           </tr>
         </thead>
         <tbody>
@@ -34,6 +36,12 @@ const TicketLog = () => {
               <td>{ticket.description}</td>
               <td>{ticket.priority}</td>
               <td>{ticket.urgency}</td>
+              <td className="view-ticket">
+                <button type="submit" aria-label="ticket-details" onClick={() => ticketDetails()}>
+                  View
+
+                </button>
+              </td>
             </tr>
           ))}
         </tbody>

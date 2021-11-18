@@ -1,4 +1,4 @@
-table 
+/* table 
 {
    border-radius: 5px;
    width: 100%;
@@ -29,4 +29,55 @@ table tr
  .ticket-log-table-header
  {
    background-color: var(--purple);
+ } */
+
+/* temp table */
+ .styled-table {
+   border-collapse: collapse;
+   border-radius: 5px;
+   width: fit-content;
+   margin-left: auto;
+   margin-right: auto;
+   padding: 0;
+   font-size: 0.9em;
+   font-family: sans-serif;
+   min-width: 400px;
+   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+.styled-table thead tr {
+   background-color: rgb(145, 34, 248);
+   color: #ffffff;
+   text-align: left;
+}
+.ticket-log-table-header2{
+   background-color: rgb(145, 34, 248);
+   color: #ffffff;
+   text-align: center;
+}
+.styled-table th,
+.styled-table td {
+    padding: 12px 15px;
+    border:1px solid #ffffff;
+}
+.styled-table tbody tr {
+   border-bottom: 1px solid #dddddd;
+}
+
+.styled-table tbody tr:nth-of-type(even) {
+   background-color: #f3f3f3;
+}
+.styled-table tbody tr:nth-of-type(odd)>td {
+   border-color: #f3f3f3;
+}
+.styled-table tbody tr:last-of-type {
+   border-bottom: 2px solid #ba05f1;
+}
+.styled-table tbody tr.active-row {
+   font-weight: bold;
+   color: #009879;
+}
+.view-ticket {
+   text-align: center;
+   display: auto;
+   justify-content: space-around;
  }
