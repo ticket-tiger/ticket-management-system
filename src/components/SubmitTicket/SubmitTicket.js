@@ -33,8 +33,8 @@ const SubmitTicket = () => {
     }
   };
 
-  const clickHandler = async (e) => {
-    e.preventDefault();
+  const clickHandler = async (event) => {
+    event.preventDefault();
     setResponseStatus(await sendPostRequest());
   };
 
