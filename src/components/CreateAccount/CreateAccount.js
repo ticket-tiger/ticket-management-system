@@ -48,7 +48,7 @@ const CreateAccount = () => {
       <form>
         <label type="text" htmlFor="create-account-form-username">Username</label>
         <input id="create-account-form-username" onChange={(e) => dispatch({ type: 'username', payload: e.target.value })} />
-        <label htmlFor="create-account-form-paswword">Password</label>
+        <label htmlFor="create-account-form-password">Password</label>
         <input type="password" id="create-account-form-password" onChange={(e) => dispatch({ type: 'password', payload: e.target.value })} />
         <button type="submit" onClick={(e) => handleSubmit(e)}>Submit</button>
       </form>

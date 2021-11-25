@@ -18,7 +18,7 @@ afterEach(() => server.resetHandlers());
 // clean up once the tests are done
 afterAll(() => server.close());
 
-test('handlers status 200 OK', async () => {
+test('handles status 200 OK', async () => {
   server.use(
     rest.post('http://localhost:3001/api/create-ticket', (req, res, ctx) => res(ctx.status(200))),
   );
@@ -33,7 +33,7 @@ test('handlers status 200 OK', async () => {
   await waitFor(() => expect(screen.getByTestId('responseStatus')).toHaveTextContent('200'));
 });
 
-test('handlers status 500 server error', async () => {
+test('handles status 500 server error', async () => {
   server.use(
     rest.post('http://localhost:3001/api/create-ticket', (req, res, ctx) => res(ctx.status(500))),
   );
