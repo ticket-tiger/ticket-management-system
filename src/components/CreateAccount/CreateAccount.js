@@ -32,7 +32,7 @@ const CreateAccount = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(credentials);
-    navigate('/User');
+    navigate('/user');
     // try {
     //   const response = await axios.post(`${process.env.REACT_APP_API_URL}
     // /create-account`, credentials, {
