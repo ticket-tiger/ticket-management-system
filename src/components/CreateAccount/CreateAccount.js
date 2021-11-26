@@ -1,5 +1,6 @@
 import React, { useReducer } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
+import { useAuth } from '../../auth';
 // import axios from 'axios';
 import './CreateAccount.css';
 
@@ -28,11 +29,11 @@ const CreateAccount = () => {
 
   const [credentials, dispatch] = useReducer(reducer, initialCredentials);
 
-  const navigate = useNavigate();
+  const auth = useAuth();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(credentials);
-    navigate('/user');
+    auth.signin(credentials.username);
     // try {
     //   const response = await axios.post(`${process.env.REACT_APP_API_URL}
     // /create-account`, credentials, {
@@ -45,6 +46,13 @@ const CreateAccount = () => {
     //   return error.response.status;
     // }
   };
+
+  if (auth.user) {
+    return <Navigate to="/user" />;
+  }
+  if (auth.user === '') {
+    return <Navigate to="/employee" />;
+  }
 
   return (
     <>
