@@ -68,7 +68,7 @@ const SubmitTicket = () => {
           <label className="form-label" htmlFor="category-dropdown">
             <div className="label-text">Category</div>
           </label>
-          <select id="category-dropdown" className="form-input" name="ticketCategory" defaultValue={state.ticketCategory} onChange={handleChange}>
+          <select id="category-dropdown" className="form-input" name="ticketCategory" value={state.ticketCategory} onChange={handleChange}>
             <option value="" disabled hidden>Select Category</option>
             <option value="Vendor Issues">Vendor Issues</option>
             <option value="Pre-Order questions">Pre-order Questions</option>
