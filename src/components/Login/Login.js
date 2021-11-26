@@ -1,4 +1,5 @@
 import React, { useReducer } from 'react';
+import { useNavigate } from 'react-router-dom';
 // import axios from 'axios';
 import './Login.css';
 
@@ -27,9 +28,10 @@ const Login = () => {
 
   const [credentials, dispatch] = useReducer(reducer, initialCredentials);
 
+  const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(credentials);
+    navigate('/User');
   };
 
   return (

@@ -1,5 +1,6 @@
 import React, { useReducer } from 'react';
-import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+// import axios from 'axios';
 import './CreateAccount.css';
 
 const CreateAccount = () => {
@@ -27,19 +28,22 @@ const CreateAccount = () => {
 
   const [credentials, dispatch] = useReducer(reducer, initialCredentials);
 
+  const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(credentials);
-    try {
-      const response = await axios.post(`${process.env.REACT_APP_API_URL}/create-account`, credentials, {
-        headers: {
-          Authorization: `Basic ${credentials.username}:${credentials.password}`,
-        },
-      });
-      return response.status;
-    } catch (error) {
-      return error.response.status;
-    }
+    navigate('/User');
+    // try {
+    //   const response = await axios.post(`${process.env.REACT_APP_API_URL}
+    // /create-account`, credentials, {
+    //     headers: {
+    //       Authorization: `Basic ${credentials.username}:${credentials.password}`,
+    //     },
+    //   });
+    //   return response.status;
+    // } catch (error) {
+    //   return error.response.status;
+    // }
   };
 
   return (
