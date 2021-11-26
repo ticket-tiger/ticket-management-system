@@ -56,6 +56,7 @@ const SubmitTicket = () => {
 
   return (
     <>
+      <h1 className="submit-ticket-heading">Have an issue? Let us know.</h1>
       {responseStatus ? <p data-testid="responseStatus">{responseStatus}</p> : null}
       <form className="form">
         <div className="form-element">
