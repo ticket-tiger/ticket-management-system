@@ -1,10 +1,15 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../auth';
 import './LandingPage.css';
 
 const LandingPage = () => {
   const auth = useAuth();
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    auth.signout();
+    navigate('/login');
+  };
   return (
     <div>
       <Link to="/create-account">
@@ -22,7 +27,7 @@ const LandingPage = () => {
           Continue As Guest
         </button>
       </Link>
-      <button type="button" onClick={() => auth.signout()}>
+      <button type="button" onClick={handleLogout}>
         Logout
       </button>
       {/* <Link to="/employee">
@@ -30,6 +35,7 @@ const LandingPage = () => {
         Continue As Employee
       </button>
     </Link> */}
+      <Outlet />
     </div>
   );
 };

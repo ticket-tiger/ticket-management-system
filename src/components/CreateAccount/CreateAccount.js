@@ -48,10 +48,10 @@ const CreateAccount = () => {
   };
 
   if (auth.user) {
-    return <Navigate to="/user" />;
+    return <Navigate to="/employee" />;
   }
   if (auth.user === '') {
-    return <Navigate to="/employee" />;
+    return <Navigate to="/user" />;
   }
 
   return (
