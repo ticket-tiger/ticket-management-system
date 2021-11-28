@@ -1,10 +1,14 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 // import axios from 'axios';
 import './Login.css';
+import Modal from '../reusableComponents/Modal';
+import CreateAccount from '../CreateAccount/CreateAccount';
 import { useAuth } from '../../auth';
 
 const Login = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const initialCredentials = {
     username: '',
     password: '',
@@ -36,6 +40,14 @@ const Login = () => {
     auth.signin(credentials.username);
   };
 
+  const closeCreateAccountForm = () => {
+    setIsModalOpen(false);
+  };
+
+  const submitCreateAccountForm = () => {
+    closeCreateAccountForm();
+  };
+
   if (auth.user) {
     return <Navigate to="/employee" />;
   }
@@ -52,6 +64,17 @@ const Login = () => {
         <input type="password" id="login-form-password" value={credentials.passsword} onChange={(e) => dispatch({ type: 'password', payload: e.target.value })} />
         <button type="submit" onClick={(e) => handleSubmit(e)}>Submit</button>
       </form>
+      <p>Don&apos;t have an account with us?</p>
+      <button type="button" onClick={() => setIsModalOpen(true)}>Sign up</button>
+      {isModalOpen
+        ? (
+          <Modal>
+            <CreateAccount
+              submitForm={submitCreateAccountForm}
+              closeForm={closeCreateAccountForm}
+            />
+          </Modal>
+        ) : null}
     </>
   );
 };
