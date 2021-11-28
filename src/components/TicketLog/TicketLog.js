@@ -58,68 +58,70 @@ const TicketLog = () => {
   //  };
   return (
   // This function is waiting for the server to send ticket data from the server
-    <table>
-      <thead>
-        <tr>
-          <th>
-            <button
-              type="button"
-              onClick={() => requestSort('title')}
-            >
-              Title
-            </button>
-          </th>
+    <div className="ticket-log-container">
+      <table className="styled-table">
+        <thead>
+          <tr>
+            <th className="ticket-log-table-header">
+              <button
+                type="button"
+                onClick={() => requestSort('title')}
+              >
+                Title
+              </button>
+            </th>
 
-          <th>
-            <button
-              type="button"
-              onClick={() => requestSort('description')}
-            >
-              Description
-            </button>
-          </th>
+            <th className="ticket-log-table-header">
+              <button
+                type="button"
+                onClick={() => requestSort('description')}
+              >
+                Description
+              </button>
+            </th>
 
-          <th>
-            <button
-              type="button"
-              onClick={() => requestSort('priority')}
-            >
-              Priority
-            </button>
-          </th>
+            <th className="ticket-log-table-header">
+              <button
+                type="button"
+                onClick={() => requestSort('priority')}
+              >
+                Priority
+              </button>
+            </th>
 
-          <th>
-            <button
-              type="button"
-              onClick={() => requestSort('urgency')}
-            >
-              Urgency
-            </button>
-          </th>
+            <th className="ticket-log-table-header">
+              <button
+                type="button"
+                onClick={() => requestSort('urgency')}
+              >
+                Urgency
+              </button>
+            </th>
 
-          <th>
-            <button
-              type="button"
-              onClick={() => requestSort('date')}
-            >
-              Date Created
-            </button>
-          </th>
-        </tr>
-      </thead>
-
-      <tbody>
-        {sortItems.map((ticket) => (
-          <tr key={ticket.id}>
-            <td>{ticket.title}</td>
-            <td>{ticket.description}</td>
-            <td>{ticket.priority}</td>
-            <td>{ticket.urgency}</td>
-            <td>{ticket.date}</td>
+            <th className="ticket-log-table-header">
+              <button
+                type="button"
+                onClick={() => requestSort('date')}
+              >
+                Date Created
+              </button>
+            </th>
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+
+        <tbody>
+          {sortItems.map((ticket) => (
+            <tr key={ticket.id}>
+              <td>{ticket.title}</td>
+              <td>{ticket.description}</td>
+              <td>{ticket.priority}</td>
+              <td>{ticket.urgency}</td>
+              <td>{ticket.date}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 };
 export default TicketLog;
