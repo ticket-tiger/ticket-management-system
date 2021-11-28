@@ -17,24 +17,23 @@ const LandingPage = () => {
           Create Account
         </button>
       </Link>
-      <Link to="/login">
-        <button type="button">
-          Login
+      {auth.user || auth.user === '' ? (
+        <button type="button" onClick={handleLogout}>
+          Logout
         </button>
-      </Link>
+      )
+        : (
+          <Link to="/login">
+            <button type="button">
+              Login
+            </button>
+          </Link>
+        )}
       <Link to="/user">
         <button type="button">
           Continue As Guest
         </button>
       </Link>
-      <button type="button" onClick={handleLogout}>
-        Logout
-      </button>
-      {/* <Link to="/employee">
-      <button type="button">
-        Continue As Employee
-      </button>
-    </Link> */}
       <Outlet />
     </div>
   );
