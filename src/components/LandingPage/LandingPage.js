@@ -12,11 +12,11 @@ const LandingPage = () => {
   };
   return (
     <div>
-      <Link to="/create-account">
+      {/* <Link to="/create-account">
         <button type="button">
           Create Account
         </button>
-      </Link>
+      </Link> */}
       {auth.user || auth.user === '' ? (
         <button type="button" onClick={handleLogout}>
           Logout
