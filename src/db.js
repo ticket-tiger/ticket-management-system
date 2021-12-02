@@ -31,61 +31,61 @@ export const getTicketCollection = async () => {
   }
 };
 
-const createTickets = async (tickets) => {
-  try {
-    await client.connect();
+// const createTickets = async (tickets) => {
+//   try {
+//     await client.connect();
 
-    const result = await client.db(config.mongodb.database).collection('tickets').insertMany(tickets);
+//     const result = await client.db(config.mongodb.database).collection('tickets').insertMany(tickets);
 
-    return result;
-  } finally {
-    await client.close();
-  }
-};
+//     return result;
+//   } finally {
+//     await client.close();
+//   }
+// };
 
-const deleteAllTickets = async () => {
-  try {
-    await client.connect();
+// const deleteAllTickets = async () => {
+//   try {
+//     await client.connect();
 
-    const result = await client.db(config.mongodb.database).collection('tickets').deleteMany({});
+//     const result = await client.db(config.mongodb.database).collection('tickets').deleteMany({});
 
-    return result;
-  } finally {
-    await client.close();
-  }
-};
+//     return result;
+//   } finally {
+//     await client.close();
+//   }
+// };
 
-const tickets = [
-  {
-    category: 'category1',
-    title: 'test1',
-    description: 'The login button doesn\x27t work.',
-    priority: 'Low',
-    urgency: 'High',
-    dateCreated: new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }),
-  },
-  {
-    category: 'category2',
-    title: 'test2',
-    description: 'The screen freezes when I run a file called malware.exe.',
-    priority: 'Medium',
-    urgency: 'Medium',
-    dateCreated: new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }),
-  },
-  {
-    category: 'category3',
-    title: 'test3',
-    description: 'I received bad customer service the last time I called you.',
-    priority: 'High',
-    urgency: 'Low',
-    dateCreated: new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }),
-  }];
+// const tickets = [
+//   {
+//     category: 'category1',
+//     title: 'test1',
+//     description: 'The login button doesn\x27t work.',
+//     priority: 'Low',
+//     urgency: 'High',
+//     dateCreated: new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }),
+//   },
+//   {
+//     category: 'category2',
+//     title: 'test2',
+//     description: 'The screen freezes when I run a file called malware.exe.',
+//     priority: 'Medium',
+//     urgency: 'Medium',
+//     dateCreated: new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }),
+//   },
+//   {
+//     category: 'category3',
+//     title: 'test3',
+//     description: 'I received bad customer service the last time I called you.',
+//     priority: 'High',
+//     urgency: 'Low',
+//     dateCreated: new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }),
+//   }];
 
-const testDB = async () => {
-  await deleteAllTickets().catch(console.dir);
-  await createTickets(tickets).catch(console.dir);
-  const returnedTickets = await getTicketCollection().catch(console.dir);
-  console.log(returnedTickets);
-};
+// const testDB = async () => {
+//   await deleteAllTickets().catch(console.dir);
+//   await createTickets(tickets).catch(console.dir);
+//   const returnedTickets = await getTicketCollection().catch(console.dir);
+//   console.log(returnedTickets);
+// };
 
-testDB();
+// testDB();
