@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useMemo } from 'react';
 // import axios from 'axios';
-import './TicketLog.css';
+import './TicketTable.css';
 // import SubmitTicket from '../SubmitTicket/SubmitTicket';
 
 const useSortableData = (items, config = null) => {

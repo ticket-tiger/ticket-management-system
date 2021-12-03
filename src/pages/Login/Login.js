@@ -2,8 +2,8 @@ import React, { useReducer, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 // import axios from 'axios';
 import './Login.css';
-import Modal from '../reusableComponents/Modal';
-import CreateAccount from '../CreateAccount/CreateAccount';
+import Modal from '../../components/reusableComponents/Modal';
+import CreateAccount from '../../components/CreateAccount/CreateAccount';
 import { useAuth } from '../../auth';
 
 const Login = () => {
