@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../auth';
-import './LandingPage.css';
+import './NavBar.css';
 
-const LandingPage = () => {
+const NavBar = () => {
   const auth = useAuth();
   const navigate = useNavigate();
   const handleLogout = () => {
@@ -39,4 +39,4 @@ const LandingPage = () => {
   );
 };
 
-export default LandingPage;
+export default NavBar;

@@ -3,7 +3,7 @@ import { Route, Routes, Navigate } from 'react-router-dom';
 import { AuthProvider, RequireAuth } from './auth';
 import SubmitTicket from './components/SubmitTicket/SubmitTicket';
 import TicketLog from './components/TicketLog/TicketLog';
-import LandingPage from './components/LandingPage/LandingPage';
+import NavBar from './components/NavBar/NavBar';
 import CreateAccount from './components/CreateAccount/CreateAccount';
 import Login from './components/Login/Login';
 import './App.css';
@@ -11,7 +11,7 @@ import './App.css';
 const App = () => (
   <AuthProvider>
     <Routes>
-      <Route element={<LandingPage />}>
+      <Route element={<NavBar />}>
         <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/create-account" element={<CreateAccount />} />
         <Route path="/login" element={<Login />} />
