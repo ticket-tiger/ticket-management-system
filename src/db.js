@@ -31,29 +31,29 @@ export const getTicketCollection = async () => {
   }
 };
 
-const createTickets = async (tickets) => {
-  try {
-    await client.connect();
+// const createTickets = async (tickets) => {
+//   try {
+//     await client.connect();
 
-    const result = await client.db(config.mongodb.database).collection('tickets').insertMany(tickets);
+//     const result = await client.db(config.mongodb.database).collection('tickets').insertMany(tickets);
 
-    return result;
-  } finally {
-    await client.close();
-  }
-};
+//     return result;
+//   } finally {
+//     await client.close();
+//   }
+// };
 
-const deleteAllTickets = async () => {
-  try {
-    await client.connect();
+// const deleteAllTickets = async () => {
+//   try {
+//     await client.connect();
 
-    const result = await client.db(config.mongodb.database).collection('tickets').deleteMany({});
+//     const result = await client.db(config.mongodb.database).collection('tickets').deleteMany({});
 
-    return result;
-  } finally {
-    await client.close();
-  }
-};
+//     return result;
+//   } finally {
+//     await client.close();
+//   }
+// };
 
 // const tickets = [
 //   {
