@@ -94,12 +94,17 @@ const Login = () => {
               </button>
             </form>
             <div className="social-login">
-              {/* <h3>Login via</h3>
-    <div className="social-icons">
-      <a href="#" className="social-login__icon fab fa-instagram" />
-      <a href="#" className="social-login__icon fab fa-facebook" />
-      <a href="#" className="social-login__icon fab fa-twitter" />
-    </div> */}
+              Don&apos;t have an account with us?
+              <button type="button" onClick={() => setIsModalOpen(true)} className="button login__signup">Sign up</button>
+              {isModalOpen
+                ? (
+                  <Modal>
+                    <CreateAccount
+                      submitForm={submitCreateAccountForm}
+                      closeForm={closeCreateAccountForm}
+                    />
+                  </Modal>
+                ) : null}
             </div>
           </div>
           <div className="screen__background">
@@ -109,17 +114,6 @@ const Login = () => {
             <span className="screen__background__shape screen__background__shape1" />
           </div>
         </div>
-        <p>Don&apos;t have an account with us?</p>
-        <button type="button" onClick={() => setIsModalOpen(true)}>Sign up</button>
-        {isModalOpen
-          ? (
-            <Modal>
-              <CreateAccount
-                submitForm={submitCreateAccountForm}
-                closeForm={closeCreateAccountForm}
-              />
-            </Modal>
-          ) : null}
       </div>
 
     </>
