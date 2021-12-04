@@ -12,28 +12,23 @@ const NavBar = () => {
   };
   return (
     <div>
-      {/* <Link to="/create-account">
-        <button type="button">
-          Create Account
-        </button>
-      </Link> */}
-      {auth.user || auth.user === '' ? (
-        <button type="button" onClick={handleLogout}>
-          Logout
-        </button>
+      {window.localStorage.getItem('user') ? (
+        <>
+          <button type="button" onClick={handleLogout}>
+            Logout
+          </button>
+        </>
       )
         : (
-          <Link to="/login">
-            <button type="button">
-              Login
-            </button>
-          </Link>
+          <>
+            <Link to="/login">
+              <button type="button">
+                Login
+              </button>
+            </Link>
+          </>
         )}
-      <Link to="/user">
-        <button type="button">
-          Continue As Guest
-        </button>
-      </Link>
+      <p>{window.localStorage.getItem('user')}</p>
       <Outlet />
     </div>
   );

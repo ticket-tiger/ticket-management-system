@@ -8,32 +8,47 @@ import CreateAccount from './components/CreateAccount/CreateAccount';
 import Login from './pages/Login/Login';
 import './App.css';
 
-const App = () => (
-  <AuthProvider>
-    <Routes>
-      <Route element={<NavBar />}>
-        <Route path="/" element={<Navigate to="/login" />} />
-        <Route path="/create-account" element={<CreateAccount />} />
-        <Route path="/login" element={<Login />} />
-        <Route
-          path="/user"
-          element={(
-            <RequireAuth>
+const App = () => {
+  window.onload = () => {
+    // window.localStorage.setItem('user', window.localStorage.getItem('user'));
+    const tabCounter = window.localStorage.getItem('tabCounter');
+    if (!window.sessionStorage.getItem('refreshed')) {
+      if (tabCounter === null || parseInt(tabCounter, 10) < 1) {
+        window.localStorage.removeItem('user');
+      }
+    }
+    window.localStorage.setItem('tabCounter', tabCounter === null ? tabCounter + 1 : parseInt(tabCounter, 10) + 1);
+  };
+  window.onbeforeunload = () => {
+    const tabCounter = window.localStorage.getItem('tabCounter');
+    window.localStorage.setItem('tabCounter', tabCounter === null ? tabCounter - 1 : parseInt(tabCounter, 10) - 1);
+    window.sessionStorage.setItem('refreshed', true);
+  };
+  return (
+    <AuthProvider>
+      <Routes>
+        <Route element={<NavBar />}>
+          <Route path="/" element={<Navigate to="/create-ticket" />} />
+          <Route path="/create-account" element={<CreateAccount />} />
+          <Route path="/login" element={<Login />} />
+          <Route
+            path="/create-ticket"
+            element={(
               <SubmitTicket />
-            </RequireAuth>
       )}
-        />
-        <Route
-          path="/employee"
-          element={(
-            <RequireAuth>
-              <ViewTickets />
-            </RequireAuth>
+          />
+          <Route
+            path="/view-tickets"
+            element={(
+              <RequireAuth>
+                <ViewTickets />
+              </RequireAuth>
           )}
-        />
-      </Route>
-    </Routes>
-  </AuthProvider>
-);
+          />
+        </Route>
+      </Routes>
+    </AuthProvider>
+  );
+};
 
 export default App;

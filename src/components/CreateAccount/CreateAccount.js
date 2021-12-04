@@ -9,12 +9,18 @@ const CreateAccount = (props) => {
   const { submitForm, closeForm } = props;
 
   const initialCredentials = {
+    name: '',
     username: '',
     password: '',
   };
 
   const reducer = (state, action) => {
     switch (action.type) {
+      case 'name':
+        return {
+          ...state,
+          name: action.payload,
+        };
       case 'username':
         return {
           ...state,
@@ -62,6 +68,8 @@ const CreateAccount = (props) => {
     <>
       <h1>Create an account with us</h1>
       <form>
+        <label type="text" htmlFor="create-account-form-name">Name</label>
+        <input id="create-account-form-name" onChange={(e) => dispatch({ type: 'name', payload: e.target.value })} />
         <label type="text" htmlFor="create-account-form-username">Username</label>
         <input id="create-account-form-username" onChange={(e) => dispatch({ type: 'username', payload: e.target.value })} />
         <label htmlFor="create-account-form-password">Password</label>

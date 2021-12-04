@@ -9,10 +9,12 @@ export const AuthProvider = ({ children }) => {
 
   const signin = (newUser) => {
     setUser(newUser);
+    window.localStorage.setItem('user', newUser);
   };
 
   const signout = () => {
     setUser(null);
+    window.localStorage.removeItem('user');
   };
 
   const value = { user, signin, signout };
