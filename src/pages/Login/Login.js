@@ -95,7 +95,10 @@ const Login = () => {
             </form>
             <div className="social-login">
               Don&apos;t have an account with us?
-              <button type="button" onClick={() => setIsModalOpen(true)} className="button login__signup">Sign up</button>
+              <button type="button" onClick={() => setIsModalOpen(true)} className="button login__signup">
+                <span className="button__text">Sign up</span>
+                <i className="button__icon fas fa-chevron-right" />
+              </button>
               {isModalOpen
                 ? (
                   <Modal>

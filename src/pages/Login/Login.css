@@ -135,6 +135,12 @@
 	cursor: pointer;
 	transition: .2s;
 }
+.login__submit:active,
+.login__submit:focus,
+.login__submit:hover {
+	border-color: #6A679E;
+	outline: none;
+}
 .login__signup{
 	background: #fff;
 	font-size: 14px;
@@ -152,13 +158,13 @@
 	cursor: pointer;
 	transition: .2s;
 }
-
-.login__submit:active,
-.login__submit:focus,
-.login__submit:hover {
+.login__signup:active,
+.login__signup:focus,
+.login__signup:hover {
 	border-color: #6A679E;
 	outline: none;
 }
+
 
 .button__icon {
 	font-size: 24px;
