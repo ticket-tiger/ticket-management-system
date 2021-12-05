@@ -120,17 +120,6 @@ const Login = () => {
       </div>
 
     </>
-  //  <>
-  //    <form>
-  //      <label htmlFor="login-form-username">Username</label>
-  //      <input type="text" id="login-form-username" value={credentials.username}
-  //       onChange={(e) => dispatch({ type: 'username', payload: e.target.value })} />
-  //      <label htmlFor="login-form-password">Password</label>
-  //      <input type="password" id="login-form-password" value={credentials.passsword}
-  //      onChange={(e) => dispatch({ type: 'password', payload: e.target.value })} />
-  //      <button type="submit" onClick={(e) => handleSubmit(e)}>Submit</button>
-  //    </form>
-  //  </>
   );
 };
 
