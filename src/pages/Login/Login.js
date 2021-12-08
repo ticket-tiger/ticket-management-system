@@ -1,6 +1,6 @@
 import React, { useReducer, useState } from 'react';
 import { Navigate, Link } from 'react-router-dom';
-// import axios from 'axios';
+import axios from 'axios';
 import './Login.css';
 import Modal from '../../components/reusableComponents/Modal';
 import CreateAccount from '../../components/CreateAccount/CreateAccount';
@@ -38,6 +38,9 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     auth.signin(credentials.username);
+    // Send post request for authentication
+    const response = await axios.post(`${process.env.REACT_APP_API_URL}/login`, credentials);
+    console.log(response);
   };
 
   const closeCreateAccountForm = () => {
