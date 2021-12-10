@@ -1,6 +1,6 @@
 import React, { useReducer, useState } from 'react';
 import { Navigate, Link } from 'react-router-dom';
-// import axios from 'axios';
+import axios from 'axios';
 import './Login.css';
 import Modal from '../../components/reusableComponents/Modal';
 import CreateAccount from '../../components/CreateAccount/CreateAccount';
@@ -8,6 +8,7 @@ import { useAuth } from '../../auth';
 
 const Login = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [authenticationStatusCSSClass, setAuthenticationStatusCSSClass] = useState('');
 
   const initialCredentials = {
     username: '',
@@ -37,7 +38,15 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    auth.signin(credentials.username);
+    try {
+      await axios.post(`${process.env.REACT_APP_API_URL}/login`, credentials);
+      setAuthenticationStatusCSSClass('200-status');
+      auth.signin(credentials.username);
+    } catch (error) {
+      if (error.response.status >= 400 && error.response.status < 500) setAuthenticationStatusCSSClass('status-400');
+      else if (error.response.status >= 500) setAuthenticationStatusCSSClass('status-500');
+      else setAuthenticationStatusCSSClass('status-default-error');
+    }
   };
 
   const closeCreateAccountForm = () => {
@@ -62,6 +71,9 @@ const Login = () => {
           Continue As Guest
         </button>
       </Link>
+      {authenticationStatusCSSClass === 'status-400' ? <p>Your credentials were incorrect.  Please try again.</p> : null}
+      {authenticationStatusCSSClass === 'status-500' ? <p>There was a problem with the server.  Sorry for the inconvenience</p> : null}
+      {authenticationStatusCSSClass === 'status-default-error' ? <p>There was an unexpected error.  Please try again in a little while.</p> : null}
       <div className="container">
         <div className="screen">
           <div className="screen__content">
@@ -70,7 +82,7 @@ const Login = () => {
                 <i className="login__icon fas fa-user" />
                 <input
                   type="text"
-                  className="login__input"
+                  className={`login__input ${authenticationStatusCSSClass}`}
                   placeholder="Username"
                   id="login-form-username"
                   value={credentials.username}
@@ -81,7 +93,7 @@ const Login = () => {
                 <i className="login__icon fas fa-lock" />
                 <input
                   type="password"
-                  className="login__input"
+                  className={`login__input ${authenticationStatusCSSClass}`}
                   placeholder="Password"
                   id="login-form-password"
                   value={credentials.passsword}
