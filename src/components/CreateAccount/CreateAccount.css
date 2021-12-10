@@ -98,3 +98,7 @@ body {
  .sec-content {
    margin-top: 85%;
  }
+
+ .status-400 {
+   border-color: red;
+ }
