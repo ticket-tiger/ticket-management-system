@@ -1,37 +1,3 @@
-/* table 
-{
-   border-radius: 5px;
-   width: 100%;
-   color: black;
- }
- 
- table td, table th 
- {
-   text-align: left;
-   padding: 10px;
-   border-top: 1px solid black;
-   border-bottom: 1px solid black;
-
- }
-table tr
-{
-   color:black;
-}
- .ticket-log-container {
-   padding: 50px;
- }
-
- .ticket-log-table {
-  border-collapse: separate;
-  border-spacing: 0 10px;
- }
-
- .ticket-log-table-header
- {
-   background-color: var(--purple);
- } */
-
-/* temp table */
  .styled-table {
    border-collapse: collapse;
    border-radius: 5px;

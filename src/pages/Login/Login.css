@@ -160,7 +160,7 @@
 }
 .login__signup:active,
 .login__signup:focus,
-.login__signup:hover {
+.login__submit:hover {
 	border-color: #6A679E;
 	outline: none;
 }
