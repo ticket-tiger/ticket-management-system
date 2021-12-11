@@ -44,9 +44,11 @@ const Login = () => {
       document.cookie = response.data.json();
       auth.signin(credentials.username);
     } catch (error) {
-      if (error.response.status >= 400 && error.response.status < 500) setAuthenticationStatusCSSClass('status-400');
-      else if (error.response.status >= 500) setAuthenticationStatusCSSClass('status-500');
-      else setAuthenticationStatusCSSClass('status-default-error');
+      if (error.response) {
+        if (error.response.status >= 400 && error.response.status < 500) setAuthenticationStatusCSSClass('status-400');
+        else if (error.response.status >= 500) setAuthenticationStatusCSSClass('status-500');
+        else setAuthenticationStatusCSSClass('status-default-error');
+      } else setAuthenticationStatusCSSClass('status-default-error');
     }
   };
 
