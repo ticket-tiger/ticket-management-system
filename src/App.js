@@ -10,18 +10,17 @@ import './App.css';
 
 const App = () => {
   window.onload = () => {
-    // window.localStorage.setItem('user', window.localStorage.getItem('user'));
-    const tabCounter = window.localStorage.getItem('tabCounter');
+    const numTabs = Number(window.localStorage.getItem('tabCounter'));
     if (!window.sessionStorage.getItem('refreshed')) {
-      if (tabCounter === null || parseInt(tabCounter, 10) < 1) {
+      if (numTabs < 1) {
         window.localStorage.removeItem('user');
       }
     }
-    window.localStorage.setItem('tabCounter', tabCounter === null ? tabCounter + 1 : parseInt(tabCounter, 10) + 1);
+    window.localStorage.setItem('tabCounter', numTabs + 1);
   };
   window.onbeforeunload = () => {
-    const tabCounter = window.localStorage.getItem('tabCounter');
-    window.localStorage.setItem('tabCounter', tabCounter === null ? tabCounter - 1 : parseInt(tabCounter, 10) - 1);
+    const numTabs = Number(window.localStorage.getItem('tabCounter'));
+    window.localStorage.setItem('tabCounter', numTabs - 1);
     window.sessionStorage.setItem('refreshed', true);
   };
   return (

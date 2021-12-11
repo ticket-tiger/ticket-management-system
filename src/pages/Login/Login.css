@@ -118,6 +118,10 @@
 	border-bottom-color: #6A679E;
 }
 
+.status-400 {
+	border-color: red;
+}
+
 .login__submit {
 	background: #fff;
 	font-size: 14px;

@@ -12,8 +12,13 @@ const NavBar = () => {
   };
   return (
     <div>
-      {window.localStorage.getItem('user') ? (
+      {auth.user ? (
         <>
+          <Link to="/view-tickets">
+            <button type="button">
+              View Your Tickets
+            </button>
+          </Link>
           <button type="button" onClick={handleLogout}>
             Logout
           </button>
@@ -28,7 +33,7 @@ const NavBar = () => {
             </Link>
           </>
         )}
-      <p>{window.localStorage.getItem('user')}</p>
+      <p>{auth.user}</p>
       <Outlet />
     </div>
   );
