@@ -2,7 +2,7 @@ import React, { useState, useContext, createContext } from 'react';
 import PropTypes from 'prop-types';
 import { Navigate } from 'react-router-dom';
 
-const AuthContext = createContext({ user: null });
+const AuthContext = createContext({ user: null, signin: null, signout: null });
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);

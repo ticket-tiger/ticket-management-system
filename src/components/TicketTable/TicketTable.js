@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useMemo } from 'react';
-// import axios from 'axios';
+import axios from 'axios';
+import { useAuth } from '../../auth';
 import './TicketTable.css';
 // import SubmitTicket from '../SubmitTicket/SubmitTicket';
 
@@ -32,7 +33,7 @@ const useSortableData = (items, config = null) => {
   return { sortItems, requestSort };
 };
 
-const tickets = [{
+const sampleTickets = [{
   title: '1', description: 'apple', priority: '10', urgency: '8', date: '12/10/21',
 }, {
   title: '23', description: 'banana', priority: '1', urgency: '5', date: '5/09/21',
@@ -47,17 +48,21 @@ const tickets = [{
 }];
 
 const TicketLog = () => {
-  useEffect(() => {
-    //   getTickets()
+  const [tickets, setTickets] = useState(sampleTickets);
+  const auth = useAuth();
+
+  useEffect(async () => {
+    try {
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/get-tickets`);
+      setTickets(response.data);
+      auth.signin(window.localStorage.getItem('user'));
+    } catch (error) {
+      auth.signout();
+    }
   }, []);
   const { sortItems, requestSort } = useSortableData(tickets);
-  //   const sendTicketText = async () => {
-  //     const response = await axios.get('http://localhost:3001/api/get-tickets',{
 
-  //       });
-  //  };
   return (
-  // This function is waiting for the server to send ticket data from the server
     <div className="ticket-log-container">
       <table className="styled-table">
         <thead>
