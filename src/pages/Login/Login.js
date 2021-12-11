@@ -1,5 +1,5 @@
 import React, { useReducer, useState } from 'react';
-import { Navigate, Link } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import axios from 'axios';
 import './Login.css';
 import Modal from '../../components/reusableComponents/Modal';
@@ -67,11 +67,11 @@ const Login = () => {
 
   return (
     <>
-      <Link to="/create-ticket">
+      {/* <Link to="/create-ticket">
         <button type="button">
           Continue As Guest
         </button>
-      </Link>
+      </Link> */}
       {authenticationStatusCSSClass === 'status-400' ? <p>Your credentials were incorrect.  Please try again.</p> : null}
       {authenticationStatusCSSClass === 'status-500' ? <p>There was a problem with the server.  Sorry for the inconvenience</p> : null}
       {authenticationStatusCSSClass === 'status-default-error' ? <p>There was an unexpected error.  Please try again in a little while.</p> : null}
