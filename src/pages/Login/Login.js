@@ -2,12 +2,9 @@ import React, { useReducer, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import axios from 'axios';
 import './Login.css';
-import Modal from '../../components/reusableComponents/Modal';
-import CreateAccount from '../../components/CreateAccount/CreateAccount';
 import { useAuth } from '../../auth';
 
 const Login = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [authenticationStatusCSSClass, setAuthenticationStatusCSSClass] = useState('');
 
   const initialCredentials = {
@@ -39,9 +36,9 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`${process.env.REACT_APP_API_URL}/login`, credentials);
+      const response = await axios.post(`${process.env.REACT_APP_USERS_URL}/login`, credentials);
       setAuthenticationStatusCSSClass('200-status');
-      document.cookie = response.data.json();
+      document.cookie = `Bearer ${response.data.json()}`;
       auth.signin(credentials.username);
     } catch (error) {
       if (error.response) {
@@ -50,14 +47,6 @@ const Login = () => {
         else setAuthenticationStatusCSSClass('status-default-error');
       } else setAuthenticationStatusCSSClass('status-default-error');
     }
-  };
-
-  const closeCreateAccountForm = () => {
-    setIsModalOpen(false);
-  };
-
-  const submitCreateAccountForm = () => {
-    closeCreateAccountForm();
   };
 
   if (auth.user) {
@@ -108,22 +97,6 @@ const Login = () => {
                 <i className="button__icon fas fa-chevron-right" />
               </button>
             </form>
-            <div className="social-login">
-              Don&apos;t have an account with us?
-              <button type="button" onClick={() => setIsModalOpen(true)} className="button login__signup">
-                <span className="button__text">Sign up</span>
-                <i className="button__icon fas fa-chevron-right" />
-              </button>
-              {isModalOpen
-                ? (
-                  <Modal>
-                    <CreateAccount
-                      submitForm={submitCreateAccountForm}
-                      closeForm={closeCreateAccountForm}
-                    />
-                  </Modal>
-                ) : null}
-            </div>
           </div>
           <div className="screen__background">
             <span className="screen__background__shape screen__background__shape4" />

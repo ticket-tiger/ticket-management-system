@@ -2,13 +2,13 @@ import React, { useReducer, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Navigate } from 'react-router-dom';
 import axios from 'axios';
-import { useAuth } from '../../auth';
 // import axios from 'axios';
 import './CreateAccount.css';
 
 const CreateAccount = (props) => {
   const { submitForm, closeForm } = props;
 
+  const [accountCreationSuccessful, setAccountCreationSuccessful] = useState(false);
   const [accountCreationStatusCSSClass, setAccountCreationStatusCSSClass] = useState('');
 
   const initialCredentials = {
@@ -41,13 +41,11 @@ const CreateAccount = (props) => {
 
   const [credentials, dispatch] = useReducer(reducer, initialCredentials);
 
-  const auth = useAuth();
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(`${process.env.REACT_APP_API_URL}/create-account`, credentials);
-      auth.signin(credentials.username);
+      await axios.post(`${process.env.REACT_APP_USERS_URL}/create-account`, credentials);
+      setAccountCreationSuccessful(true);
       submitForm();
     } catch (error) {
       if (error.response.status >= 400 && error.response.status < 500) setAccountCreationStatusCSSClass('status-400');
@@ -56,11 +54,8 @@ const CreateAccount = (props) => {
     }
   };
 
-  if (auth.user) {
-    return <Navigate to="/employee" />;
-  }
-  if (auth.user === '') {
-    return <Navigate to="/user" />;
+  if (accountCreationSuccessful) {
+    return <Navigate to="/Login" />;
   }
 
   return (

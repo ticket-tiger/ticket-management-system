@@ -53,7 +53,7 @@ const TicketLog = () => {
 
   useEffect(async () => {
     try {
-      const response = await axios.get(`${process.env.REACT_APP_API_URL}/get-tickets`);
+      const response = await axios.get(`${process.env.REACT_APP_TICKETS_URL}/get-tickets`);
       setTickets(response.data);
       auth.signin(window.localStorage.getItem('user'));
     } catch (error) {

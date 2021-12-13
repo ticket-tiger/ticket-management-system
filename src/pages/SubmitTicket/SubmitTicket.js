@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useAuth } from '../../auth';
 import './SubmitTicket.css';
 
 const SubmitTicket = () => {
@@ -14,6 +15,8 @@ const SubmitTicket = () => {
     subjectText: '',
     descriptionText: '',
   });
+  const auth = useAuth();
+
   const handleChange = (e) => {
     const { value } = e.target;
     setState({
@@ -34,8 +37,7 @@ const SubmitTicket = () => {
     };
     console.log('Ticket sent');
     try {
-      // const response = await axios.post('http://localhost:3001/api/create-ticket', ticket);
-      const response = await axios.post(`${process.env.REACT_APP_API_URL}/create-ticket`, ticket);
+      const response = await axios.post(`${process.env.REACT_APP_TICKETS_URL}/create-ticket`, { email: auth.user.email, ticket });
       return response.status;
     } catch (error) {
       return error.response.status;

@@ -1,15 +1,40 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../auth';
+import Modal from '../reusableComponents/Modal';
+import Login from '../../pages/Login/Login';
+import CreateAccount from '../CreateAccount/CreateAccount';
 import './NavBar.css';
 
 const NavBar = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [hasAccount, setHasAccount] = useState(false);
+
   const auth = useAuth();
   const navigate = useNavigate();
   const handleLogout = () => {
     auth.signout();
     navigate('/login');
   };
+
+  const openLoginModal = () => {
+    setHasAccount(true);
+    setIsModalOpen(true);
+  };
+
+  const openCreateAccountModal = () => {
+    setHasAccount(false);
+    setIsModalOpen(true);
+  };
+
+  const closeUserForm = () => {
+    setIsModalOpen(false);
+  };
+
+  const submitUserForm = () => {
+    closeUserForm();
+  };
+
   return (
     <div>
       {auth.user ? (
@@ -26,14 +51,32 @@ const NavBar = () => {
       )
         : (
           <>
-            <Link to="/login">
-              <button type="button">
-                Login
-              </button>
-            </Link>
+            <button type="button" onClick={openLoginModal} className="button login__signup">
+              <span className="button__text">Login</span>
+              <i className="button__icon fas fa-chevron-right" />
+            </button>
+            <button type="button" onClick={openCreateAccountModal} className="button login__signup">
+              <span className="button__text">Sign Up</span>
+              <i className="button__icon fas fa-chevron-right" />
+            </button>
           </>
         )}
       <p>{auth.user}</p>
+      {isModalOpen
+        ? (
+          <Modal
+            submitForm={submitUserForm}
+            closeForm={closeUserForm}
+          >
+            <div>
+              <button type="button" onClick={() => setHasAccount(true)} disabled={hasAccount}>Login</button>
+              <button type="button" onClick={() => setHasAccount(false)} disabled={!hasAccount}>Sign Up</button>
+              {hasAccount
+                ? <Login />
+                : <CreateAccount />}
+            </div>
+          </Modal>
+        ) : null}
       <Outlet />
     </div>
   );
