@@ -13,7 +13,7 @@ const App = () => {
     const numTabs = Number(window.localStorage.getItem('tabCounter'));
     if (!window.sessionStorage.getItem('refreshed')) {
       if (numTabs < 1) {
-        window.localStorage.removeItem('user');
+        window.localStorage.removeItem('email');
       }
     }
     window.localStorage.setItem('tabCounter', numTabs + 1);

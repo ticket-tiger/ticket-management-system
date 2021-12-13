@@ -31,13 +31,9 @@ const NavBar = () => {
     setIsModalOpen(false);
   };
 
-  const submitUserForm = () => {
-    closeUserForm();
-  };
-
   return (
     <div>
-      {auth.user ? (
+      {auth.email ? (
         <>
           <Link to="/view-tickets">
             <button type="button">
@@ -61,19 +57,17 @@ const NavBar = () => {
             </button>
           </>
         )}
-      <p>{auth.user}</p>
+      <p>{auth.email}</p>
       {isModalOpen
         ? (
-          <Modal
-            submitForm={submitUserForm}
-            closeForm={closeUserForm}
-          >
+          <Modal closeForm={closeUserForm}>
             <div>
               <button type="button" onClick={() => setHasAccount(true)} disabled={hasAccount}>Login</button>
               <button type="button" onClick={() => setHasAccount(false)} disabled={!hasAccount}>Sign Up</button>
               {hasAccount
                 ? <Login />
                 : <CreateAccount />}
+              <button type="button" onClick={closeUserForm}>Close</button>
             </div>
           </Modal>
         ) : null}

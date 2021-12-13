@@ -1,33 +1,24 @@
 import React, { useReducer, useState } from 'react';
-import PropTypes from 'prop-types';
 import { Navigate } from 'react-router-dom';
 import axios from 'axios';
 // import axios from 'axios';
 import './CreateAccount.css';
 
-const CreateAccount = (props) => {
-  const { submitForm, closeForm } = props;
-
+const CreateAccount = () => {
   const [accountCreationSuccessful, setAccountCreationSuccessful] = useState(false);
   const [accountCreationStatusCSSClass, setAccountCreationStatusCSSClass] = useState('');
 
   const initialCredentials = {
-    name: '',
-    username: '',
+    email: '',
     password: '',
   };
 
   const reducer = (state, action) => {
     switch (action.type) {
-      case 'name':
+      case 'email':
         return {
           ...state,
-          name: action.payload,
-        };
-      case 'username':
-        return {
-          ...state,
-          username: action.payload,
+          email: action.payload,
         };
       case 'password':
         return {
@@ -46,7 +37,6 @@ const CreateAccount = (props) => {
     try {
       await axios.post(`${process.env.REACT_APP_USERS_URL}/create-account`, credentials);
       setAccountCreationSuccessful(true);
-      submitForm();
     } catch (error) {
       if (error.response.status >= 400 && error.response.status < 500) setAccountCreationStatusCSSClass('status-400');
       else if (error.response.status >= 500) setAccountCreationStatusCSSClass('status-500');
@@ -65,16 +55,10 @@ const CreateAccount = (props) => {
       {accountCreationStatusCSSClass === 'status-default-error' ? <p>There was an unexpected error.  Please try again in a little while.</p> : null}
       <h1>Create an account with us</h1>
       <form>
-        <label type="text" htmlFor="create-account-form-name">Name</label>
-        <input
-          id="create-account-form-name"
-          onChange={(e) => dispatch({ type: 'name', payload: e.target.value })}
-          className={accountCreationStatusCSSClass}
-        />
-        <label type="text" htmlFor="create-account-form-username">Username</label>
+        <label type="text" htmlFor="create-account-form-username">Email</label>
         <input
           id="create-account-form-username"
-          onChange={(e) => dispatch({ type: 'username', payload: e.target.value })}
+          onChange={(e) => dispatch({ type: 'email', payload: e.target.value })}
           className={accountCreationStatusCSSClass}
         />
         <label htmlFor="create-account-form-password">Password</label>
@@ -85,15 +69,9 @@ const CreateAccount = (props) => {
           className={accountCreationStatusCSSClass}
         />
         <button type="submit" onClick={(e) => handleSubmit(e)}>Submit</button>
-        <button type="button" onClick={closeForm}>Close</button>
       </form>
     </>
   );
-};
-
-CreateAccount.propTypes = {
-  submitForm: PropTypes.func.isRequired,
-  closeForm: PropTypes.func.isRequired,
 };
 
 export default CreateAccount;

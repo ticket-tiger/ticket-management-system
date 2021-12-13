@@ -2,22 +2,22 @@ import React, { useState, useContext, createContext } from 'react';
 import PropTypes from 'prop-types';
 import { Navigate } from 'react-router-dom';
 
-const AuthContext = createContext({ user: null, signin: null, signout: null });
+const AuthContext = createContext({ email: null, signin: null, signout: null });
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [email, setEmail] = useState(null);
 
   const signin = (newUser) => {
-    setUser(newUser);
-    window.localStorage.setItem('user', newUser);
+    setEmail(newUser);
+    window.localStorage.setItem('email', newUser);
   };
 
   const signout = () => {
-    setUser(null);
-    window.localStorage.removeItem('user');
+    setEmail(null);
+    window.localStorage.removeItem('email');
   };
 
-  const value = { user, signin, signout };
+  const value = { email, signin, signout };
 
   return (
     <AuthContext.Provider value={value}>
@@ -34,7 +34,7 @@ export const useAuth = () => useContext(AuthContext);
 
 export const RequireAuth = ({ children }) => {
   const auth = useAuth();
-  if (auth.user === null) {
+  if (auth.email === null) {
     return <Navigate to="/login" />;
   }
   return children;

@@ -53,9 +53,18 @@ const TicketLog = () => {
 
   useEffect(async () => {
     try {
-      const response = await axios.get(`${process.env.REACT_APP_TICKETS_URL}/get-tickets`);
+      const cookieValue = document.cookie
+        .split('; ')
+        .find((row) => row.startsWith('test2='))
+        .split('=')[1];
+
+      const config = {
+        authorization: cookieValue,
+      };
+
+      const response = await axios.get(`${process.env.REACT_APP_TICKETS_URL}/get-tickets`, config);
       setTickets(response.data);
-      auth.signin(window.localStorage.getItem('user'));
+      auth.signin(window.localStorage.getItem('email'));
     } catch (error) {
       auth.signout();
     }

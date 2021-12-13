@@ -8,16 +8,16 @@ const Login = () => {
   const [authenticationStatusCSSClass, setAuthenticationStatusCSSClass] = useState('');
 
   const initialCredentials = {
-    username: '',
+    email: '',
     password: '',
   };
 
   const reducer = (state, action) => {
     switch (action.type) {
-      case 'username':
+      case 'email':
         return {
           ...state,
-          username: action.payload,
+          email: action.payload,
         };
       case 'password':
         return {
@@ -39,7 +39,7 @@ const Login = () => {
       const response = await axios.post(`${process.env.REACT_APP_USERS_URL}/login`, credentials);
       setAuthenticationStatusCSSClass('200-status');
       document.cookie = `Bearer ${response.data.json()}`;
-      auth.signin(credentials.username);
+      auth.signin(credentials.email);
     } catch (error) {
       if (error.response) {
         if (error.response.status >= 400 && error.response.status < 500) setAuthenticationStatusCSSClass('status-400');
@@ -49,10 +49,10 @@ const Login = () => {
     }
   };
 
-  if (auth.user) {
+  if (auth.email) {
     return <Navigate to="/view-tickets" />;
   }
-  if (auth.user === '') {
+  if (auth.email === '') {
     return <Navigate to="/create-ticket" />;
   }
 
@@ -78,7 +78,7 @@ const Login = () => {
                   placeholder="Username"
                   id="login-form-username"
                   value={credentials.username}
-                  onChange={(e) => dispatch({ type: 'username', payload: e.target.value })}
+                  onChange={(e) => dispatch({ type: 'email', payload: e.target.value })}
                 />
               </div>
               <div className="login__field">
