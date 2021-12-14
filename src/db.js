@@ -3,7 +3,7 @@ import { MongoClient } from 'mongodb';
 import mongoose from 'mongoose';
 import validate from 'mongoose-validator';
 import config from './config.js';
-import localConfig from './localconfig.js';
+import localConfig from './localConfig.js';
 
 const { Schema, model } = mongoose;
 
@@ -24,6 +24,11 @@ const userSchema = new Schema({
     type: String, unique: true, default: null, set: toLower, validate: emailValidate, index: { unique: true },
   },
   password: { type: String },
+  role: {
+    type: String,
+    default: 'Basic',
+    enum: ['Basic', 'Employee', 'Admin'],
+  },
   tickets: [{
     title: { type: String, required: true, default: 'anonymous' },
     description: { type: String, required: true, default: 'anonymous' },

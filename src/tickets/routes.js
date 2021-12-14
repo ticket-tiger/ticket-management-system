@@ -1,7 +1,7 @@
 import express from 'express';
 // import { MongoClient } from 'mongodb';
 import jwt from 'jsonwebtoken';
-import localConfig from '../localconfig.js';
+import localConfig from '../localConfig.js';
 import {
   createTicket, getTicketCollection,
 } from '../db.js';
