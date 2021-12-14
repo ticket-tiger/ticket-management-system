@@ -26,8 +26,8 @@ const userSchema = new Schema({
   password: { type: String },
   role: {
     type: String,
-    default: 'Basic',
-    enum: ['Basic', 'Employee', 'Admin'],
+    default: 'User',
+    enum: ['User', 'Employee', 'Admin'],
   },
   tickets: [{
     title: { type: String, required: true, default: 'anonymous' },
