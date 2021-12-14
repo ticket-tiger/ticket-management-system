@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../auth';
 import Modal from '../reusableComponents/Modal';
-import Login from '../../pages/Login/Login';
+import Login from '../Login/Login';
 import CreateAccount from '../CreateAccount/CreateAccount';
 import './NavBar.css';
 
@@ -67,7 +67,6 @@ const NavBar = () => {
               {hasAccount
                 ? <Login />
                 : <CreateAccount />}
-              <button type="button" onClick={closeUserForm}>Close</button>
             </div>
           </Modal>
         ) : null}

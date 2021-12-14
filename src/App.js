@@ -5,7 +5,7 @@ import SubmitTicket from './pages/SubmitTicket/SubmitTicket';
 import ViewTickets from './pages/ViewTickets/ViewTickets';
 import NavBar from './components/NavBar/NavBar';
 import CreateAccount from './components/CreateAccount/CreateAccount';
-import Login from './pages/Login/Login';
+import Login from './components/Login/Login';
 import './App.css';
 
 const App = () => {
