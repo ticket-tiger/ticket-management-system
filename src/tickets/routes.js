@@ -1,5 +1,5 @@
 import express from 'express';
-import { MongoClient } from 'mongodb';
+// import { MongoClient } from 'mongodb';
 import jwt from 'jsonwebtoken';
 import localConfig from '../localconfig.js';
 import {
@@ -12,29 +12,25 @@ const verifyToken = async (req, res, next) => {
   const authheader = req.headers.authorization;
   const token = authheader && authheader.split(' ')[1];
 
-  if (token == null) res.sendStatus(401);
-
-  jwt.verify(token, localConfig.tokenSecret, (err, email) => {
-    console.log(err);
-
-    if (err) { res.sendStatus(403); }
-
-    req.userEmail = email;
-
-    next();
-  });
+  if (token === undefined) {
+    req.userEmail = req.body.email;
+  } else {
+    jwt.verify(token, localConfig.tokenSecret, (err, user) => {
+      if (err) { res.status(403); }
+      req.userEmail = user.email;
+    });
+  }
+  next();
 };
 
 router.post('/create-ticket', verifyToken, async (req, res) => {
-  const authheader = req.headers.authorization;
-  const token = authheader && authheader.split(' ')[1];
-  if (token == null) { console.log('Received POST request.'); }
+  console.log('Received POST request.');
   const ticket = {
-    title: req.body.title,
-    description: req.body.description,
-    category: req.body.category,
-    priority: req.body.priority,
-    urgency: req.body.urgency,
+    title: req.body.ticket.title,
+    description: req.body.ticket.description,
+    category: req.body.ticket.category,
+    priority: req.body.ticket.priority,
+    urgency: req.body.ticket.urgency,
     date: new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }),
   };
   const result = await createTicket(req.userEmail, ticket);
@@ -42,9 +38,9 @@ router.post('/create-ticket', verifyToken, async (req, res) => {
   res.end();
 });
 
-router.get('/get-ticket-collection', async (req, res) => {
+router.get('/get-tickets', verifyToken, async (req, res) => {
   console.log('Received GET request.');
-  const result = await getTicketCollection();
+  const result = await getTicketCollection(req.userEmail);
   res.send(result);
   res.end();
 });

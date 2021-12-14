@@ -15,11 +15,10 @@ export const hashPassword = async (password) => {
 export const verifyPassword = async (hashedPassword, password) => {
   try {
     if (await argon2.verify(hashedPassword, password)) {
-      // password match
-    } else {
-      // password did not match
+      return true;
     }
+    return false;
   } catch (err) {
-    // internal failure
+    return false;
   }
 };

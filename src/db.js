@@ -1,13 +1,15 @@
 /* eslint-disable max-len */
 import { MongoClient } from 'mongodb';
-import mongoose, { Schema, model } from 'mongoose';
+import mongoose from 'mongoose';
 import validate from 'mongoose-validator';
 import config from './config.js';
 import localConfig from './localconfig.js';
 
+const { Schema, model } = mongoose;
+
 const emailValidate = [
   validate({
-    validator: 'islength',
+    validator: 'isLength',
     arguments: [3, 50],
     message: 'Name should be between {ARGS[0]} and {ARGS[1]} characters',
     httpStatus: 400,
@@ -19,18 +21,18 @@ const toLower = (v) => v.toLowerCase();
 
 const userSchema = new Schema({
   email: {
-    type: { type: String }, unique: true, default: null, set: toLower, validate: emailValidate, index: { unique: true },
+    type: String, unique: true, default: null, set: toLower, validate: emailValidate, index: { unique: true },
   },
-  password: { type: { type: String } },
+  password: { type: String },
   tickets: [{
     title: { type: String, required: true, default: 'anonymous' },
     description: { type: String, required: true, default: 'anonymous' },
     category: { type: String, required: true, default: 'anonymous' },
     priority: {
-      type: Number, required: true, min: 0, max: 10,
+      type: String, required: true, default: 'Low',
     },
     urgency: {
-      type: Number, required: true, min: 0, max: 10, index: true,
+      type: String, required: true, default: 'Low',
     },
     date: { type: Date, default: Date.now },
   }],
@@ -76,7 +78,8 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 export const createTicket = async (userEmail, ticket) => {
   try {
     await mongoose.connect(uri);
-    User.updateOne({ email: userEmail }, { $push: { tickets: ticket } });
+    const result = User.updateOne({ email: userEmail }, { $push: { tickets: ticket } });
+    return result;
   } finally {
     await client.close();
   }
@@ -85,8 +88,8 @@ export const createTicket = async (userEmail, ticket) => {
 export const getTicketCollection = async (userEmail) => {
   try {
     await mongoose.connect(uri);
-    const result = await User.find({ email: userEmail }, 'tickets').exec();
-    return result;
+    const result = await User.findOne({ email: userEmail }, 'tickets').exec();
+    return result.tickets;
   } finally {
     await client.close();
   }
@@ -112,8 +115,8 @@ export const getPassword = async (userEmail) => {
   try {
     await mongoose.connect(uri);
 
-    const result = await User.find({ email: userEmail }, 'password').exec();
-    return result;
+    const result = await User.findOne({ email: userEmail }, 'password').exec();
+    return result.password;
   } finally {
     await client.close();
   }
