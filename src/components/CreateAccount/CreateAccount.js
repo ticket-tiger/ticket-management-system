@@ -55,19 +55,21 @@ const CreateAccount = () => {
       {accountCreationStatusCSSClass === 'status-default-error' ? <p>There was an unexpected error.  Please try again in a little while.</p> : null}
       <h1>Create an account with us</h1>
       <form>
-        <label type="text" htmlFor="create-account-form-username">Email</label>
-        <input
-          id="create-account-form-username"
-          onChange={(e) => dispatch({ type: 'email', payload: e.target.value })}
-          className={accountCreationStatusCSSClass}
-        />
-        <label htmlFor="create-account-form-password">Password</label>
-        <input
-          type="password"
-          id="create-account-form-password"
-          onChange={(e) => dispatch({ type: 'password', payload: e.target.value })}
-          className={accountCreationStatusCSSClass}
-        />
+        <div className="create-account-form-input-group">
+          <label className="create-account-form-label" type="text" htmlFor="create-account-form-username">Email</label>
+          <input
+            id="create-account-form-username"
+            onChange={(e) => dispatch({ type: 'email', payload: e.target.value })}
+            className={`create-account-form-input ${accountCreationStatusCSSClass}`}
+          />
+          <label className="create-account-form-label" type="text" htmlFor="create-account-form-password">Password</label>
+          <input
+            type="password"
+            id="create-account-form-password"
+            onChange={(e) => dispatch({ type: 'password', payload: e.target.value })}
+            className={`create-account-form-input ${accountCreationStatusCSSClass}`}
+          />
+        </div>
         <button type="submit" onClick={(e) => handleSubmit(e)}>Submit</button>
       </form>
     </>

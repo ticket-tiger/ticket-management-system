@@ -33,30 +33,32 @@ const NavBar = () => {
 
   return (
     <div>
-      {auth.email ? (
-        <>
-          <Link to="/view-tickets">
-            <button type="button">
-              View Your Tickets
-            </button>
-          </Link>
-          <button type="button" onClick={handleLogout}>
-            Logout
-          </button>
-        </>
-      )
-        : (
+      <nav className="navbar">
+        {auth.email ? (
           <>
-            <button type="button" onClick={openLoginModal} className="button login__signup">
-              <span className="button__text">Login</span>
-              <i className="button__icon fas fa-chevron-right" />
-            </button>
-            <button type="button" onClick={openCreateAccountModal} className="button login__signup">
-              <span className="button__text">Sign Up</span>
-              <i className="button__icon fas fa-chevron-right" />
+            <Link to="/view-tickets">
+              <button type="button">
+                View Your Tickets
+              </button>
+            </Link>
+            <button type="button" onClick={handleLogout}>
+              Logout
             </button>
           </>
-        )}
+        )
+          : (
+            <>
+              <button type="button" onClick={openLoginModal} className="button navbar-button login__signup">
+                <span className="button__text">Login</span>
+                <i className="button__icon fas fa-chevron-right" />
+              </button>
+              <button type="button" onClick={openCreateAccountModal} className="button navbar-button login__signup">
+                <span className="button__text">Sign Up</span>
+                <i className="button__icon fas fa-chevron-right" />
+              </button>
+            </>
+          )}
+      </nav>
       <p>{auth.email}</p>
       {isModalOpen
         ? (

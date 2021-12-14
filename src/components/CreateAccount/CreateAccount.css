@@ -1,101 +1,17 @@
-body {
-   display: flex;
-   justify-content: center;
-   margin-top: 200px;
- }
- 
- .modal-body {
-   display: flex;
-   padding: 0;
-   border-radius: 4rem;
-   font-family: 'PT Sans', sans-serif;
- }
- 
- .modal-content {
-   border-radius: 4rem;
-   width: 140%;
-   -webkit-box-shadow: -1px -2px 42px -19px rgba(0,0,0,0.74);
- -moz-box-shadow: -1px -2px 42px -19px rgba(0,0,0,0.74);
- box-shadow: -1px -2px 42px -19px rgba(0,0,0,0.74);
- }
- .modal-content h1, .modal-content h2, .modal-content h3 {
-     text-align: center;
- }
- .modal-content h1 {
-   font-size: 1.3em;
-   text-transform: uppercase;
- }
- 
- .modal-content h2 {
-     font-size: 1.1em;
- }
- .modal-content h3 {
-   font-size: .8em;
-   letter-spacing: 2px;
- }
- form {
-     font-size: .8em;
- }
- .column {
-   flex: 50%;
-   padding: 10px;
- }
- 
- .column#main {
-   flex: 75%;
-   padding: 50px;
-   margin-top: 30px;
-   margin-left: 15px;
- }
- 
- #secondary {
-   background-color: #F9BC35;
-   border-radius: 0 4rem 4rem 0;
-   text-align: center;
- }
- 
- #main .form-control {
-   border-radius: 0;
-   font-size: .9em;
- }
- 
- .btn {
-   text-transform: uppercase;
-   border-radius: .15rem;
-   width: 200px;
-   padding: .150rem .75rem;
-   margin: 30px auto;
-   font-family: 'PT Sans', sans-serif;
-   letter-spacing: 2px;
- }
- 
- .btn-primary {
-   border-color: rgba( 255, 255, 255, 0);
-   background: #f1da36; /* Old browsers */
- background: -moz-linear-gradient(left, #f1da36 0%, #fca86c 99%); /* FF3.6-15 */
- background: -webkit-linear-gradient(left, #f1da36 0%,#fca86c 99%); /* Chrome10-25,Safari5.1-6 */
- background: linear-gradient(to right, #f1da36 0%,#fca86c 99%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
- filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f1da36', endColorstr='#fca86c',GradientType=1 ); /* IE6-9 */
- }
- 
- .btn-primary:hover {
-   border-color: rgba( 255, 255, 255, 0);
- }
- 
- #main .btn-primary {
-   width: 100%;
- }
- #secondary .btn-primary {
-   background: #f8f9fa4f;
-   color: #000;
- }
- .modal-body label {
-   margin-bottom: 0;
- }
- 
- .sec-content {
-   margin-top: 85%;
- }
+.create-account-form-input-group {
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-row-gap: 20px;
+  padding: 50px;
+}
+
+.create-account-form-label {
+  font-size: 30px;
+}
+
+.create-account-form-input {
+  font-size: 28px;
+}
 
  .status-400 {
    border-color: red;
