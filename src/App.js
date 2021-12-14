@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Routes, Navigate } from 'react-router-dom';
-import { RequireAuth } from './auth';
+import { AuthProvider, RequireAuth } from './auth';
 import SubmitTicket from './pages/SubmitTicket/SubmitTicket';
 import ViewTickets from './pages/ViewTickets/ViewTickets';
 import NavBar from './components/NavBar/NavBar';
@@ -24,27 +24,29 @@ const App = () => {
     window.sessionStorage.setItem('refreshed', true);
   };
   return (
-    <Routes>
-      <Route element={<NavBar />}>
-        <Route path="/" element={<Navigate to="/create-ticket" />} />
-        <Route path="/create-account" element={<CreateAccount />} />
-        <Route path="/login" element={<Login />} />
-        <Route
-          path="/create-ticket"
-          element={(
-            <SubmitTicket />
-      )}
-        />
-        <Route
-          path="/view-tickets"
-          element={(
-            <RequireAuth>
-              <ViewTickets />
-            </RequireAuth>
-          )}
-        />
-      </Route>
-    </Routes>
+    <AuthProvider>
+      <Routes>
+        <Route element={<NavBar />}>
+          <Route path="/" element={<Navigate to="/create-ticket" />} />
+          <Route path="/create-account" element={<CreateAccount />} />
+          <Route path="/login" element={<Login />} />
+          <Route
+            path="/create-ticket"
+            element={(
+              <SubmitTicket />
+        )}
+          />
+          <Route
+            path="/view-tickets"
+            element={(
+              <RequireAuth>
+                <ViewTickets />
+              </RequireAuth>
+            )}
+          />
+        </Route>
+      </Routes>
+    </AuthProvider>
   );
 };
 

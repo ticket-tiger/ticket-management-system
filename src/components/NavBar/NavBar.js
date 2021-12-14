@@ -35,6 +35,11 @@ const NavBar = () => {
     <div>
       {auth.email ? (
         <>
+          <Link to="/create-ticket">
+            <button type="button">
+              Create A Ticket
+            </button>
+          </Link>
           <Link to="/view-tickets">
             <button type="button">
               View Your Tickets

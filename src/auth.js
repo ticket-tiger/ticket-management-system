@@ -5,7 +5,7 @@ import { Navigate } from 'react-router-dom';
 const AuthContext = createContext({ email: null, signin: null, signout: null });
 
 export const AuthProvider = ({ children }) => {
-  const [email, setEmail] = useState(null);
+  const [email, setEmail] = useState(() => window.localStorage.getItem('email'));
 
   const signin = (newUser) => {
     setEmail(newUser);

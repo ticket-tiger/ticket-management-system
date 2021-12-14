@@ -36,9 +36,9 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`${process.env.REACT_APP_USERS_URL}/login`, credentials);
+      const response = await axios.post('/users/login', credentials);
       setAuthenticationStatusCSSClass('200-status');
-      document.cookie = `Bearer ${response.data.json()}`;
+      document.cookie = `Bearer ${response.data}`;
       auth.signin(credentials.email);
     } catch (error) {
       if (error.response) {
@@ -50,9 +50,6 @@ const Login = () => {
   };
 
   if (auth.email) {
-    return <Navigate to="/view-tickets" />;
-  }
-  if (auth.email === '') {
     return <Navigate to="/create-ticket" />;
   }
 

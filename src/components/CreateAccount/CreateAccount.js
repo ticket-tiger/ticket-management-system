@@ -35,7 +35,7 @@ const CreateAccount = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(`${process.env.REACT_APP_USERS_URL}/create-account`, credentials);
+      await axios.post('/users/create-account', credentials);
       setAccountCreationSuccessful(true);
     } catch (error) {
       if (error.response.status >= 400 && error.response.status < 500) setAccountCreationStatusCSSClass('status-400');
@@ -45,7 +45,7 @@ const CreateAccount = () => {
   };
 
   if (accountCreationSuccessful) {
-    return <Navigate to="/Login" />;
+    return <Navigate to="/login" />;
   }
 
   return (

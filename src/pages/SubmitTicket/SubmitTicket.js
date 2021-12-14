@@ -4,10 +4,9 @@ import { useAuth } from '../../auth';
 import './SubmitTicket.css';
 
 const SubmitTicket = () => {
-//   const [ticketCategory, setTicketCategory] = useState('');
-//   const [ticketPriority, setTicketPriority] = useState('Low');
-//   const [ticketUrgency, setTicketUrgency] = useState('Low');
+  const auth = useAuth();
   const [responseStatus, setResponseStatus] = useState(null);
+  const [guestEmail, setGuestEmail] = useState(auth.email);
   const [state, setState] = useState({
     ticketCategory: '',
     ticketPriority: 'Low',
@@ -15,7 +14,6 @@ const SubmitTicket = () => {
     subjectText: '',
     descriptionText: '',
   });
-  const auth = useAuth();
 
   const handleChange = (e) => {
     const { value } = e.target;
@@ -26,8 +24,6 @@ const SubmitTicket = () => {
   };
 
   const sendPostRequest = async () => {
-    setState({ ticketPriority: 'Low' });
-    setState({ ticketUrgency: 'Low' });
     const ticket = {
       category: state.ticketCategory,
       title: state.subjectText,
@@ -38,16 +34,16 @@ const SubmitTicket = () => {
 
     const cookieValue = document.cookie
       .split('; ')
-      .find((row) => row.startsWith('test2='))
-      .split('=')[1];
+      .find((row) => row.startsWith('Bearer '));
 
     const config = {
-      authorization: cookieValue,
+      authorization: cookieValue || null,
     };
 
     console.log('Ticket sent');
     try {
-      const response = await axios.post(`${process.env.REACT_APP_TICKETS_URL}/create-ticket`, { email: auth.email, ticket }, config);
+      const response = await axios.post('/tickets/create-ticket', { email: guestEmail, ticket }, config);
+      console.log(response);
       return response.status;
     } catch (error) {
       return error.response.status;
@@ -96,6 +92,14 @@ const SubmitTicket = () => {
           </label>
           <textarea id="description-textarea" className="form-input form-textarea" name="descriptionText" value={state.descriptionText} onChange={handleChange} />
         </div>
+        {auth.email
+          ? null
+          : (
+            <div className="form-element">
+              <label className="form-label" htmlFor="submit-ticket-email">Email</label>
+              <input id="submit-ticket-email" onChange={(e) => setGuestEmail(e.target.value)} />
+            </div>
+          )}
         <div className="form-button-group">
           <button className="form-button" type="submit" onClick={() => clickHandler2()}>
             Cancel

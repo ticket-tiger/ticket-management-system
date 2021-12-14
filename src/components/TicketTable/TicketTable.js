@@ -10,10 +10,10 @@ const useSortableData = (items, config = null) => {
     const sortedItems = [...items];
     if (sortConfig != null) {
       sortedItems.sort((a, b) => {
-        if (a[sortConfig.field] < b[sortConfig.field]) {
+        if (a[sortConfig.field].toLowerCase() < b[sortConfig.field].toLowerCase()) {
           return sortConfig.direction === 'ascending' ? -1 : 1;
         }
-        if (a[sortConfig.field] > b[sortConfig.field]) {
+        if (a[sortConfig.field].toLowerCase() > b[sortConfig.field].toLowerCase()) {
           return sortConfig.direction === 'ascending' ? 1 : -1;
         }
         return 0;
@@ -34,17 +34,17 @@ const useSortableData = (items, config = null) => {
 };
 
 const sampleTickets = [{
-  title: '1', description: 'apple', priority: '10', urgency: '8', date: '12/10/21',
+  title: 'SDcasdc', description: 'apple', priority: '10', urgency: '8', date: '12/10/21',
 }, {
-  title: '23', description: 'banana', priority: '1', urgency: '5', date: '5/09/21',
+  title: 'ZSCsc', description: 'banana', priority: '1', urgency: '5', date: '5/09/21',
 },
 {
-  title: '1', description: 'apple', priority: '10', urgency: '1', date: '12/10/21',
+  title: 'anonymous', description: 'apple', priority: '10', urgency: '1', date: '12/10/21',
 }, {
-  title: '3', description: 'mandarin', priority: '2', urgency: '6', date: '01/10/19',
+  title: 'anonymous', description: 'mandarin', priority: '2', urgency: '6', date: '01/10/19',
 },
 {
-  title: 'bad port', description: 'apple', priority: '4', urgency: '9', date: '3/23/21',
+  title: 'Badport', description: 'apple', priority: '4', urgency: '9', date: '3/23/21',
 }];
 
 const TicketLog = () => {
@@ -55,14 +55,15 @@ const TicketLog = () => {
     try {
       const cookieValue = document.cookie
         .split('; ')
-        .find((row) => row.startsWith('test2='))
-        .split('=')[1];
+        .find((row) => row.startsWith('Bearer '));
 
       const config = {
-        authorization: cookieValue,
+        headers: {
+          authorization: cookieValue || null,
+        },
       };
 
-      const response = await axios.get(`${process.env.REACT_APP_TICKETS_URL}/get-tickets`, config);
+      const response = await axios.get('/tickets/get-tickets', config);
       setTickets(response.data);
       auth.signin(window.localStorage.getItem('email'));
     } catch (error) {
