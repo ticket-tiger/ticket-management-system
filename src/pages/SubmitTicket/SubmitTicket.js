@@ -62,25 +62,22 @@ const SubmitTicket = () => {
     setState({ ticketCategory: '' });
   };
 
-  const clickHandler2 = () => {
-
+  const clickHandler2 = (event) => {
+    event.preventDefault();
   };
 
   return (
     <>
-      <h1 className="submit-ticket-heading">Have an issue? Let us know.</h1>
+      {/* <h1 className="submit-ticket-heading">Have an issue? Let us know.</h1> */}
       {responseStatus ? <p data-testid="responseStatus">{responseStatus}</p> : null}
       <form className="form">
         <div className="form-element">
+          <input id="subject-input" className="form-input" type="text" name="subjectText" value={state.subjectText || ''} onChange={handleChange} />
           <label className="form-label" htmlFor="subject-input">
             <div className="label-text">Subject</div>
           </label>
-          <input id="subject-input" className="form-input" type="text" name="subjectText" value={state.subjectText || ''} onChange={handleChange} />
         </div>
         <div className="form-element">
-          <label className="form-label" htmlFor="category-dropdown">
-            <div className="label-text">Category</div>
-          </label>
           <select id="category-dropdown" className="form-input" name="ticketCategory" value={state.ticketCategory} onChange={handleChange}>
             <option value="" disabled hidden>Select Category</option>
             <option value="Vendor Issues">Vendor Issues</option>
@@ -89,24 +86,27 @@ const SubmitTicket = () => {
             <option value="Returns">Returns</option>
             <option value="Other">Other</option>
           </select>
+          <label className="form-label" htmlFor="category-dropdown">
+            <div className="label-text">Category</div>
+          </label>
         </div>
         <div className="form-element">
+          <textarea id="description-textarea" className="form-input form-textarea" name="descriptionText" value={state.descriptionText} onChange={handleChange} />
           <label className="form-label" htmlFor="description-textarea">
             <div className="label-text">Description</div>
           </label>
-          <textarea id="description-textarea" className="form-input form-textarea" name="descriptionText" value={state.descriptionText} onChange={handleChange} />
         </div>
         <div className="form-button-group">
-          <button className="form-button" type="submit" onClick={() => clickHandler2()}>
-            Cancel
+          <button className="form-button form-clear-button" type="button" onClick={(e) => clickHandler2(e)}>
+            Clear
           </button>
           <button
-            className="form-button"
+            className="form-button form-submit-button"
             type="submit"
             // className = 'submit-ticket__button'
             onClick={(e) => clickHandler(e)}
           >
-            Submit
+            Submit Your Issue
           </button>
         </div>
       </form>

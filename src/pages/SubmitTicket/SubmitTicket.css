@@ -1,5 +1,8 @@
 .form {
-  position: relative;
+  position: absolute;
+  top: 16%;
+  left: 50%;
+  transform: translate(-50%);
   justify-content: center;
   align-items: center;
   width: 30%;
@@ -7,8 +10,9 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
   margin: auto;
   padding: 60px;
-  border-radius: 12px;
-  background-color: white;
+  /* border-radius: 12px; */
+  border: 15px solid black;
+  background-color: transparent;
   font-size: 25px;
 }
 
@@ -19,29 +23,35 @@
 .form-label {
   display: block;
   text-align: left;
-  font-weight: 500;
+  font-size: 20px;
+  font-weight: 700;
   width: fit-content;
-  color: var(--purple);
+  color: black;
+  transition: .3s;
 }
 
 .form-input {
+  background-color: transparent;
   text-align: left;
   margin: 0;
   padding: 0;
   height: 40px;
   width: 100%;
-  border: none;
+  border: 2px solid transparent;
   border-bottom: 2px solid black;
-  font-size: 18px;
   box-sizing: border-box;
+  transition: .3s;
+  font-size: 18px;
 }
 
-.form-input:focus {
-  /* outline: none; */
+.form-input:focus, .form-input:hover {
   outline-color: var(--purple);
-  border-radius: 5px;
-  border: none;
-  /* border-bottom: 4px solid var(--purple); */
+  /* border-radius: 5px; */
+  border: 2px solid var(--purple);
+}
+
+.form-input:focus + label, .form-input:hover + label {
+  color: var(--purple);
 }
 
 #category-dropdown {
@@ -56,28 +66,36 @@
   text-align: center;
   display: flex;
   justify-content: space-around;
+  height: 155px;
 }
 
 .form-button {
   height: 50px;
   width: 150px;
-  border: none;
+  border: 2px solid black;
   border-radius: 5px;
-  background: var(--purple);
+  background: white;
   font-size: 18px;
-  color: white;
-  cursor: pointer;
+  font-weight: 700;
+  color: black;
+  transition: .3s;
 }
 
-.textarea
-{
+.form-button:hover {
+  /* height: 53px;
+  width: 153px; */
+  color: var(--purple);
+  border: 3px solid var(--purple);
+}
+
+.textarea {
    border:1px solid #999999;
    width:100%;
    margin:5px 0;
    padding:3px;
 }
-.submit-ticket
-{
+
+.submit-ticket {
   position: absolute;
   top: 50%; right: 50%;
   transform: translate(50%,-50%);
@@ -92,6 +110,7 @@
   background-color: white;
   border: black 2px solid;
 }
+
 .title {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   color: white;
@@ -105,13 +124,9 @@
   background: linear-gradient(to right, orange , yellow, green, cyan, blue, violet);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-
-
 }
 
-.submit-ticket__button
-{
-
+.submit-ticket__button {
   align-items: center;
   position: relative;
   font-size: 1rem;
@@ -130,9 +145,7 @@
   color: #40005d;
   background-color: white;
   opacity: 1;
-  
  }
-
 
 .submit-ticket__button:hover {
   color: #40005d;
@@ -158,8 +171,8 @@
    display: flex;
    justify-content: space-evenly;
    width: auto;
-    
  }
+
  .priority-level__text{
    padding-left: 2vh;
    color:cadetblue;
@@ -170,8 +183,6 @@
  .priority-select {
    padding-left: 2vh;
    color:cadetblue;
-
-
  }
 
  @media screen and (max-width: 768px) {

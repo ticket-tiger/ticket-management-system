@@ -14,8 +14,8 @@
   top: 50%;
   transform: translate(-50%, -50%);
   height: 80vh;
-  width: 35vw;
-  background: white;
+  width: 30vw;
+  background-color: transparent;
   z-index: 1;
 }
 
@@ -23,4 +23,18 @@
   position: absolute;
   top: 5%;
   right: 5%;
+  height: 35px;
+  width: 35px;
+  border: none;
+}
+
+.modal-close-image {
+  height: 30px;
+  width: 30px;
+  transition: .3s;
+}
+
+.modal-close-image:hover {
+  height: 33px;
+  width: 33px;
 }

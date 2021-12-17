@@ -2,6 +2,14 @@
   --purple: rgb(145, 34, 248);
 }
 
+/* body {
+  background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(145,34,248,1) 0%, rgba(255,255,255,1) 100%);
+} */
+
+button {
+  cursor: pointer;
+}
+
 .submit-ticket-container {
   height: 100vh;
 }

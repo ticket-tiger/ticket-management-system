@@ -33,26 +33,27 @@ const NavBar = () => {
 
   return (
     <div>
+      <h1 className="logo">TMS</h1>
       <nav className="navbar">
         {auth.email ? (
           <>
             <Link to="/view-tickets">
-              <button type="button">
+              <button type="button" className="navbar-button">
                 View Your Tickets
               </button>
             </Link>
-            <button type="button" onClick={handleLogout}>
+            <button type="button" onClick={handleLogout} className="navbar-button">
               Logout
             </button>
           </>
         )
           : (
             <>
-              <button type="button" onClick={openLoginModal} className="button navbar-button login__signup">
+              <button type="button" onClick={openLoginModal} className="navbar-button">
                 <span className="button__text">Login</span>
                 <i className="button__icon fas fa-chevron-right" />
               </button>
-              <button type="button" onClick={openCreateAccountModal} className="button navbar-button login__signup">
+              <button type="button" onClick={openCreateAccountModal} className="navbar-button">
                 <span className="button__text">Sign Up</span>
                 <i className="button__icon fas fa-chevron-right" />
               </button>
