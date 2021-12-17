@@ -6,3 +6,20 @@
 .navbar-button {
 
 }
+
+.user-modal-button-group {
+	position: absolute;
+	top: -8%;
+	height: 8%;
+	width: 100%;
+}
+
+.user-modal-button {
+	height: 100%;
+	width: 50%;
+}
+
+.user-modal-button:disabled {
+	background-color: grey;
+	color: white;
+}

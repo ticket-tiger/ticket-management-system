@@ -13,8 +13,14 @@
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  height: 90vh;
-  width: 40vw;
+  height: 80vh;
+  width: 35vw;
   background: white;
   z-index: 1;
+}
+
+.modal-close-button {
+  position: absolute;
+  top: 5%;
+  right: 5%;
 }

@@ -64,8 +64,10 @@ const NavBar = () => {
         ? (
           <Modal closeForm={closeUserForm}>
             <div>
-              <button type="button" onClick={() => setHasAccount(true)} disabled={hasAccount}>Login</button>
-              <button type="button" onClick={() => setHasAccount(false)} disabled={!hasAccount}>Sign Up</button>
+              <div className="user-modal-button-group">
+                <button className="user-modal-button" type="button" onClick={() => setHasAccount(true)} disabled={hasAccount}>Login</button>
+                <button className="user-modal-button" type="button" onClick={() => setHasAccount(false)} disabled={!hasAccount}>Sign Up</button>
+              </div>
               {hasAccount
                 ? <Login />
                 : <CreateAccount />}

@@ -5,10 +5,10 @@ import './Modal.css';
 const Modal = ({ closeForm, children }) => (
   <div className="modal-background">
     <div className="modal">
-      {children}
-      <button type="button" onClick={closeForm}>
+      <button className="modal-close-button" type="button" onClick={closeForm}>
         Close
       </button>
+      {children}
     </div>
   </div>
 );
