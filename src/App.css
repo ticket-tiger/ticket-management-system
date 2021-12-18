@@ -2,6 +2,10 @@
   --purple: rgb(145, 34, 248);
 }
 
+body {
+  font-family: Helvetica, Arial, sans-serif;
+}
+
 button {
   cursor: pointer;
 }

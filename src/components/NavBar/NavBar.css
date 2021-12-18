@@ -57,3 +57,25 @@
 	color: black;
 	cursor: auto;
 }
+
+@media screen and (min-width: 1800px) {
+	.logo {
+		font-size: 51px;
+	}
+
+	.navbar-button {
+		width: 150px;
+		font-size: 32px;
+	}
+}
+
+@media screen and (max-width: 1200px) {
+	.logo {
+		font-size: 20px;
+	}
+
+	.navbar-button {
+		width: 50px;
+		font-size: 12px;
+	}
+}

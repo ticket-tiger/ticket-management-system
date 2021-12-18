@@ -5,7 +5,7 @@
   transform: translate(-50%);
   justify-content: center;
   align-items: center;
-  width: 30%;
+  width: 30vw;
   min-width: 450px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
   margin: auto;
@@ -13,11 +13,11 @@
   /* border-radius: 12px; */
   border: 15px solid black;
   background-color: white;
-  font-size: 25px;
+  font-size: 32px;
 }
 
 .form-element {
-  margin-bottom: 50px;
+  margin-bottom: 5vh;
 }
 
 .form-label {
@@ -183,6 +183,36 @@
  .priority-select {
    padding-left: 2vh;
    color:cadetblue;
+ }
+
+@media screen and (min-width: 1800px) {
+  .form {
+    padding: 90px;
+    border: 22px solid black;
+  }
+
+  .form-label {
+    font-size: 51px;
+  }
+
+  .form-input {
+    height: 60px;
+    font-size: 32px;
+  }
+
+  .form-textarea {
+    height: 150px;
+  }
+}
+
+ @media screen and (max-width: 1200px) {
+   .form-label {
+     font-size: 20px;
+   }
+
+   .form-input {
+     font-size: 12px;
+   }
  }
 
  @media screen and (max-width: 768px) {
