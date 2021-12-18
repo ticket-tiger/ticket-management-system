@@ -33,7 +33,7 @@ const NavBar = () => {
 
   return (
     <div>
-      <h1 className="logo">TMS</h1>
+      <h1 className="logo">Ticket Management System</h1>
       <nav className="navbar">
         {auth.email ? (
           <>

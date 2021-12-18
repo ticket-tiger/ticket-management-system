@@ -12,7 +12,7 @@
   padding: 60px;
   /* border-radius: 12px; */
   border: 15px solid black;
-  background-color: transparent;
+  background-color: white;
   font-size: 25px;
 }
 
@@ -23,7 +23,7 @@
 .form-label {
   display: block;
   text-align: left;
-  font-size: 20px;
+  font-size: 32px;
   font-weight: 700;
   width: fit-content;
   color: black;
@@ -31,7 +31,7 @@
 }
 
 .form-input {
-  background-color: transparent;
+  background-color: white;
   text-align: left;
   margin: 0;
   padding: 0;
@@ -41,12 +41,12 @@
   border-bottom: 2px solid black;
   box-sizing: border-box;
   transition: .3s;
-  font-size: 18px;
+  font-size: 20px;
 }
 
 .form-input:focus, .form-input:hover {
   outline-color: var(--purple);
-  /* border-radius: 5px; */
+  border-radius: 5px;
   border: 2px solid var(--purple);
 }
 
@@ -75,7 +75,7 @@
   border: 2px solid black;
   border-radius: 5px;
   background: white;
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 700;
   color: black;
   transition: .3s;

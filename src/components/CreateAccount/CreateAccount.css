@@ -9,7 +9,7 @@
 
 .create-account-form-input-group {
   position: absolute;
-  top: 45%;
+  top: 40%;
   left: 50%;
   transform: translate(-50%, -50%);
   height: 25%;
@@ -24,14 +24,15 @@
 }
 
 .create-account-form-label {
-  font-size: 20px;
-  color: var(--purple);
+  font-size: 32px;
+  color: black;
   display: block;
   font-weight: bold;
+  transition: .3s;
 }
 
 .create-account-form-input {
-  font-size: 30px;
+  font-size: 20px;
   height: 50px;
   width: 100%;
   border: 2px solid transparent;
@@ -46,25 +47,30 @@
   border: 2px solid var(--purple);
 }
 
+.create-account-form-input:focus + label, .create-account-form-input:hover + label {
+  color: var(--purple);
+}
+
 .create-account-submit-button {
   position: absolute;
-  bottom: 25%;
+  top: 60%;
   left: 50%;
   transform: translate(-50%, 50%);
   height: 45px;
   width: 60%;
-  border-radius: 50px;
-  border: none;
+  border-radius: 5px;
+  border: 2px solid black;
   font-size: 20px;
-  background-color: var(--purple);
-  color: white;
-  box-shadow: 0px 2px 2px #5C5696;
+  font-weight: 700;
+  background-color: white;
+  color: black;
+  /* box-shadow: 0px 2px 2px #5C5696; */
   transition: .3s;
 }
 
 .create-account-submit-button:hover {
-  height: 47px;
-  width: 62%;
+  border: 3px solid var(--purple);
+  color: var(--purple);
 }
 
  .status-400 {

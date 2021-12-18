@@ -16,13 +16,14 @@
   height: 80vh;
   width: 30vw;
   background-color: white;
+  border: 15px solid black;
   z-index: 1;
 }
 
 .modal-close-button {
   position: absolute;
-  top: 5%;
-  right: 5%;
+  top: 30px;
+  right: 30px;
   height: 35px;
   width: 35px;
   border: none;

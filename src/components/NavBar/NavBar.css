@@ -2,6 +2,8 @@
 	position: absolute;
 	top: 10vh;
 	left: 7vw;
+	width: 1px;
+	font-size: 32px;
 }
 
 .navbar {
@@ -35,11 +37,13 @@
 
 .user-modal-button {
 	height: 100%;
-	width: 10%;
-	background-color: var(--purple);
+	width: 5vw;
+	background-color: black;
 	color: white;
 	transition: .3s;
 	border: none;
+	font-size: 20px;
+	white-space: nowrap;
 }
 
 .user-modal-button:hover {
