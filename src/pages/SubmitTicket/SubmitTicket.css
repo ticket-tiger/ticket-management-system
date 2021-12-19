@@ -6,11 +6,10 @@
   justify-content: center;
   align-items: center;
   width: 25vw;
-  min-width: 450px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
   margin: auto;
   padding: 40px;
-  /* border-radius: 12px; */
+  border-radius: 5px;
   border: 15px solid black;
   background-color: white;
   font-size: 32px;
@@ -237,7 +236,7 @@
  }
 
  @media screen and (max-width: 768px) {
-   .form {
+   /* .form {
      min-width: 350px;
-   }
+   } */
  }

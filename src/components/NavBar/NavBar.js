@@ -50,12 +50,10 @@ const NavBar = () => {
           : (
             <>
               <button type="button" onClick={openLoginModal} className="navbar-button">
-                <span className="button__text">Login</span>
-                <i className="button__icon fas fa-chevron-right" />
+                Login
               </button>
               <button type="button" onClick={openCreateAccountModal} className="navbar-button">
-                <span className="button__text">Sign Up</span>
-                <i className="button__icon fas fa-chevron-right" />
+                Sign Up
               </button>
             </>
           )}

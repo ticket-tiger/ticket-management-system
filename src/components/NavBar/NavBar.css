@@ -30,14 +30,14 @@
 
 .user-modal-button-group {
 	position: absolute;
-	top: -4%;
-	height: 4%;
+	top: -5%;
+	height: 5%;
 	width: 100%;
 }
 
 .user-modal-button {
 	height: 100%;
-	width: 5vw;
+	width: 6vw;
 	background-color: black;
 	color: white;
 	transition: .3s;
