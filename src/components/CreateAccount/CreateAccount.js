@@ -53,22 +53,28 @@ const CreateAccount = () => {
       {accountCreationStatusCSSClass === 'status-400' ? <p>Your credentials were incorrect.  Please try again.</p> : null}
       {accountCreationStatusCSSClass === 'status-500' ? <p>There was a problem with the server.  Sorry for the inconvenience</p> : null}
       {accountCreationStatusCSSClass === 'status-default-error' ? <p>There was an unexpected error.  Please try again in a little while.</p> : null}
-      <h1>Create an account with us</h1>
+      {/* <h2 className="create-account-heading">Create an account with us</h2> */}
       <form>
-        <label type="text" htmlFor="create-account-form-username">Email</label>
-        <input
-          id="create-account-form-username"
-          onChange={(e) => dispatch({ type: 'email', payload: e.target.value })}
-          className={accountCreationStatusCSSClass}
-        />
-        <label htmlFor="create-account-form-password">Password</label>
-        <input
-          type="password"
-          id="create-account-form-password"
-          onChange={(e) => dispatch({ type: 'password', payload: e.target.value })}
-          className={accountCreationStatusCSSClass}
-        />
-        <button type="submit" onClick={(e) => handleSubmit(e)}>Submit</button>
+        <div className="create-account-form-input-group">
+          <div>
+            <input
+              id="create-account-form-username"
+              onChange={(e) => dispatch({ type: 'email', payload: e.target.value })}
+              className={`create-account-form-input ${accountCreationStatusCSSClass}`}
+            />
+            <label className="create-account-form-label" type="text" htmlFor="create-account-form-username">Email</label>
+          </div>
+          <div>
+            <input
+              type="password"
+              id="create-account-form-password"
+              onChange={(e) => dispatch({ type: 'password', payload: e.target.value })}
+              className={`create-account-form-input ${accountCreationStatusCSSClass}`}
+            />
+            <label className="create-account-form-label" type="text" htmlFor="create-account-form-password">Password</label>
+          </div>
+        </div>
+        <button className="create-account-submit-button" type="submit" onClick={(e) => handleSubmit(e)}>Create Your Account</button>
       </form>
     </>
   );

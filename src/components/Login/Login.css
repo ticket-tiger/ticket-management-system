@@ -1,4 +1,4 @@
-.create-account-heading {
+.login-heading {
   position: absolute;
   top: 20%;
   left: 50%;
@@ -7,7 +7,7 @@
   font-weight: normal;
 }
 
-.create-account-form-input-group {
+.login-form-input-group {
   position: absolute;
   top: 40%;
   left: 50%;
@@ -19,7 +19,7 @@
   justify-content: space-between;
 }
 
-.create-account-form-label {
+.login-form-label {
   font-size: 32px;
   color: black;
   display: block;
@@ -27,7 +27,7 @@
   transition: .3s;
 }
 
-.create-account-form-input {
+.login-form-input {
   font-size: 20px;
   height: 50px;
   width: 100%;
@@ -37,17 +37,17 @@
   transition: .3s;
 }
 
-.create-account-form-input:focus, .create-account-form-input:hover {
+.login-form-input:focus, .login-form-input:hover {
   outline-color: var(--purple);
   border-radius: 5px;
   border: 2px solid var(--purple);
 }
 
-.create-account-form-input:focus + label, .create-account-form-input:hover + label {
+.login-form-input:focus + label, .login-form-input:hover + label {
   color: var(--purple);
 }
 
-.create-account-submit-button {
+.login-submit-button {
   position: absolute;
   top: 60%;
   left: 50%;
@@ -64,7 +64,7 @@
   transition: .3s;
 }
 
-.create-account-submit-button:hover {
+.login-submit-button:hover {
   border: 3px solid var(--purple);
   color: var(--purple);
 }
@@ -74,11 +74,11 @@
  }
 
  @media screen and (min-width: 1800px) {
-   .create-account-form-label {
+   .login-form-label {
      font-size: 51px;
    }
 
-   .create-account-form-input {
+   .login-form-input {
     font-size: 32px;
     height: 75px;
     width: 100%;
@@ -86,17 +86,17 @@
     border-bottom: 3px solid black;
   }
 
-  .create-account-form-input:focus, .create-account-form-input:hover {
+  .login-form-input:focus, .login-form-input:hover {
     border: 3px solid var(--purple);
   }
 
-  .create-account-submit-button {
+  .login-submit-button {
     height: 67px;
     border: 3px solid black;
     font-size: 32px;
   }
 
-  .create-account-submit-button:hover {
+  .login-submit-button:hover {
     border: 5px solid var(--purple);
   }
  }

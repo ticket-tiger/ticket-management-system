@@ -63,47 +63,35 @@ const Login = () => {
       {authenticationStatusCSSClass === 'status-400' ? <p>Your credentials were incorrect.  Please try again.</p> : null}
       {authenticationStatusCSSClass === 'status-500' ? <p>There was a problem with the server.  Sorry for the inconvenience</p> : null}
       {authenticationStatusCSSClass === 'status-default-error' ? <p>There was an unexpected error.  Please try again in a little while.</p> : null}
-      <div className="container">
-        <div className="screen">
-          <div className="screen__content">
-            <form className="login">
-              <div className="login__field">
-                <i className="login__icon fas fa-user" />
-                <input
-                  type="text"
-                  className={`login__input ${authenticationStatusCSSClass}`}
-                  placeholder="Username"
-                  id="login-form-username"
-                  value={credentials.username}
-                  onChange={(e) => dispatch({ type: 'email', payload: e.target.value })}
-                />
-              </div>
-              <div className="login__field">
-                <i className="login__icon fas fa-lock" />
-                <input
-                  type="password"
-                  className={`login__input ${authenticationStatusCSSClass}`}
-                  placeholder="Password"
-                  id="login-form-password"
-                  value={credentials.passsword}
-                  onChange={(e) => dispatch({ type: 'password', payload: e.target.value })}
-                />
-              </div>
-              <button type="button" className="button login__submit" onClick={(e) => handleSubmit(e)}>
-                <span className="button__text">Log In Now</span>
-                <i className="button__icon fas fa-chevron-right" />
-              </button>
-            </form>
+      <form>
+        <div className="login-form-input-group">
+          <div>
+            <input
+              type="text"
+              className={`login-form-input ${authenticationStatusCSSClass}`}
+              placeholder="Email"
+              id="login-form-email"
+              value={credentials.username}
+              onChange={(e) => dispatch({ type: 'email', payload: e.target.value })}
+            />
+            <label className="login-form-label" htmlFor="login-form-email">Email</label>
           </div>
-          <div className="screen__background">
-            <span className="screen__background__shape screen__background__shape4" />
-            <span className="screen__background__shape screen__background__shape3" />
-            <span className="screen__background__shape screen__background__shape2" />
-            <span className="screen__background__shape screen__background__shape1" />
+          <div>
+            <input
+              type="password"
+              className={`login-form-input ${authenticationStatusCSSClass}`}
+              placeholder="Password"
+              id="login-form-password"
+              value={credentials.passsword}
+              onChange={(e) => dispatch({ type: 'password', payload: e.target.value })}
+            />
+            <label className="login-form-label" htmlFor="login-form-password">Password</label>
           </div>
         </div>
-      </div>
-
+        <button type="submit" className="login-submit-button" onClick={(e) => handleSubmit(e)}>
+          Log In
+        </button>
+      </form>
     </>
   );
 };

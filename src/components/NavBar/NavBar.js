@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../auth';
 import Modal from '../reusableComponents/Modal';
-import Login from '../../pages/Login/Login';
+import Login from '../Login/Login';
 import CreateAccount from '../CreateAccount/CreateAccount';
 import './NavBar.css';
 
@@ -33,46 +33,48 @@ const NavBar = () => {
 
   return (
     <div>
-      {auth.email ? (
-        <>
-          <Link to="/create-ticket">
-            <button type="button">
-              Create A Ticket
-            </button>
-          </Link>
-          <Link to="/view-tickets">
-            <button type="button">
-              View Your Tickets
-            </button>
-          </Link>
-          <button type="button" onClick={handleLogout}>
-            Logout
-          </button>
-        </>
-      )
-        : (
+      <h1 className="logo">Ticket Management System</h1>
+      <nav className="navbar">
+        {auth.email ? (
           <>
-            <button type="button" onClick={openLoginModal} className="button login__signup">
-              <span className="button__text">Login</span>
-              <i className="button__icon fas fa-chevron-right" />
-            </button>
-            <button type="button" onClick={openCreateAccountModal} className="button login__signup">
-              <span className="button__text">Sign Up</span>
-              <i className="button__icon fas fa-chevron-right" />
+            <Link to="/create-ticket">
+              <button type="button">
+                Create A Ticket
+              </button>
+            </Link>
+            <Link to="/view-tickets">
+              <button type="button" className="navbar-button">
+                View Your Tickets
+              </button>
+            </Link>
+            <button type="button" onClick={handleLogout} className="navbar-button">
+              Logout
             </button>
           </>
-        )}
+        )
+          : (
+            <>
+              <button type="button" onClick={openLoginModal} className="navbar-button">
+                Login
+              </button>
+              <button type="button" onClick={openCreateAccountModal} className="navbar-button">
+                Sign Up
+              </button>
+            </>
+          )}
+      </nav>
       <p>{auth.email}</p>
       {isModalOpen
         ? (
           <Modal closeForm={closeUserForm}>
             <div>
-              <button type="button" onClick={() => setHasAccount(true)} disabled={hasAccount}>Login</button>
-              <button type="button" onClick={() => setHasAccount(false)} disabled={!hasAccount}>Sign Up</button>
+              <div className="user-modal-button-group">
+                <button className="user-modal-button" type="button" onClick={() => setHasAccount(true)} disabled={hasAccount}>Login</button>
+                <button className="user-modal-button" type="button" onClick={() => setHasAccount(false)} disabled={!hasAccount}>Sign Up</button>
+              </div>
               {hasAccount
                 ? <Login />
                 : <CreateAccount />}
-              <button type="button" onClick={closeUserForm}>Close</button>
             </div>
           </Modal>
         ) : null}
