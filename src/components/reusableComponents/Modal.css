@@ -26,6 +26,7 @@
   right: 30px;
   height: 35px;
   width: 35px;
+  background-color: white;
   border: none;
 }
 
@@ -38,4 +39,27 @@
 .modal-close-image:hover {
   height: 33px;
   width: 33px;
+}
+
+@media screen and (min-width: 1800px) {
+  .modal {
+    border: 22px solid black;
+  }
+
+  .modal-close-button {
+    top: 45px;
+    right: 45px;
+    height: 52px;
+    width: 52px;
+  }
+
+  .modal-close-image {
+    height: 45px;
+    width: 45px;
+  }
+
+  .modal-close-image:hover {
+    height: 50px;
+    width: 50px;
+  }
 }

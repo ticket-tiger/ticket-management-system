@@ -67,9 +67,13 @@
 		width: 150px;
 		font-size: 32px;
 	}
+
+	.user-modal-button {
+		font-size: 32px;
+	}
 }
 
-@media screen and (max-width: 1200px) {
+/* @media screen and (max-width: 1200px) {
 	.logo {
 		font-size: 20px;
 	}
@@ -78,4 +82,4 @@
 		width: 50px;
 		font-size: 12px;
 	}
-}
+} */
