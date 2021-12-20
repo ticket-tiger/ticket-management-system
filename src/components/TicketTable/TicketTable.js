@@ -73,12 +73,13 @@ const TicketLog = () => {
   const { sortItems, requestSort } = useSortableData(tickets);
 
   return (
-    <div className="ticket-log-container">
-      <table className="styled-table">
+    <div className="ticket-table-container">
+      <table className="ticket-table">
         <thead>
           <tr>
-            <th className="ticket-log-table-header">
+            <th className="ticket-table-header">
               <button
+                className="ticket-table-header-button"
                 type="button"
                 onClick={() => requestSort('title')}
               >
@@ -86,8 +87,9 @@ const TicketLog = () => {
               </button>
             </th>
 
-            <th className="ticket-log-table-header">
+            <th className="ticket-table-header">
               <button
+                className="ticket-table-header-button"
                 type="button"
                 onClick={() => requestSort('description')}
               >
@@ -95,8 +97,9 @@ const TicketLog = () => {
               </button>
             </th>
 
-            <th className="ticket-log-table-header">
+            <th className="ticket-table-header">
               <button
+                className="ticket-table-header-button"
                 type="button"
                 onClick={() => requestSort('priority')}
               >
@@ -104,8 +107,9 @@ const TicketLog = () => {
               </button>
             </th>
 
-            <th className="ticket-log-table-header">
+            <th className="ticket-table-header">
               <button
+                className="ticket-table-header-button"
                 type="button"
                 onClick={() => requestSort('urgency')}
               >
@@ -113,8 +117,9 @@ const TicketLog = () => {
               </button>
             </th>
 
-            <th className="ticket-log-table-header">
+            <th className="ticket-table-header">
               <button
+                className="ticket-table-header-button"
                 type="button"
                 onClick={() => requestSort('date')}
               >

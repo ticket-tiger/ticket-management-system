@@ -1,47 +1,85 @@
- .styled-table {
+ .ticket-table-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+ }
+ 
+ .ticket-table {
    border-collapse: collapse;
    border-radius: 5px;
    width: fit-content;
    margin-left: auto;
    margin-right: auto;
    padding: 0;
-   font-size: 0.9em;
+   font-size: 20px;
    font-family: sans-serif;
    min-width: 400px;
    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
-.styled-table thead tr {
-   background-color: rgb(145, 34, 248);
+
+.ticket-table thead tr {
+   background-color: black;
    color: #ffffff;
    text-align: left;
 }
-.ticket-log-table-header2{
-   background-color: rgb(145, 34, 248);
-   color: #ffffff;
-   text-align: center;
-}
-.styled-table th,
-.styled-table td {
+
+/* .ticket-table th, */
+.ticket-table td {
     padding: 12px 15px;
-    border:1px solid #ffffff;
+    border: 1px solid #ffffff;
 }
-.styled-table tbody tr {
+
+.ticket-table tbody tr {
    border-bottom: 1px solid #dddddd;
 }
 
-.styled-table tbody tr:nth-of-type(even) {
+.ticket-table tbody tr:nth-of-type(even) {
    background-color: #f3f3f3;
 }
-.styled-table tbody tr:nth-of-type(odd)>td {
+
+.ticket-table tbody tr:nth-of-type(odd)>td {
    border-color: #f3f3f3;
 }
-.styled-table tbody tr:last-of-type {
-   border-bottom: 2px solid #ba05f1;
+
+.ticket-table tbody tr:last-of-type {
+   border-bottom: 2px solid black;
 }
-.styled-table tbody tr.active-row {
+
+.ticket-table tbody tr.active-row {
    font-weight: bold;
    color: #009879;
 }
+
+.ticket-table tbody {
+   font-size: 20px;
+}
+
+.ticket-table-header {
+   transition: .3s;
+}
+
+.ticket-table-header:hover {
+   background-color: white;
+}
+
+.ticket-table-header-button {
+   height: 100%;
+   width: 100%;
+   background: black;
+   color: white;
+   font-size: 20px;
+   font-weight: 700;
+   border: 2px solid transparent;
+   transition: .3s;
+}
+
+.ticket-table-header-button:hover {
+   background: white;
+   color: var(--purple);
+   border: 2px solid black;
+}
+
 .view-ticket {
    text-align: center;
    display: auto;

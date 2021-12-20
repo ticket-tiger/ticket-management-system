@@ -96,8 +96,8 @@ const SubmitTicket = () => {
           ? null
           : (
             <div className="form-element">
+              <input id="submit-ticket-email" className="form-input" onChange={(e) => setGuestEmail(e.target.value)} />
               <label className="form-label" htmlFor="submit-ticket-email">Email</label>
-              <input id="submit-ticket-email" onChange={(e) => setGuestEmail(e.target.value)} />
             </div>
           )}
         <div className="form-button-group">

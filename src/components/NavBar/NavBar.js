@@ -4,11 +4,13 @@ import { useAuth } from '../../auth';
 import Modal from '../reusableComponents/Modal';
 import Login from '../Login/Login';
 import CreateAccount from '../CreateAccount/CreateAccount';
+import CreateEmployee from '../CreateEmployee/CreateEmployee';
 import './NavBar.css';
 
 const NavBar = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [hasAccount, setHasAccount] = useState(false);
+  const [isEmployeeModalOpen, setIsEmployeeModalOpen] = useState(false);
 
   const auth = useAuth();
   const navigate = useNavigate();
@@ -31,6 +33,14 @@ const NavBar = () => {
     setIsModalOpen(false);
   };
 
+  const openCreateEmployeeModal = () => {
+    setIsEmployeeModalOpen(true);
+  };
+
+  const closeEmployeeForm = () => {
+    setIsEmployeeModalOpen(false);
+  };
+
   return (
     <div>
       <h1 className="logo">Ticket Management System</h1>
@@ -38,7 +48,7 @@ const NavBar = () => {
         {auth.email ? (
           <>
             <Link to="/create-ticket">
-              <button type="button">
+              <button type="button" className="navbar-button">
                 Create A Ticket
               </button>
             </Link>
@@ -60,13 +70,16 @@ const NavBar = () => {
               <button type="button" onClick={openCreateAccountModal} className="navbar-button">
                 Sign Up
               </button>
+              <button type="button" onClick={openCreateEmployeeModal} className="navbar-button">
+                Create Employee
+              </button>
             </>
           )}
       </nav>
       <p>{auth.email}</p>
       {isModalOpen
         ? (
-          <Modal closeForm={closeUserForm}>
+          <Modal close={closeUserForm}>
             <div>
               <div className="user-modal-button-group">
                 <button className="user-modal-button" type="button" onClick={() => setHasAccount(true)} disabled={hasAccount}>Login</button>
@@ -76,6 +89,12 @@ const NavBar = () => {
                 ? <Login />
                 : <CreateAccount />}
             </div>
+          </Modal>
+        ) : null}
+      {isEmployeeModalOpen
+        ? (
+          <Modal close={closeEmployeeForm}>
+            <CreateEmployee closeModal={closeEmployeeForm} />
           </Modal>
         ) : null}
       <Outlet />
