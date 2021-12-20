@@ -6,7 +6,7 @@ import './CreateEmployee.css';
 const CreateEmployee = ({ closeModal }) => {
   // const [accountCreationSuccessful, setAccountCreationSuccessful] = useState(false);
   const [accountCreationStatusCSSClass, setAccountCreationStatusCSSClass] = useState('');
-  const [employeeUsername, setEmployeeUsername] = useState('');
+  const [employeeEmail, setEmployeeEmail] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -21,7 +21,7 @@ const CreateEmployee = ({ closeModal }) => {
         },
       };
 
-      await axios.post('/users/create-employee', employeeUsername, config);
+      await axios.post('/users/create-employee', employeeEmail, config);
       closeModal();
       // setAccountCreationSuccessful(true);
     } catch (error) {
@@ -41,7 +41,7 @@ const CreateEmployee = ({ closeModal }) => {
         <div>
           <input
             id="create-employee-form-username"
-            onChange={(e) => setEmployeeUsername(e.target.value)}
+            onChange={(e) => setEmployeeEmail(e.target.value)}
             className={`create-employee-form-input ${accountCreationStatusCSSClass}`}
           />
           <label className="create-employee-form-label" type="text" htmlFor="create-employee-form-username">Employee Email</label>
