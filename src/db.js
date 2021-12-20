@@ -111,6 +111,11 @@ export const createUser = async (userEmail, userPassword) => {
   }
 };
 
+export const createEmployee = async (managerEmail, employeeEmail) => {
+  // Create an expiration data here?  We could also create it in routes.js
+  // Create an employee in the database somehow
+};
+
 export const getPassword = async (userEmail) => {
   try {
     await mongoose.connect(uri);
