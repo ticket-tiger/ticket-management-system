@@ -123,8 +123,9 @@ export const createEmployee = async (managerEmail, employeeEmail) => {
   const expirationDate = Date.now() + 6.048e+8;
   try {
     await mongoose.connect(uri);
-    const userRole = await User.findOne({ email: managerEmail }, 'role').exec();
-    if (userRole === 'Manager') {
+    const userObject = await User.findOne({ email: managerEmail }, 'role').exec();
+    console.log(userObject);
+    if (userObject.role === 'Manager' || userObject.role === 'Basic') {
       const newEmployee = new User({
         email: employeeEmail,
         password: randomBytes(10).toString('utf8'),
@@ -134,10 +135,12 @@ export const createEmployee = async (managerEmail, employeeEmail) => {
         tickets: [],
       });
       newEmployee.save((err, user) => {
-        if (err) console.error(err);
+        if (err) console.log(err);
         console.log(`${user.email} saved to user collection.`);
       });
     }
+  } catch (error) {
+    console.log(error);
   } finally {
     await client.close();
   }
