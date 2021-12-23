@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, Outlet, useNavigate } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
 import { useAuth } from '../../auth';
 import Modal from '../reusableComponents/Modal';
 import Login from '../Login/Login';
@@ -13,10 +13,8 @@ const NavBar = () => {
   const [isEmployeeModalOpen, setIsEmployeeModalOpen] = useState(false);
 
   const auth = useAuth();
-  const navigate = useNavigate();
   const handleLogout = () => {
     auth.signout();
-    navigate('/login');
   };
 
   const openLoginModal = () => {
@@ -57,6 +55,9 @@ const NavBar = () => {
                 View Your Tickets
               </button>
             </Link>
+            <button type="button" onClick={openCreateEmployeeModal} className="navbar-button">
+              Create Employee
+            </button>
             <button type="button" onClick={handleLogout} className="navbar-button">
               Logout
             </button>
@@ -69,9 +70,6 @@ const NavBar = () => {
               </button>
               <button type="button" onClick={openCreateAccountModal} className="navbar-button">
                 Sign Up
-              </button>
-              <button type="button" onClick={openCreateEmployeeModal} className="navbar-button">
-                Create Employee
               </button>
             </>
           )}
@@ -86,8 +84,8 @@ const NavBar = () => {
                 <button className="user-modal-button" type="button" onClick={() => setHasAccount(false)} disabled={!hasAccount}>Sign Up</button>
               </div>
               {hasAccount
-                ? <Login />
-                : <CreateAccount />}
+                ? <Login closeModal={closeUserForm} />
+                : <CreateAccount closeModal={closeUserForm} />}
             </div>
           </Modal>
         ) : null}

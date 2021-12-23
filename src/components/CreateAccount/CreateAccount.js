@@ -1,11 +1,10 @@
 import React, { useReducer, useState } from 'react';
-import { Navigate } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import axios from 'axios';
 // import axios from 'axios';
 import './CreateAccount.css';
 
-const CreateAccount = () => {
-  const [accountCreationSuccessful, setAccountCreationSuccessful] = useState(false);
+const CreateAccount = ({ closeModal }) => {
   const [accountCreationStatusCSSClass, setAccountCreationStatusCSSClass] = useState('');
 
   const initialCredentials = {
@@ -36,17 +35,13 @@ const CreateAccount = () => {
     e.preventDefault();
     try {
       await axios.post('/users/create-account', credentials);
-      setAccountCreationSuccessful(true);
+      closeModal();
     } catch (error) {
       if (error.response.status >= 400 && error.response.status < 500) setAccountCreationStatusCSSClass('status-400');
       else if (error.response.status >= 500) setAccountCreationStatusCSSClass('status-500');
       else setAccountCreationStatusCSSClass('status-default-error');
     }
   };
-
-  if (accountCreationSuccessful) {
-    return <Navigate to="/login" />;
-  }
 
   return (
     <>
@@ -78,6 +73,10 @@ const CreateAccount = () => {
       </form>
     </>
   );
+};
+
+CreateAccount.propTypes = {
+  closeModal: PropTypes.func.isRequired,
 };
 
 export default CreateAccount;

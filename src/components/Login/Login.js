@@ -1,10 +1,11 @@
 import React, { useReducer, useState } from 'react';
+import PropTypes from 'prop-types';
 import { Navigate } from 'react-router-dom';
 import axios from 'axios';
 import './Login.css';
 import { useAuth } from '../../auth';
 
-const Login = () => {
+const Login = ({ closeModal }) => {
   const [authenticationStatusCSSClass, setAuthenticationStatusCSSClass] = useState('');
 
   const initialCredentials = {
@@ -40,6 +41,7 @@ const Login = () => {
       setAuthenticationStatusCSSClass('200-status');
       document.cookie = `Bearer ${response.data}`;
       auth.signin(credentials.email);
+      closeModal();
     } catch (error) {
       if (error.response) {
         if (error.response.status >= 400 && error.response.status < 500) setAuthenticationStatusCSSClass('status-400');
@@ -94,6 +96,10 @@ const Login = () => {
       </form>
     </>
   );
+};
+
+Login.propTypes = {
+  closeModal: PropTypes.func.isRequired,
 };
 
 export default Login;

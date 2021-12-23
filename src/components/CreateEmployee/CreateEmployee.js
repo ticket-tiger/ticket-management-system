@@ -21,7 +21,7 @@ const CreateEmployee = ({ closeModal }) => {
         },
       };
 
-      await axios.post('/users/create-employee', employeeEmail, config);
+      await axios.post('/users/create-employee', { employeeEmail }, config);
       closeModal();
       // setAccountCreationSuccessful(true);
     } catch (error) {
