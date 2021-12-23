@@ -3,9 +3,24 @@ import express from 'express';
 import jwt from 'jsonwebtoken';
 import localConfig from '../localConfig.js';
 import { hashPassword, verifyPassword } from './argon2.js';
-import { createUser, getPassword } from '../db.js';
+import { createUser, createEmployee, getPassword } from '../db.js';
 
 const userRouter = express.Router();
+
+const verifyToken = async (req, res, next) => {
+  const authheader = req.headers.authorization;
+  const token = authheader && authheader.split(' ')[1];
+
+  if (token === undefined) {
+    res.sendStatus(401);
+  } else {
+    jwt.verify(token, localConfig.tokenSecret, (err, user) => {
+      if (err) { res.sendStatus(403); }
+      req.managerEmail = user.email;
+    });
+  }
+  next();
+};
 
 // generate access tokens
 const generateAccessTokens = (email) => jwt.sign(email, localConfig.tokenSecret, { expiresIn: '3600s' });
@@ -21,6 +36,13 @@ userRouter.post('/create-account', async (req, res) => {
   };
   // send the result to mongo
   const result = await createUser(account.email, account.password);
+  res.send(result);
+  res.end();
+});
+
+userRouter.post('/create-employee', verifyToken, async (req, res) => {
+  console.log('Received POST request.');
+  const result = await createEmployee(req.managerEmail, req.body.employeeEmail);
   res.send(result);
   res.end();
 });

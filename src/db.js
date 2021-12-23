@@ -2,6 +2,7 @@
 import { MongoClient } from 'mongodb';
 import mongoose from 'mongoose';
 import validate from 'mongoose-validator';
+import { randomBytes } from 'crypto';
 import config from './config.js';
 import localConfig from './localConfig.js';
 
@@ -24,10 +25,12 @@ const userSchema = new Schema({
     type: String, unique: true, default: null, set: toLower, validate: emailValidate, index: { unique: true },
   },
   password: { type: String },
+  oneTimePassword: { type: Boolean, required: false },
+  passwordExpirationDate: { type: Date, required: false },
   role: {
     type: String,
-    default: 'User',
-    enum: ['User', 'Employee', 'Admin'],
+    default: 'Basic',
+    enum: ['Basic', 'Employee', 'Manager', 'Admin'],
   },
   tickets: [{
     title: { type: String, required: true, default: 'anonymous' },
@@ -109,8 +112,35 @@ export const createUser = async (userEmail, userPassword) => {
     // save model to database
     user1.save((err, user) => {
       if (err) console.error(err);
-      console.log(`${user.name} saved to user collection.`);
+      console.log(`${user.email} saved to user collection.`);
     });
+  } finally {
+    await client.close();
+  }
+};
+
+export const createEmployee = async (managerEmail, employeeEmail) => {
+  const expirationDate = Date.now() + 6.048e+8;
+  try {
+    await mongoose.connect(uri);
+    const userObject = await User.findOne({ email: managerEmail }, 'role').exec();
+    console.log(userObject);
+    if (userObject.role === 'Manager' || userObject.role === 'Basic') {
+      const newEmployee = new User({
+        email: employeeEmail,
+        password: randomBytes(10).toString('utf8'),
+        oneTimePassword: true,
+        passwordExpirationDate: expirationDate,
+        role: 'Employee',
+        tickets: [],
+      });
+      newEmployee.save((err, user) => {
+        if (err) console.log(err);
+        console.log(`${user.email} saved to user collection.`);
+      });
+    }
+  } catch (error) {
+    console.log(error);
   } finally {
     await client.close();
   }
