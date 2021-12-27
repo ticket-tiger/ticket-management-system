@@ -7,6 +7,8 @@ import { useAuth } from '../../auth';
 
 const Login = ({ closeModal }) => {
   const [authenticationStatusCSSClass, setAuthenticationStatusCSSClass] = useState('');
+  const [isOneTimePassword, setIsOneTimePassword] = useState(false);
+  const [oneTimePassword, setOneTimePassword] = useState('');
 
   const initialCredentials = {
     email: '',
@@ -39,8 +41,9 @@ const Login = ({ closeModal }) => {
     try {
       const response = await axios.post('/users/login', credentials);
       setAuthenticationStatusCSSClass('200-status');
-      document.cookie = `Bearer ${response.data}`;
+      document.cookie = `Bearer ${response.data.token}`;
       auth.signin(credentials.email);
+      setIsOneTimePassword(response.data.isOneTimePassword);
       closeModal();
     } catch (error) {
       if (error.response) {
@@ -50,6 +53,10 @@ const Login = ({ closeModal }) => {
       } else setAuthenticationStatusCSSClass('status-default-error');
     }
   };
+
+  if (isOneTimePassword) {
+    return <CreatePermanentPassword oneTimePassword={oneTimePassword}/>;
+}
 
   if (auth.email) {
     return <Navigate to="/create-ticket" />;
