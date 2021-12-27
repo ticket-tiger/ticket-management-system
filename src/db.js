@@ -2,7 +2,6 @@
 import { MongoClient } from 'mongodb';
 import mongoose from 'mongoose';
 import validate from 'mongoose-validator';
-import { randomBytes } from 'crypto';
 import config from './config.js';
 import localConfig from './localConfig.js';
 
@@ -119,7 +118,7 @@ export const createUser = async (userEmail, userPassword) => {
   }
 };
 
-export const createEmployee = async (managerEmail, employeeEmail) => {
+export const createEmployee = async (managerEmail, employeeEmail, oneTimePassword) => {
   const expirationDate = Date.now() + 6.048e+8;
   try {
     await mongoose.connect(uri);
@@ -128,7 +127,7 @@ export const createEmployee = async (managerEmail, employeeEmail) => {
     if (userObject.role === 'Manager' || userObject.role === 'Basic') {
       const newEmployee = new User({
         email: employeeEmail,
-        password: randomBytes(10).toString('utf8'),
+        password: oneTimePassword,
         oneTimePassword: true,
         passwordExpirationDate: expirationDate,
         role: 'Employee',

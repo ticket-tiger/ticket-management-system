@@ -1,9 +1,11 @@
 import express from 'express';
 // import { MongoClient } from 'mongodb';
 import jwt from 'jsonwebtoken';
+import { randomBytes } from 'crypto';
 import localConfig from '../localConfig.js';
 import { hashPassword, verifyPassword } from './argon2.js';
 import { createUser, createEmployee, getPassword } from '../db.js';
+import sendOneTimePasswordByEmail from './email.js';
 
 const userRouter = express.Router();
 
@@ -42,7 +44,10 @@ userRouter.post('/create-account', async (req, res) => {
 
 userRouter.post('/create-employee', verifyToken, async (req, res) => {
   console.log('Received POST request.');
-  const result = await createEmployee(req.managerEmail, req.body.employeeEmail);
+  const tempPassword = randomBytes(10).toString('hex');
+  const hashedTempPassword = await hashPassword(tempPassword);
+  const result = await createEmployee(req.managerEmail, req.body.employeeEmail, hashedTempPassword);
+  sendOneTimePasswordByEmail(req.body.employeeEmail, tempPassword);
   res.send(result);
   res.end();
 });
