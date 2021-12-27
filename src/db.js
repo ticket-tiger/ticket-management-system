@@ -42,6 +42,11 @@ const userSchema = new Schema({
       type: String, required: true, default: 'Low',
     },
     date: { type: Date, default: Date.now },
+    status: {
+      type: String,
+      default: 'Submitted',
+      enum: ['Submitted', 'In Progress', 'Completed'],
+    },
   }],
 });
 
