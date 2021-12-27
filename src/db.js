@@ -150,84 +150,36 @@ export const createEmployee = async (managerEmail, employeeEmail, oneTimePasswor
   }
 };
 
-export const getPassword = async (userEmail) => {
+export const createPermanentPassword = async (email, newPassword) => {
+  try {
+    await mongoose.connect(uri);
+    const passwordExpirationDate = await User.findOne({ email }, 'passwordExpirationDate');
+    if (passwordExpirationDate >= Date.now()) {
+      const result = await User.updateOne({ email }, { password: newPassword });
+      return result;
+    }
+    throw new Error('Your one-time password has expired. Please request a new one to be issued.');
+  } finally {
+    await client.close();
+  }
+};
+
+export const getPasswordInfo = async (userEmail) => {
   try {
     await mongoose.connect(uri);
 
-    const result = await User.findOne({ email: userEmail }, 'password').exec();
-    return result.password;
+    const result = await User.findOne({ email: userEmail }, 'password oneTimePassword passwordExpirationDate').exec();
+    const { id, ...passwordInfo } = result;
+    return passwordInfo;
   } finally {
     await client.close();
   }
 };
 
-const connectDatabase = async (req, res) => {
-  try {
-    await mongoose.connect(config.mongodb);
-  } catch (error) {
-    res.status(500);
-  }
-};
-
-/*
-
-const createTickets = async (tickets) => {
-  try {
-    await client.connect();
-
-    const result = await client.db(config.mongodb.database).collection('tickets').insertMany(tickets);
-
-    return result;
-  } finally {
-    await client.close();
-  }
-};
-
-const deleteAllTickets = async () => {
-  try {
-    await client.connect();
-
-    const result = await client.db(config.mongodb.database).collection('tickets').deleteMany({});
-
-    return result;
-  } finally {
-    await client.close();
-  }
-};
-
-*/
-
-// const tickets = [
-//   {
-//     category: 'category1',
-//     title: 'test1',
-//     description: 'The login button doesn\x27t work.',
-//     priority: 'Low',
-//     urgency: 'High',
-//     dateCreated: new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }),
-//   },
-//   {
-//     category: 'category2',
-//     title: 'test2',
-//     description: 'The screen freezes when I run a file called malware.exe.',
-//     priority: 'Medium',
-//     urgency: 'Medium',
-//     dateCreated: new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }),
-//   },
-//   {
-//     category: 'category3',
-//     title: 'test3',
-//     description: 'I received bad customer service the last time I called you.',
-//     priority: 'High',
-//     urgency: 'Low',
-//     dateCreated: new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }),
-//   }];
-
-// const testDB = async () => {
-//   await deleteAllTickets().catch(console.dir);
-//   await createTickets(tickets).catch(console.dir);
-//   const returnedTickets = await getTicketCollection().catch(console.dir);
-//   console.log(returnedTickets);
+// const connectDatabase = async (req, res) => {
+//   try {
+//     await mongoose.connect(config.mongodb);
+//   } catch (error) {
+//     res.status(500);
+//   }
 // };
-
-// testDB();

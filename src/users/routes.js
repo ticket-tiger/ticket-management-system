@@ -4,7 +4,9 @@ import jwt from 'jsonwebtoken';
 import { randomBytes } from 'crypto';
 import localConfig from '../localConfig.js';
 import { hashPassword, verifyPassword } from './argon2.js';
-import { createUser, createEmployee, getPassword } from '../db.js';
+import {
+  createUser, createEmployee, createPermanentPassword, getPasswordInfo,
+} from '../db.js';
 import sendOneTimePasswordByEmail from './email.js';
 
 const userRouter = express.Router();
@@ -54,7 +56,10 @@ userRouter.post('/create-employee', verifyToken, async (req, res) => {
 
 userRouter.post('/login', async (req, res, next) => {
   console.log('Received POST request.');
-  const verify = await verifyPassword(await getPassword(req.body.email), req.body.password);
+  const { passwordInfo } = await getPasswordInfo(req.body.email);
+  const verify = await verifyPassword(passwordInfo.password, req.body.password);
+  res.locals.isOneTimePassword = passwordInfo.oneTimePassword;
+  res.locals.passwordExpirationDate = passwordInfo.passwordExpirationDate;
   if (verify) {
     res.status(200);
     next();
@@ -63,7 +68,19 @@ userRouter.post('/login', async (req, res, next) => {
   }
 }, (req, res) => {
   const token = generateAccessTokens({ email: req.body.email });
-  res.send(token);
+  res.send({
+    token,
+    isOneTimePassword: res.locals.isOneTimePassword,
+    passwordExpirationDate: res.locals.passwordExpirationDate,
+  });
+});
+
+userRouter.post('/create-permanent-password', verifyToken, async (req, res) => {
+  console.log('Received POST request.');
+  const hashedPassword = await hashPassword(req.body.newPassword);
+  const result = await createPermanentPassword(req.body.email, hashedPassword);
+  res.send(result);
+  res.end();
 });
 
 export default userRouter;
