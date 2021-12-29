@@ -56,7 +56,7 @@ userRouter.post('/create-employee', verifyToken, async (req, res) => {
 
 userRouter.post('/login', async (req, res, next) => {
   console.log('Received POST request.');
-  const { passwordInfo } = await getPasswordInfo(req.body.email);
+  const passwordInfo = await getPasswordInfo(req.body.email);
   const verify = await verifyPassword(passwordInfo.password, req.body.password);
   res.locals.isOneTimePassword = passwordInfo.oneTimePassword;
   res.locals.passwordExpirationDate = passwordInfo.passwordExpirationDate;

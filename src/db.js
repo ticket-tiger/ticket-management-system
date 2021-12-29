@@ -169,8 +169,7 @@ export const getPasswordInfo = async (userEmail) => {
     await mongoose.connect(uri);
 
     const result = await User.findOne({ email: userEmail }, 'password oneTimePassword passwordExpirationDate').exec();
-    const { id, ...passwordInfo } = result;
-    return passwordInfo;
+    return result;
   } finally {
     await client.close();
   }
