@@ -45,12 +45,12 @@ const NavBar = () => {
       <nav className="navbar">
         {auth.email ? (
           <>
-            <Link to="/create-ticket">
+            <Link to="/create-ticket" className="navbar-button">
               <button type="button" className="navbar-button">
                 Create A Ticket
               </button>
             </Link>
-            <Link to="/view-tickets">
+            <Link to="/view-tickets" className="navbar-button">
               <button type="button" className="navbar-button">
                 View Your Tickets
               </button>

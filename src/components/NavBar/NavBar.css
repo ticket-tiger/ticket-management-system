@@ -16,6 +16,7 @@
 }
 
 .navbar-button {
+	height: 100%;
 	width: 100px;
 	background-color: transparent;
 	font-size: 20px;

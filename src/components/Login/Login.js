@@ -2,13 +2,13 @@ import React, { useReducer, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Navigate } from 'react-router-dom';
 import axios from 'axios';
+import CreatePermanentPassword from '../CreatePermanentPassword/CreatePermanentPassword';
 import './Login.css';
 import { useAuth } from '../../auth';
 
 const Login = ({ closeModal }) => {
   const [authenticationStatusCSSClass, setAuthenticationStatusCSSClass] = useState('');
   const [isOneTimePassword, setIsOneTimePassword] = useState(false);
-  const [oneTimePassword, setOneTimePassword] = useState('');
 
   const initialCredentials = {
     email: '',
@@ -55,8 +55,8 @@ const Login = ({ closeModal }) => {
   };
 
   if (isOneTimePassword) {
-    return <CreatePermanentPassword oneTimePassword={oneTimePassword}/>;
-}
+    return <CreatePermanentPassword />;
+  }
 
   if (auth.email) {
     return <Navigate to="/create-ticket" />;
