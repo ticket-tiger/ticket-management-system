@@ -44,7 +44,7 @@ const Login = ({ closeModal }) => {
       document.cookie = `Bearer ${response.data.token}`;
       auth.signin(credentials.email);
       setIsOneTimePassword(response.data.isOneTimePassword);
-      closeModal();
+      if (!response.data.isOneTimePassword) closeModal();
     } catch (error) {
       if (error.response) {
         if (error.response.status >= 400 && error.response.status < 500) setAuthenticationStatusCSSClass('status-400');
@@ -55,7 +55,7 @@ const Login = ({ closeModal }) => {
   };
 
   if (isOneTimePassword) {
-    return <CreatePermanentPassword />;
+    return <CreatePermanentPassword closeModal={closeModal} />;
   }
 
   if (auth.email) {
