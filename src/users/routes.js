@@ -56,15 +56,22 @@ userRouter.post('/create-employee', verifyToken, async (req, res) => {
 
 userRouter.post('/login', async (req, res, next) => {
   console.log('Received POST request.');
-  const passwordInfo = await getPasswordInfo(req.body.email);
-  const verify = await verifyPassword(passwordInfo.password, req.body.password);
-  res.locals.isOneTimePassword = passwordInfo.oneTimePassword;
-  res.locals.passwordExpirationDate = passwordInfo.passwordExpirationDate;
-  if (verify) {
-    res.status(200);
-    next();
-  } else {
-    res.status(401);
+  try {
+    const passwordInfo = await getPasswordInfo(req.body.email);
+    const verify = await verifyPassword(passwordInfo.password, req.body.password);
+    res.locals.isOneTimePassword = passwordInfo.isOneTimePassword;
+    res.locals.passwordExpirationDate = passwordInfo.passwordExpirationDate;
+    if (verify) {
+      res.status(200);
+      next();
+    } else {
+      res.status(401);
+      res.end();
+    }
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+    res.end();
   }
 }, (req, res) => {
   const token = generateAccessTokens({ email: req.body.email });
@@ -73,12 +80,13 @@ userRouter.post('/login', async (req, res, next) => {
     isOneTimePassword: res.locals.isOneTimePassword,
     passwordExpirationDate: res.locals.passwordExpirationDate,
   });
+  res.end();
 });
 
 userRouter.post('/create-permanent-password', verifyToken, async (req, res) => {
   console.log('Received POST request.');
   const hashedPassword = await hashPassword(req.body.newPassword);
-  const result = await createPermanentPassword(req.body.email, hashedPassword);
+  const result = await createPermanentPassword(req.managerEmail, hashedPassword);
   res.send(result);
   res.end();
 });

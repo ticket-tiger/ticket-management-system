@@ -24,7 +24,7 @@ const userSchema = new Schema({
     type: String, unique: true, default: null, set: toLower, validate: emailValidate, index: { unique: true },
   },
   password: { type: String },
-  oneTimePassword: { type: Boolean, required: false },
+  isOneTimePassword: { type: Boolean, required: false },
   passwordExpirationDate: { type: Date, required: false },
   role: {
     type: String,
@@ -128,12 +128,11 @@ export const createEmployee = async (managerEmail, employeeEmail, oneTimePasswor
   try {
     await mongoose.connect(uri);
     const userObject = await User.findOne({ email: managerEmail }, 'role').exec();
-    console.log(userObject);
     if (userObject.role === 'Manager' || userObject.role === 'Basic') {
       const newEmployee = new User({
         email: employeeEmail,
         password: oneTimePassword,
-        oneTimePassword: true,
+        isOneTimePassword: true,
         passwordExpirationDate: expirationDate,
         role: 'Employee',
         tickets: [],
@@ -153,9 +152,12 @@ export const createEmployee = async (managerEmail, employeeEmail, oneTimePasswor
 export const createPermanentPassword = async (email, newPassword) => {
   try {
     await mongoose.connect(uri);
-    const passwordExpirationDate = await User.findOne({ email }, 'passwordExpirationDate');
-    if (passwordExpirationDate >= Date.now()) {
-      const result = await User.updateOne({ email }, { password: newPassword });
+    const userObject = await User.findOne({ email }, 'passwordExpirationDate');
+    const passwordExpirationDate = Date.parse(Date(userObject.passwordExpirationDate));
+    console.log(passwordExpirationDate);
+    console.log(Date.now());
+    if (passwordExpirationDate <= Date.now()) {
+      const result = await User.updateOne({ email }, { password: newPassword, isOneTimePassword: false, $unset: { passwordExpirationDate: '' } });
       return result;
     }
     throw new Error('Your one-time password has expired. Please request a new one to be issued.');
@@ -167,8 +169,7 @@ export const createPermanentPassword = async (email, newPassword) => {
 export const getPasswordInfo = async (userEmail) => {
   try {
     await mongoose.connect(uri);
-
-    const result = await User.findOne({ email: userEmail }, 'password oneTimePassword passwordExpirationDate').exec();
+    const result = await User.findOne({ email: userEmail }, 'password isOneTimePassword passwordExpirationDate').exec();
     return result;
   } finally {
     await client.close();
