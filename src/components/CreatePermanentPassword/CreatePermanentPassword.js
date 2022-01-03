@@ -39,8 +39,10 @@ const CreatePermanentPassword = ({ closeModal }) => {
 
   return (
     <>
-      {passwordChangeStatusCSSClass === 'status-500' ? <p>There was a problem with the server.  Sorry for the inconvenience</p> : null}
-      {passwordChangeStatusCSSClass === 'status-default-error' ? <p>There was an unexpected error.  Please try again in a little while.</p> : null}
+      <div className="error-message-group">
+        {passwordChangeStatusCSSClass === 'status-500' ? <p>There was a problem with the server.  Sorry for the inconvenience.</p> : null}
+        {passwordChangeStatusCSSClass === 'status-default-error' ? <p>There was an unexpected error.  Please try again in a little while.</p> : null}
+      </div>
       <form>
         <div className="permanent-password-form-input-group">
           <input

@@ -64,8 +64,8 @@
   top: 15%;
   left: 50%;
   transform: translate(-50%);
+  width: 80%;
   font-size: 32px;
-  white-space: nowrap;
 }
 
 .status-400 {

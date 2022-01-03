@@ -68,6 +68,15 @@
   color: var(--purple);
 }
 
+.error-message-group {
+  position: absolute;
+  top: 15%;
+  left: 50%;
+  transform: translate(-50%);
+  width: 80%;
+  font-size: 32px;
+}
+
  .status-400 {
    border-color: red;
  }
