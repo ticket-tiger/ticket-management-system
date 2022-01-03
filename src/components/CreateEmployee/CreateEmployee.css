@@ -1,0 +1,111 @@
+.create-employee-form-input-group {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 12%;
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.create-employee-form-input {
+  font-size: 20px;
+  height: 50px;
+  width: 100%;
+  border: 2px solid transparent;
+  border-bottom: 2px solid black;
+  box-sizing: border-box;
+  transition: .3s;
+}
+
+.create-employee-form-label {
+  font-size: 32px;
+  color: black;
+  display: block;
+  font-weight: bold;
+  transition: .3s;
+}
+
+.create-employee-form-input:focus, .create-employee-form-input:hover {
+  outline-color: var(--purple);
+  border-radius: 5px;
+  border: 2px solid var(--purple);
+}
+
+.create-employee-form-input:focus + label, .create-employee-form-input:hover + label {
+  color: var(--purple);
+}
+
+.create-employee-submit-button {
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, 50%);
+  height: 45px;
+  width: 60%;
+  border-radius: 5px;
+  border: 2px solid black;
+  font-size: 20px;
+  font-weight: 700;
+  background-color: white;
+  color: black;
+  transition: .3s;
+}
+
+.create-employee-submit-button:hover {
+  border: 3px solid var(--purple);
+  color: var(--purple);
+}
+
+.error-message-group {
+  position: absolute;
+  top: 15%;
+  left: 50%;
+  transform: translate(-50%);
+  font-size: 32px;
+  white-space: nowrap;
+}
+
+.status-400 {
+  border-color: red;
+}
+
+.invalid-email {
+  border-radius: 5px;
+  border-color: red;
+}
+
+@media screen and (min-width: 1800px) {
+  .create-employee-form-label {
+    font-size: 51px;
+  }
+
+  .create-employee-form-input {
+   font-size: 32px;
+   height: 75px;
+   width: 100%;
+   border: 3px solid transparent;
+   border-bottom: 3px solid black;
+ }
+
+ .create-employee-form-input:focus, .create-employee-form-input:hover {
+   border: 3px solid var(--purple);
+ }
+
+ .create-employee-submit-button {
+   height: 67px;
+   border: 3px solid black;
+   font-size: 32px;
+ }
+
+ .create-employee-submit-button:hover {
+   border: 5px solid var(--purple);
+ }
+
+ .invalid-email {
+    border-radius: 5px;
+    border-color: red;
+  }
+}

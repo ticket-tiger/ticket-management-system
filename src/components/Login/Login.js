@@ -6,7 +6,7 @@ import CreatePermanentPassword from '../CreatePermanentPassword/CreatePermanentP
 import './Login.css';
 import { useAuth } from '../../auth';
 
-const Login = ({ closeModal }) => {
+const Login = ({ hideTabs, closeModal }) => {
   const [authenticationStatusCSSClass, setAuthenticationStatusCSSClass] = useState('');
   const [isOneTimePassword, setIsOneTimePassword] = useState(false);
 
@@ -55,6 +55,7 @@ const Login = ({ closeModal }) => {
   };
 
   if (isOneTimePassword) {
+    hideTabs(true);
     return <CreatePermanentPassword closeModal={closeModal} />;
   }
 
@@ -106,6 +107,7 @@ const Login = ({ closeModal }) => {
 };
 
 Login.propTypes = {
+  hideTabs: PropTypes.func.isRequired,
   closeModal: PropTypes.func.isRequired,
 };
 

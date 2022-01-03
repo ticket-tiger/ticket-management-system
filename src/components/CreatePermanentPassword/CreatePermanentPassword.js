@@ -27,14 +27,11 @@ const CreatePermanentPassword = ({ closeModal }) => {
         username: auth.email,
         newPassword,
       };
-      const response = await axios.post('/users/create-permanent-password', credentials, config);
-      setPasswordChangeStatusCSSClass('200-status');
+      await axios.post('/users/create-permanent-password', credentials, config);
       closeModal();
-      console.log(response.status);
     } catch (error) {
       if (error.response) {
-        if (error.response.status >= 400 && error.response.status < 500) setPasswordChangeStatusCSSClass('status-400');
-        else if (error.response.status >= 500) setPasswordChangeStatusCSSClass('status-500');
+        if (error.response.status >= 500) setPasswordChangeStatusCSSClass('status-500');
         else setPasswordChangeStatusCSSClass('status-default-error');
       } else setPasswordChangeStatusCSSClass('status-default-error');
     }
@@ -42,15 +39,19 @@ const CreatePermanentPassword = ({ closeModal }) => {
 
   return (
     <>
+      {passwordChangeStatusCSSClass === 'status-500' ? <p>There was a problem with the server.  Sorry for the inconvenience</p> : null}
+      {passwordChangeStatusCSSClass === 'status-default-error' ? <p>There was an unexpected error.  Please try again in a little while.</p> : null}
       <form>
-        <input
-          id="newPassword"
-          className={`permanent-password-form-input ${passwordChangeStatusCSSClass}`}
-          type="password"
-          onChange={(e) => setNewPassword(e.target.value)}
-        />
-        <label className="permanent-password-form-label" htmlFor="newPassword">New Password</label>
-        <button type="submit" className="permanent-password-form-button" onClick={(e) => handleSubmit(e)}>Submit</button>
+        <div className="permanent-password-form-input-group">
+          <input
+            id="newPassword"
+            className={`permanent-password-form-input ${passwordChangeStatusCSSClass}`}
+            type="password"
+            onChange={(e) => setNewPassword(e.target.value)}
+          />
+          <label className="permanent-password-form-label" htmlFor="newPassword">New Password</label>
+        </div>
+        <button type="submit" className="permanent-password-submit-button" onClick={(e) => handleSubmit(e)}>Submit</button>
       </form>
     </>
   );

@@ -42,6 +42,10 @@
   width: 33px;
 }
 
+.display-none {
+  display: none;
+}
+
 @media screen and (min-width: 1800px) {
   .modal {
     border: 22px solid black;

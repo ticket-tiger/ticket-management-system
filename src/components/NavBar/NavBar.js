@@ -11,6 +11,7 @@ const NavBar = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [hasAccount, setHasAccount] = useState(false);
   const [isEmployeeModalOpen, setIsEmployeeModalOpen] = useState(false);
+  const [isPermanentPasswordModalOpen, setIsPermanentPasswordModalOpen] = useState(false);
 
   const auth = useAuth();
   const handleLogout = () => {
@@ -77,14 +78,14 @@ const NavBar = () => {
       <p>{auth.email}</p>
       {isModalOpen
         ? (
-          <Modal close={closeUserForm}>
+          <Modal hideCloseModalButton={isPermanentPasswordModalOpen} close={closeUserForm}>
             <div>
-              <div className="user-modal-button-group">
+              <div className={`user-modal-button-group ${isPermanentPasswordModalOpen ? 'display-none' : ''}`}>
                 <button className="user-modal-button" type="button" onClick={() => setHasAccount(true)} disabled={hasAccount}>Login</button>
                 <button className="user-modal-button" type="button" onClick={() => setHasAccount(false)} disabled={!hasAccount}>Sign Up</button>
               </div>
               {hasAccount
-                ? <Login closeModal={closeUserForm} />
+                ? <Login hideTabs={setIsPermanentPasswordModalOpen} closeModal={closeUserForm} />
                 : <CreateAccount closeModal={closeUserForm} />}
             </div>
           </Modal>

@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import closeModal from '../../images/close-modal.png';
 import './Modal.css';
 
-const Modal = ({ close, children }) => (
+const Modal = ({ hideCloseModalButton, close, children }) => (
   <div className="modal-background">
     <div className="modal">
 
-      <button className="modal-close-button" type="button" onClick={close}>
+      <button className={`modal-close-button ${hideCloseModalButton ? 'display-none' : ''}`} type="button" onClick={close}>
         <img className="modal-close-image" src={closeModal} alt="Close Modal" />
       </button>
       {children}
@@ -16,6 +16,7 @@ const Modal = ({ close, children }) => (
 );
 
 Modal.propTypes = {
+  hideCloseModalButton: PropTypes.bool.isRequired,
   close: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
 };
