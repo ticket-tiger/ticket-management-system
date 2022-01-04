@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useReducer } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import validator from 'validator';
@@ -8,12 +8,31 @@ const CreateEmployee = ({ closeModal }) => {
   // const [accountCreationSuccessful, setAccountCreationSuccessful] = useState(false);
   const [accountCreationStatusCSSClass, setAccountCreationStatusCSSClass] = useState('');
   const [errorCSSClass, setErrorCSSClass] = useState('');
-  const [employeeEmail, setEmployeeEmail] = useState('');
+
+  const initialEmployee = { email: '', type: '' };
+  const reducer = (state, action) => {
+    switch (action.type) {
+      case 'email':
+        return {
+          ...state,
+          email: action.payload,
+        };
+      case 'type':
+        return {
+          ...state,
+          type: action.payload,
+        };
+      default:
+        return state;
+    }
+  };
+
+  const [employee, dispatch] = useReducer(reducer, initialEmployee);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!validator.isEmail(employeeEmail)) {
+    if (!validator.isEmail(employee.email)) {
       setErrorCSSClass('invalid-email');
     } else {
       try {
@@ -27,7 +46,7 @@ const CreateEmployee = ({ closeModal }) => {
           },
         };
 
-        await axios.post('/users/create-employee', { employeeEmail }, config);
+        await axios.post('/users/create-employee', employee, config);
         closeModal();
         // setAccountCreationSuccessful(true);
       } catch (error) {
@@ -50,11 +69,16 @@ const CreateEmployee = ({ closeModal }) => {
       <form>
         <div className="create-employee-form-input-group">
           <input
-            id="create-employee-form-username"
-            onChange={(e) => setEmployeeEmail(e.target.value)}
+            id="create-employee-form-email"
+            onChange={(e) => dispatch({ type: 'email', payload: e.target.value })}
             className={`create-employee-form-input ${accountCreationStatusCSSClass} ${errorCSSClass}`}
           />
-          <label className="create-employee-form-label" type="text" htmlFor="create-employee-form-username">Employee Email</label>
+          <label className="create-employee-form-label" type="text" htmlFor="create-employee-form-email">Employee Email</label>
+          <select id="employee-type-dropdown" className="create-employee-form-dropdown" value={employee.type} onChange={(e) => dispatch({ action: 'type', payload: e.target.value })}>
+            <option value="Engineer">Engineer</option>
+            <option value="Manager">Manager</option>
+          </select>
+          <label className="create-employee-form-label" type="text" htmlFor="create-employee-form-employee-type">Employee Type</label>
         </div>
         <button className="create-employee-submit-button" type="submit" onClick={(e) => handleSubmit(e)}>Create Account</button>
       </form>
