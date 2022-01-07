@@ -48,8 +48,8 @@ userRouter.post('/create-employee', verifyToken, async (req, res) => {
   console.log('Received POST request.');
   const tempPassword = randomBytes(10).toString('hex');
   const hashedTempPassword = await hashPassword(tempPassword);
-  const result = await createEmployee(req.managerEmail, req.body.employeeEmail, hashedTempPassword);
-  sendOneTimePasswordByEmail(req.body.employeeEmail, tempPassword);
+  const result = await createEmployee(req.managerEmail, req.body, hashedTempPassword);
+  sendOneTimePasswordByEmail(req.body.email, tempPassword);
   res.send(result);
   res.end();
 });

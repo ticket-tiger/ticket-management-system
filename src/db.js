@@ -123,18 +123,18 @@ export const createUser = async (userEmail, userPassword) => {
   }
 };
 
-export const createEmployee = async (managerEmail, employeeEmail, oneTimePassword) => {
+export const createEmployee = async (managerEmail, employeeObject, oneTimePassword) => {
   const expirationDate = Date.now() + 6.048e+8;
   try {
     await mongoose.connect(uri);
     const userObject = await User.findOne({ email: managerEmail }, 'role').exec();
-    if (userObject.role === 'Manager' || userObject.role === 'Basic') {
+    if (userObject.role === 'Manager') {
       const newEmployee = new User({
-        email: employeeEmail,
+        email: employeeObject.email,
         password: oneTimePassword,
         isOneTimePassword: true,
         passwordExpirationDate: expirationDate,
-        role: 'Employee',
+        role: employeeObject.type,
         tickets: [],
       });
       newEmployee.save((err, user) => {
