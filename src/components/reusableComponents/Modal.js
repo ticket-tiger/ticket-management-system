@@ -16,9 +16,13 @@ const Modal = ({ hideCloseModalButton, close, children }) => (
 );
 
 Modal.propTypes = {
-  hideCloseModalButton: PropTypes.bool.isRequired,
+  hideCloseModalButton: PropTypes.bool,
   close: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
+};
+
+Modal.defaultProps = {
+  hideCloseModalButton: true,
 };
 
 export default Modal;

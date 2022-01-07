@@ -74,7 +74,7 @@ const CreateEmployee = ({ closeModal }) => {
             className={`create-employee-form-input ${accountCreationStatusCSSClass} ${errorCSSClass}`}
           />
           <label className="create-employee-form-label" type="text" htmlFor="create-employee-form-email">Employee Email</label>
-          <select id="employee-type-dropdown" className="create-employee-form-dropdown" value={employee.type} onChange={(e) => dispatch({ action: 'type', payload: e.target.value })}>
+          <select id="employee-type-dropdown" className="create-employee-form-dropdown" onChange={(e) => dispatch({ type: 'type', payload: e.target.value })}>
             <option value="Engineer">Engineer</option>
             <option value="Manager">Manager</option>
           </select>
