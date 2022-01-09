@@ -1,15 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import closeModal from '../../images/close-modal.png';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
+// import closeModal from '../../images/close-modal.png';
 import './Modal.css';
 
 const Modal = ({ hideCloseModalButton, close, children }) => (
   <div className="modal-background">
     <div className="modal">
-
-      <button className={`modal-close-button ${hideCloseModalButton ? 'display-none' : ''}`} type="button" onClick={close}>
-        <img className="modal-close-image" src={closeModal} alt="Close Modal" />
-      </button>
+      <FontAwesomeIcon
+        className={`modal-close-x ${hideCloseModalButton ? 'display-none' : ''}`}
+        icon={faTimes}
+        size="3x"
+        onClick={close}
+      />
       {children}
     </div>
   </div>

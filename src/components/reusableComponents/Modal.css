@@ -21,6 +21,18 @@
   z-index: 1;
 }
 
+.modal-close-x {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  cursor: pointer;
+  transition: .3s;
+}
+
+.modal-close-x:hover {
+  color: var(--purple);
+}
+
 .modal-close-button {
   position: absolute;
   top: 30px;
