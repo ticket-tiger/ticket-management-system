@@ -1,4 +1,6 @@
 import React, { useEffect, useState, useMemo } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 import { useAuth } from '../../auth';
 import './TicketTable.css';
@@ -136,7 +138,12 @@ const TicketLog = () => {
               <td>{ticket.description}</td>
               <td>{ticket.priority}</td>
               <td>{ticket.urgency}</td>
-              <td>{ticket.date}</td>
+              <td className="table-last-cell">
+                {ticket.date}
+                <div className="table-delete-button-container">
+                  <FontAwesomeIcon className="table-delete-button" icon={faTrashAlt} size="lg" />
+                </div>
+              </td>
             </tr>
           ))}
         </tbody>
