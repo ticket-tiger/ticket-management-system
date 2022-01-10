@@ -176,6 +176,16 @@ export const getPasswordInfo = async (userEmail) => {
   }
 };
 
+export const getCurrentStatus = async (objectId) => {
+  try {
+    await mongoose.connect(uri);
+    const result = await User.findOne({ tickets: { _id: objectId } }, { tickets: { _id: objectId } }).exec();
+    return result.status;
+  } finally {
+    await client.close();
+  }
+};
+
 // const connectDatabase = async (req, res) => {
 //   try {
 //     await mongoose.connect(config.mongodb);
