@@ -5,7 +5,7 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 // import closeModal from '../../images/close-modal.png';
 import './Modal.css';
 
-const Modal = ({ hideCloseModalButton, close, children }) => (
+const Modal = ({ hideCloseModalButton = false, close, children }) => (
   <div className="modal-background">
     <div className="modal">
       <FontAwesomeIcon
@@ -26,7 +26,7 @@ Modal.propTypes = {
 };
 
 Modal.defaultProps = {
-  hideCloseModalButton: true,
+  hideCloseModalButton: false,
 };
 
 export default Modal;

@@ -80,35 +80,16 @@
    border: 2px solid black;
 }
 
+.ticket-table-row {
+   cursor: pointer;
+}
+
+.ticket-table-row:hover {
+   color: var(--purple);
+}
+
 .view-ticket {
    text-align: center;
    display: auto;
    justify-content: space-around;
- }
-
- .table-last-cell {
-    position: relative;
- }
-
- .table-delete-button-container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
- }
-
-.table-delete-button {
-   position: absolute;
-   top: 50%;
-   right: -45px;
-   transform: translateY(-50%);
-   height: fit-content;
-   width: fit-content;
-   cursor: pointer;
-   transition: .3s;
- }
-
- .table-delete-button:hover {
-    color: var(--purple);
  }

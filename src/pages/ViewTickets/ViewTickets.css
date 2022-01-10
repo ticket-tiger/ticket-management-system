@@ -1,0 +1,21 @@
+.ticket-button-group {
+  position: absolute;
+  top: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  height: fit-content;
+  width: 20%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.edit-ticket-button,
+.delete-ticket-button {
+  cursor: pointer;
+  transition: .3s;
+}
+
+.edit-ticket-button:hover,
+.delete-ticket-button:hover {
+   color: var(--purple);
+}

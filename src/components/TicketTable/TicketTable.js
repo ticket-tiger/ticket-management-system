@@ -1,7 +1,8 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { faTrashAlt, faEdit } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
+import Modal from '../reusableComponents/Modal';
 import { useAuth } from '../../auth';
 import './TicketTable.css';
 // import SubmitTicket from '../SubmitTicket/SubmitTicket';
@@ -49,8 +50,9 @@ const sampleTickets = [{
   title: 'Badport', description: 'apple', priority: '4', urgency: '9', date: '3/23/21',
 }];
 
-const TicketLog = () => {
+const TicketTable = () => {
   const [tickets, setTickets] = useState(sampleTickets);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const auth = useAuth();
 
   useEffect(async () => {
@@ -75,80 +77,87 @@ const TicketLog = () => {
   const { sortItems, requestSort } = useSortableData(tickets);
 
   return (
-    <div className="ticket-table-container">
-      <table className="ticket-table">
-        <thead>
-          <tr>
-            <th className="ticket-table-header">
-              <button
-                className="ticket-table-header-button"
-                type="button"
-                onClick={() => requestSort('title')}
-              >
-                Title
-              </button>
-            </th>
+    <>
+      {isModalOpen ? (
+        <Modal close={() => setIsModalOpen(false)}>
+          {/* {sortItems.find(ticket => )} */}
+          <div className="ticket-button-group">
+            <FontAwesomeIcon className="edit-ticket-button" icon={faEdit} size="2x" />
+            <FontAwesomeIcon className="delete-ticket-button" icon={faTrashAlt} size="2x" />
+          </div>
+        </Modal>
+      ) : null }
+      <div className="ticket-table-container">
+        <table className="ticket-table">
+          <thead>
+            <tr>
+              <th className="ticket-table-header">
+                <button
+                  className="ticket-table-header-button"
+                  type="button"
+                  onClick={() => requestSort('title')}
+                >
+                  Title
+                </button>
+              </th>
 
-            <th className="ticket-table-header">
-              <button
-                className="ticket-table-header-button"
-                type="button"
-                onClick={() => requestSort('description')}
-              >
-                Description
-              </button>
-            </th>
+              <th className="ticket-table-header">
+                <button
+                  className="ticket-table-header-button"
+                  type="button"
+                  onClick={() => requestSort('description')}
+                >
+                  Description
+                </button>
+              </th>
 
-            <th className="ticket-table-header">
-              <button
-                className="ticket-table-header-button"
-                type="button"
-                onClick={() => requestSort('priority')}
-              >
-                Priority
-              </button>
-            </th>
+              <th className="ticket-table-header">
+                <button
+                  className="ticket-table-header-button"
+                  type="button"
+                  onClick={() => requestSort('priority')}
+                >
+                  Priority
+                </button>
+              </th>
 
-            <th className="ticket-table-header">
-              <button
-                className="ticket-table-header-button"
-                type="button"
-                onClick={() => requestSort('urgency')}
-              >
-                Urgency
-              </button>
-            </th>
+              <th className="ticket-table-header">
+                <button
+                  className="ticket-table-header-button"
+                  type="button"
+                  onClick={() => requestSort('urgency')}
+                >
+                  Urgency
+                </button>
+              </th>
 
-            <th className="ticket-table-header">
-              <button
-                className="ticket-table-header-button"
-                type="button"
-                onClick={() => requestSort('date')}
-              >
-                Date Created
-              </button>
-            </th>
-          </tr>
-        </thead>
-
-        <tbody>
-          {sortItems.map((ticket) => (
-            <tr key={ticket.id}>
-              <td>{ticket.title}</td>
-              <td>{ticket.description}</td>
-              <td>{ticket.priority}</td>
-              <td>{ticket.urgency}</td>
-              <td className="table-last-cell">
-                {ticket.date}
-                <div className="table-delete-button-container">
-                  <FontAwesomeIcon className="table-delete-button" icon={faTrashAlt} size="lg" />
-                </div>
-              </td>
+              <th className="ticket-table-header">
+                <button
+                  className="ticket-table-header-button"
+                  type="button"
+                  onClick={() => requestSort('date')}
+                >
+                  Date Created
+                </button>
+              </th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+          </thead>
+
+          <tbody>
+            {sortItems.map((ticket) => (
+              <tr className="ticket-table-row" onClick={() => setIsModalOpen(true)} key={ticket.id}>
+                <td>{ticket.title}</td>
+                <td>{ticket.description}</td>
+                <td>{ticket.priority}</td>
+                <td>{ticket.urgency}</td>
+                <td>{ticket.date}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </>
   );
 };
-export default TicketLog;
+
+export default TicketTable;
