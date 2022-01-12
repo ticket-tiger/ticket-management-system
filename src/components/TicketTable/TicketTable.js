@@ -53,6 +53,7 @@ const sampleTickets = [{
 const TicketTable = () => {
   const [tickets, setTickets] = useState(sampleTickets);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedTicket, setSelectedTicket] = useState(null);
   const auth = useAuth();
 
   useEffect(async () => {
@@ -76,14 +77,41 @@ const TicketTable = () => {
   }, []);
   const { sortItems, requestSort } = useSortableData(tickets);
 
+  const openModal = (ticketTitle) => {
+    // Fill the modal with the right ticket data
+    setSelectedTicket(sortItems.find((ticket) => ticket.title === ticketTitle));
+    setIsModalOpen(true);
+  };
+
   return (
     <>
       {isModalOpen ? (
         <Modal close={() => setIsModalOpen(false)}>
-          {/* {sortItems.find(ticket => )} */}
           <div className="ticket-button-group">
             <FontAwesomeIcon className="edit-ticket-button" icon={faEdit} size="2x" />
             <FontAwesomeIcon className="delete-ticket-button" icon={faTrashAlt} size="2x" />
+          </div>
+          <div className="selected-ticket-data-group">
+            <div>
+              <label className="selected-ticket-label" htmlFor="selected-ticket-title">Title:</label>
+              <p id="selected-ticket-title" className="selected-ticket-data">{selectedTicket.title}</p>
+            </div>
+            <div>
+              <label className="selected-ticket-label" htmlFor="selected-ticket-date">Date Created:</label>
+              <p id="selected-ticket-date" className="selected-ticket-data">{selectedTicket.date}</p>
+            </div>
+            <div>
+              <label className="selected-ticket-label" htmlFor="selected-ticket-priority">Priority:</label>
+              <p id="selected-ticket-priority" className="selected-ticket-data">{selectedTicket.priority}</p>
+            </div>
+            <div>
+              <label className="selected-ticket-label" htmlFor="selected-ticket-urgency">Urgency:</label>
+              <p id="selected-ticket-urgency" className="selected-ticket-data">{selectedTicket.urgency}</p>
+            </div>
+            <div>
+              <label className="selected-ticket-label" htmlFor="selected-ticket-description">Description:</label>
+              <p id="selected-ticket-description" className="selected-ticket-data">{selectedTicket.description}</p>
+            </div>
           </div>
         </Modal>
       ) : null }
@@ -145,7 +173,7 @@ const TicketTable = () => {
 
           <tbody>
             {sortItems.map((ticket) => (
-              <tr className="ticket-table-row" onClick={() => setIsModalOpen(true)} key={ticket.id}>
+              <tr className="ticket-table-row" onClick={() => openModal(ticket.title)} key={ticket.id}>
                 <td>{ticket.title}</td>
                 <td>{ticket.description}</td>
                 <td>{ticket.priority}</td>
