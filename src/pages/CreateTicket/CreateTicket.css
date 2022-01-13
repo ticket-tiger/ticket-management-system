@@ -109,52 +109,6 @@
   border: black 2px solid;
 }
 
-.title {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  color: white;
-  align-items: center;
-  margin-bottom: 3vh; margin-top: 3vh;
-  font-size: 20px;
-  background: red;
-  background: -webkit-linear-gradient(left, orange , yellow, green, cyan, blue, violet);
-  background: -o-linear-gradient(right, orange, yellow, green, cyan, blue, violet);
-  background: -moz-linear-gradient(right, orange, yellow, green, cyan, blue, violet);
-  background: linear-gradient(to right, orange , yellow, green, cyan, blue, violet);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.submit-ticket__button {
-  align-items: center;
-  position: relative;
-  font-size: 1rem;
-  font-weight: bold;
-  color: white;
-  background-color: #40005d;
-  border: 1px solid white;
-  padding: 0.5rem;
-  border-radius: 12px;
-  cursor: pointer; 
-  opacity: .8;
-  margin-bottom: 1vh; margin-top: 2vh;
- }
-
- .submit-ticket__button:hover {
-  color: #40005d;
-  background-color: white;
-  opacity: 1;
- }
-
-.submit-ticket__button:hover {
-  color: #40005d;
-  background-color: white;
-  opacity: 1;
-}
-
-.submit-ticket__button:active {
-  transform: scale(.97);
-}
-
  @media (min-width: 580px)
  {
    /* .submit-ticket__button
@@ -162,25 +116,6 @@
       font-size: 1.25rem;
       padding: 0.5rem 1.5rem;
    } */
- }
- .submit-ticket__priority-level {
-   /* justify-content: inline-block; */
-   color: white;
-   display: flex;
-   justify-content: space-evenly;
-   width: auto;
- }
-
- .priority-level__text{
-   padding-left: 2vh;
-   color:cadetblue;
-   border: solid green 2px;
-   margin-left: 20px;
- }
-
- .priority-select {
-   padding-left: 2vh;
-   color:cadetblue;
  }
 
 @media screen and (min-width: 1800px) {

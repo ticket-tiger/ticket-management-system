@@ -37,17 +37,17 @@ const useSortableData = (items, config = null) => {
 };
 
 const sampleTickets = [{
-  title: 'SDcasdc', description: 'apple', priority: '10', urgency: '8', date: '12/10/21',
+  title: 'SDcasdc', description: 'apple', status: 'Submitted', priority: '10', urgency: '8', date: '12/10/21',
 }, {
-  title: 'ZSCsc', description: 'banana', priority: '1', urgency: '5', date: '5/09/21',
+  title: 'ZSCsc', description: 'banana', status: 'In Progress', priority: '1', urgency: '5', date: '5/09/21',
 },
 {
-  title: 'anonymous', description: 'apple', priority: '10', urgency: '1', date: '12/10/21',
+  title: 'anonymous', description: 'apple', status: 'Resolved', priority: '10', urgency: '1', date: '12/10/21',
 }, {
-  title: 'anonymous', description: 'mandarin', priority: '2', urgency: '6', date: '01/10/19',
+  title: 'anonymous', description: 'mandarin', status: 'Submitted', priority: '2', urgency: '6', date: '01/10/19',
 },
 {
-  title: 'Badport', description: 'apple', priority: '4', urgency: '9', date: '3/23/21',
+  title: 'Badport', description: 'apple', status: 'In Progress', priority: '4', urgency: '9', date: '3/23/21',
 }];
 
 const TicketTable = () => {
@@ -115,6 +115,16 @@ const TicketTable = () => {
                 <button
                   className="ticket-table-header-button"
                   type="button"
+                  onClick={() => requestSort('status')}
+                >
+                  Status
+                </button>
+              </th>
+
+              <th className="ticket-table-header">
+                <button
+                  className="ticket-table-header-button"
+                  type="button"
                   onClick={() => requestSort('priority')}
                 >
                   Priority
@@ -148,6 +158,7 @@ const TicketTable = () => {
               <tr className="ticket-table-row" onClick={() => setIsModalOpen(true)} key={ticket.id}>
                 <td>{ticket.title}</td>
                 <td>{ticket.description}</td>
+                <td>{ticket.status}</td>
                 <td>{ticket.priority}</td>
                 <td>{ticket.urgency}</td>
                 <td>{ticket.date}</td>

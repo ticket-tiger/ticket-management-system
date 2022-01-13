@@ -6,7 +6,7 @@ import {
 } from '@testing-library/react';
 import '@testing-library/jest-dom';
 // import { act } from 'react-dom/test-utils';
-import SubmitTicket from './SubmitTicket';
+import CreateTicket from './CreateTicket';
 
 // Declares which API requests to mock
 const server = setupServer();
@@ -22,7 +22,7 @@ test('handles status 200 OK', async () => {
   server.use(
     rest.post('http://localhost:3001/api/create-ticket', (req, res, ctx) => res(ctx.status(200))),
   );
-  render(<SubmitTicket />);
+  render(<CreateTicket />);
   fireEvent.click(screen.getByText('Submit'));
   // wait until the post request promise resolves and
   // the component calls setState and re-renders.
@@ -37,7 +37,7 @@ test('handles status 500 server error', async () => {
   server.use(
     rest.post('http://localhost:3001/api/create-ticket', (req, res, ctx) => res(ctx.status(500))),
   );
-  render(<SubmitTicket />);
+  render(<CreateTicket />);
   fireEvent.click(screen.getByText('Submit'));
   await waitFor(() => screen.getByTestId('responseStatus'));
   await waitFor(() => expect(screen.getByTestId('responseStatus')).toHaveTextContent('500'));
