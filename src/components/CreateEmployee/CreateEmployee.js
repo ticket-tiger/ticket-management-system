@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import validator from 'validator';
 import './CreateEmployee.css';
+// import isEmail from 'validator/lib/isEmail';
 
 const CreateEmployee = ({ closeModal }) => {
   // const [accountCreationSuccessful, setAccountCreationSuccessful] = useState(false);
