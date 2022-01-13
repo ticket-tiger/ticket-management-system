@@ -5,9 +5,9 @@ import { randomBytes } from 'crypto';
 import localConfig from '../localConfig.js';
 import { hashPassword, verifyPassword } from './argon2.js';
 import {
-  createUser, createEmployee, createPermanentPassword, getPasswordInfo,
+  createUser, createEmployee, createPermanentPassword, getUserInfo,
 } from '../db.js';
-import sendOneTimePasswordByEmail from './email.js';
+import { sendOneTimePasswordByEmail } from './email.js';
 
 const userRouter = express.Router();
 
@@ -57,10 +57,13 @@ userRouter.post('/create-employee', verifyToken, async (req, res) => {
 userRouter.post('/login', async (req, res, next) => {
   console.log('Received POST request.');
   try {
-    const passwordInfo = await getPasswordInfo(req.body.email);
-    const verify = await verifyPassword(passwordInfo.password, req.body.password);
-    res.locals.isOneTimePassword = passwordInfo.isOneTimePassword;
-    res.locals.passwordExpirationDate = passwordInfo.passwordExpirationDate;
+    // get password info and user role
+    // Should we send a separate db request for it?
+    const userInfo = await getUserInfo(req.body.email);
+    const verify = await verifyPassword(userInfo.password, req.body.password);
+    res.locals.isOneTimePassword = userInfo.isOneTimePassword;
+    res.locals.passwordExpirationDate = userInfo.passwordExpirationDate;
+    res.locals.role = userInfo.role;
     if (verify) {
       res.status(200);
       next();
@@ -79,6 +82,7 @@ userRouter.post('/login', async (req, res, next) => {
     token,
     isOneTimePassword: res.locals.isOneTimePassword,
     passwordExpirationDate: res.locals.passwordExpirationDate,
+    role: res.locals.role,
   });
   res.end();
 });
