@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Routes, Navigate } from 'react-router-dom';
-import { AuthProvider } from './auth';
+import { AuthProvider, RequireAuth } from './auth';
 import CreateTicket from './pages/CreateTicket/CreateTicket';
 import ViewTickets from './pages/ViewTickets/ViewTickets';
 import NavBar from './components/NavBar/NavBar';
@@ -12,6 +12,7 @@ const App = () => {
     if (!window.sessionStorage.getItem('refreshed')) {
       if (numTabs < 1) {
         window.localStorage.removeItem('email');
+        window.localStorage.removeItem('role');
       }
     }
     window.localStorage.setItem('tabCounter', numTabs + 1);
@@ -35,10 +36,9 @@ const App = () => {
           <Route
             path="/view-tickets"
             element={(
-              <ViewTickets />
-            // <RequireAuth>
-            //   <ViewTickets />
-            // </RequireAuth>
+              <RequireAuth>
+                <ViewTickets />
+              </RequireAuth>
           )}
           />
         </Route>

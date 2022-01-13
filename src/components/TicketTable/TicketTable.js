@@ -12,6 +12,7 @@ import './TicketTable.css';
 const useSortableData = (items, config = null) => {
   const [sortConfig, setSortConfig] = useState(config);
   const sortItems = useMemo(() => {
+    if (!items) return items;
     const sortedItems = [...items];
     if (sortConfig != null) {
       sortedItems.sort((a, b) => {
@@ -38,24 +39,29 @@ const useSortableData = (items, config = null) => {
   return { sortItems, requestSort };
 };
 
-const sampleTickets = [{
-  title: 'SDcasdc', description: 'apple', status: 'Submitted', priority: '10', urgency: '8', date: '12/10/21',
-}, {
-  title: 'ZSCsc', description: 'banana', status: 'In Progress', priority: '1', urgency: '5', date: '5/09/21',
-},
-{
-  title: 'anonymous', description: 'apple', status: 'Resolved', priority: '10', urgency: '1', date: '12/10/21',
-}, {
-  title: 'anonymous', description: 'mandarin', status: 'Submitted', priority: '2', urgency: '6', date: '01/10/19',
-},
-{
-  title: 'Badport', description: 'apple', status: 'In Progress', priority: '4', urgency: '9', date: '3/23/21',
-}];
+// const sampleTickets = [{
+//   _id: '1', title: 'SDcasdc', description: 'apple', status:
+// 'Submitted', priority: '10', urgency: '8', date: '12/10/21',
+// }, {
+//   _id: '2', title: 'ZSCsc', description: 'banana', status:
+// 'In Progress', priority: '1', urgency: '5', date: '5/09/21',
+// },
+// {
+//   _id: '3', title: 'anonymous', description: 'apple', status:
+// 'Resolved', priority: '10', urgency: '1', date: '12/10/21',
+// }, {
+//   _id: '4', title: 'anonymous', description: 'mandarin', status:
+// 'Submitted', priority: '2', urgency: '6', date: '01/10/19',
+// },
+// {
+//   _id: '5', title: 'Badport', description: 'apple', status:
+// 'In Progress', priority: '4', urgency: '9', date: '3/23/21',
+// }];
 
 const TicketTable = () => {
-  const [tickets, setTickets] = useState(sampleTickets);
+  const [tickets, setTickets] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [ticketisEditable, setticketisEditable] = useState(null);
+  const [ticketisEditable, setTicketisEditable] = useState(null);
   const [ticketStatusCSSClass, setTicketCreationStatusCSSClass] = useState('');
   const auth = useAuth();
 
@@ -70,6 +76,11 @@ const TicketTable = () => {
         return {
           ...state,
           date: action.payload,
+        };
+      case 'status':
+        return {
+          ...state,
+          status: action.payload,
         };
       case 'priority':
         return {
@@ -111,12 +122,11 @@ const TicketTable = () => {
 
       const response = await axios.get('/tickets/get-tickets', config);
       setTickets(response.data);
-      auth.signin(window.localStorage.getItem('email'));
     } catch (error) {
       auth.signout();
     }
   };
-  useEffect(getTickets(), []);
+  useEffect(getTickets, []);
   const { sortItems, requestSort } = useSortableData(tickets);
 
   const openModal = (ticketTitle) => {
@@ -137,6 +147,7 @@ const TicketTable = () => {
           authorization: cookieValue || null,
         },
       };
+
       await axios.post('tickets/update-ticket', selectedTicket, config);
       setIsModalOpen(false);
     } catch (error) {
@@ -155,9 +166,9 @@ const TicketTable = () => {
             {ticketStatusCSSClass === 'status-500' ? <p>There was a problem with the server.  Sorry for the inconvenience.</p> : null}
             {ticketStatusCSSClass === 'status-default-error' ? <p>There was an unexpected error.  Please try again in a little while.</p> : null}
           </div>
-          {auth.user.role === 'nbobhfs' ? (
+          {auth.user.role === 'Manager' ? (
             <div className="ticket-button-group">
-              <FontAwesomeIcon className="edit-ticket-button" icon={faEdit} size="2x" onClick={() => setticketisEditable(true)} />
+              <FontAwesomeIcon className="edit-ticket-button" icon={faEdit} size="2x" onClick={() => setTicketisEditable(true)} />
               <FontAwesomeIcon className="delete-ticket-button" icon={faTrashAlt} size="2x" />
             </div>
           ) : null}
@@ -173,6 +184,10 @@ const TicketTable = () => {
                   <input id="selected-ticket-date-input" className="selected-ticket-data" value={selectedTicket.date} onChange={(e) => dispatch({ type: 'date', payload: e.target.value })} />
                 </div>
                 <div>
+                  <label className="selected-ticket-label" htmlFor="selected-ticket-status-input">Status:</label>
+                  <input id="selected-ticket-status-input" className="selected-ticket-data" value={selectedTicket.status} onChange={(e) => dispatch({ type: 'status', payload: e.target.value })} />
+                </div>
+                <div>
                   <label className="selected-ticket-label" htmlFor="selected-ticket-priority-input">Priority:</label>
                   <input id="selected-ticket-priority-input" className="selected-ticket-data" value={selectedTicket.priority} onChange={(e) => dispatch({ type: 'priority', payload: e.target.value })} />
                 </div>
@@ -184,7 +199,7 @@ const TicketTable = () => {
                   <label className="selected-ticket-label" htmlFor="selected-ticket-description-input">Description:</label>
                   <input id="selected-ticket-description-input" className="selected-ticket-data" value={selectedTicket.description} onChange={(e) => dispatch({ type: 'description', payload: e.target.value })} />
                 </div>
-                <button type="button">Cancel</button>
+                <button type="button" onClick={() => setTicketisEditable(false)}>Cancel</button>
                 <button type="submit" onClick={(e) => handleUpdate(e)}> Submit</button>
 
               </>
@@ -199,6 +214,10 @@ const TicketTable = () => {
                   <div>
                     <label className="selected-ticket-label" htmlFor="selected-ticket-date-p">Date Created:</label>
                     <p id="selected-ticket-date-p" className="selected-ticket-data">{selectedTicket.date}</p>
+                  </div>
+                  <div>
+                    <label className="selected-ticket-label" htmlFor="selected-ticket-status-p">Status:</label>
+                    <p id="selected-ticket-status-p" className="selected-ticket-data">{selectedTicket.status}</p>
                   </div>
                   <div>
                     <label className="selected-ticket-label" htmlFor="selected-ticket-priority-p">Priority:</label>
@@ -218,86 +237,90 @@ const TicketTable = () => {
 
         </Modal>
       ) : null }
-      <div className="ticket-table-container">
-        <table className="ticket-table">
-          <thead>
-            <tr>
-              <th className="ticket-table-header">
-                <button
-                  className="ticket-table-header-button"
-                  type="button"
-                  onClick={() => requestSort('title')}
-                >
-                  Title
-                </button>
-              </th>
+      {tickets
+        ? (
+          <div className="ticket-table-container">
+            <table className="ticket-table">
+              <thead>
+                <tr>
+                  <th className="ticket-table-header">
+                    <button
+                      className="ticket-table-header-button"
+                      type="button"
+                      onClick={() => requestSort('title')}
+                    >
+                      Title
+                    </button>
+                  </th>
 
-              <th className="ticket-table-header">
-                <button
-                  className="ticket-table-header-button"
-                  type="button"
-                  onClick={() => requestSort('description')}
-                >
-                  Description
-                </button>
-              </th>
+                  <th className="ticket-table-header">
+                    <button
+                      className="ticket-table-header-button"
+                      type="button"
+                      onClick={() => requestSort('description')}
+                    >
+                      Description
+                    </button>
+                  </th>
 
-              <th className="ticket-table-header">
-                <button
-                  className="ticket-table-header-button"
-                  type="button"
-                  onClick={() => requestSort('status')}
-                >
-                  Status
-                </button>
-              </th>
+                  <th className="ticket-table-header">
+                    <button
+                      className="ticket-table-header-button"
+                      type="button"
+                      onClick={() => requestSort('status')}
+                    >
+                      Status
+                    </button>
+                  </th>
 
-              <th className="ticket-table-header">
-                <button
-                  className="ticket-table-header-button"
-                  type="button"
-                  onClick={() => requestSort('priority')}
-                >
-                  Priority
-                </button>
-              </th>
+                  <th className="ticket-table-header">
+                    <button
+                      className="ticket-table-header-button"
+                      type="button"
+                      onClick={() => requestSort('priority')}
+                    >
+                      Priority
+                    </button>
+                  </th>
 
-              <th className="ticket-table-header">
-                <button
-                  className="ticket-table-header-button"
-                  type="button"
-                  onClick={() => requestSort('urgency')}
-                >
-                  Urgency
-                </button>
-              </th>
+                  <th className="ticket-table-header">
+                    <button
+                      className="ticket-table-header-button"
+                      type="button"
+                      onClick={() => requestSort('urgency')}
+                    >
+                      Urgency
+                    </button>
+                  </th>
 
-              <th className="ticket-table-header">
-                <button
-                  className="ticket-table-header-button"
-                  type="button"
-                  onClick={() => requestSort('date')}
-                >
-                  Date Created
-                </button>
-              </th>
-            </tr>
-          </thead>
+                  <th className="ticket-table-header">
+                    <button
+                      className="ticket-table-header-button"
+                      type="button"
+                      onClick={() => requestSort('date')}
+                    >
+                      Date Created
+                    </button>
+                  </th>
+                </tr>
+              </thead>
 
-          <tbody>
-            {sortItems.map((ticket) => (
-              <tr className="ticket-table-row" onClick={() => openModal(ticket.title)} key={ticket.id}>
-                <td>{ticket.title}</td>
-                <td>{ticket.description}</td>
-                <td>{ticket.status}</td>
-                <td>{ticket.priority}</td>
-                <td>{ticket.urgency}</td>
-                <td>{ticket.date}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+              <tbody>
+                {sortItems.map((ticket) => (
+                  <tr className="ticket-table-row" onClick={() => openModal(ticket.title)} key={ticket._id}>
+                    <td key="title">{ticket.title}</td>
+                    <td key="description">{ticket.description}</td>
+                    <td key="status">{ticket.status}</td>
+                    <td key="priority">{ticket.priority}</td>
+                    <td key="urgency">{ticket.urgency}</td>
+                    <td key="date">{ticket.date}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )
+        : null }
     </>
   );
 };

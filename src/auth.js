@@ -2,22 +2,31 @@ import React, { useState, useContext, createContext } from 'react';
 import PropTypes from 'prop-types';
 import { Navigate } from 'react-router-dom';
 
-const AuthContext = createContext({ email: null, signin: null, signout: null });
+const AuthContext = createContext({
+  user: { email: null, role: null },
+  signin: null,
+  signout: null,
+});
 
 export const AuthProvider = ({ children }) => {
-  const [email, setEmail] = useState(() => window.localStorage.getItem('email'));
+  const [user, setUser] = useState({
+    email: window.localStorage.getItem('email'),
+    role: window.localStorage.getItem('role'),
+  });
 
   const signin = (newUser) => {
-    setEmail(newUser);
-    window.localStorage.setItem('email', newUser);
+    setUser(newUser);
+    window.localStorage.setItem('email', newUser.email);
+    window.localStorage.setItem('role', newUser.role);
   };
 
   const signout = () => {
-    setEmail(null);
+    setUser({ email: null, role: null });
     window.localStorage.removeItem('email');
+    window.localStorage.removeItem('role');
   };
 
-  const value = { email, signin, signout };
+  const value = { user, signin, signout };
 
   return (
     <AuthContext.Provider value={value}>
@@ -34,8 +43,8 @@ export const useAuth = () => useContext(AuthContext);
 
 export const RequireAuth = ({ children }) => {
   const auth = useAuth();
-  if (auth.email === null) {
-    return <Navigate to="/login" />;
+  if (auth.user.email === null) {
+    return <Navigate to="/create-ticket" />;
   }
   return children;
 };

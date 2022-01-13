@@ -44,7 +44,7 @@ const NavBar = () => {
     <div>
       <h1 className="logo">Ticket Management System</h1>
       <nav className="navbar">
-        {auth.email ? (
+        {auth.user.email ? (
           <>
             <Link to="/create-ticket" className="navbar-button">
               <button type="button" className="navbar-button">
@@ -75,7 +75,6 @@ const NavBar = () => {
             </>
           )}
       </nav>
-      <p>{auth.email}</p>
       {isModalOpen
         ? (
           <Modal hideCloseModalButton={isPermanentPasswordModalOpen} close={closeUserForm}>

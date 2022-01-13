@@ -42,7 +42,7 @@ const Login = ({ hideTabs, closeModal }) => {
       const response = await axios.post('/users/login', credentials);
       setAuthenticationStatusCSSClass('200-status');
       document.cookie = `Bearer ${response.data.token}`;
-      auth.signin(credentials.email);
+      auth.signin({ email: credentials.email, role: response.data.role });
       setIsOneTimePassword(response.data.isOneTimePassword);
       if (!response.data.isOneTimePassword) closeModal();
     } catch (error) {

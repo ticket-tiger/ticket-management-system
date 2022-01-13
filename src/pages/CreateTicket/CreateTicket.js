@@ -6,7 +6,7 @@ import './CreateTicket.css';
 const CreateTicket = () => {
   const auth = useAuth();
   const [responseStatus, setResponseStatus] = useState(null);
-  const [guestEmail, setGuestEmail] = useState(auth.email);
+  const [guestEmail, setGuestEmail] = useState(null);
   const [state, setState] = useState({
     ticketCategory: '',
     ticketPriority: 'Low',
@@ -41,7 +41,8 @@ const CreateTicket = () => {
     };
 
     try {
-      const response = await axios.post('/tickets/create-ticket', { email: guestEmail, ticket }, config);
+      const email = guestEmail || auth.email;
+      const response = await axios.post('/tickets/create-ticket', { email, ticket }, config);
       console.log(response);
       return response.status;
     } catch (error) {
