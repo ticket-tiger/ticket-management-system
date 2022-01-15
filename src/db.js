@@ -112,12 +112,13 @@ export const createUser = async (userEmail, userPassword) => {
     await mongoose.connect(uri);
     // a document instance of user
     const user1 = new User({ email: userEmail, password: userPassword, tickets: [] });
+    console.log('hello');
 
     // save model to database
-    user1.save((err, user) => {
-      if (err) console.error(err);
-      console.log(`${user.email} saved to user collection.`);
-    });
+    const result = await user1.save();
+    return result;
+  } catch (error) {
+    return error.code;
   } finally {
     await client.close();
   }

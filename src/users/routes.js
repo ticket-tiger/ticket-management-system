@@ -40,7 +40,10 @@ userRouter.post('/create-account', async (req, res) => {
   };
   // send the result to mongo
   const result = await createUser(account.email, account.password);
-  res.send(result);
+  if (result === 11000) {
+    res.status(409);
+    res.send('Your email is not unique.');
+  } else { res.send(result); }
   res.end();
 });
 
