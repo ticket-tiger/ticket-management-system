@@ -1,3 +1,5 @@
+
+
 .create-account-heading {
   position: absolute;
   top: 20%;
@@ -9,7 +11,7 @@
 
 .create-account-form-input-group {
   position: absolute;
-  top: 40%;
+  top: 30%;
   left: 50%;
   transform: translate(-50%, -50%);
   height: 25%;
@@ -49,7 +51,7 @@
 
 .create-account-submit-button {
   position: absolute;
-  top: 60%;
+  top: 80%;
   left: 50%;
   transform: translate(-50%, 50%);
   height: 45px;
@@ -69,18 +71,43 @@
   color: var(--purple);
 }
 
-.error-message-group {
-  position: absolute;
-  top: 15%;
-  left: 50%;
-  transform: translate(-50%);
-  width: 80%;
-  font-size: 32px;
+.yo {
+  border: 3px solid tan;
 }
 
- .status-400 {
+.error-message-group-1 {
+  border: orangered 1px;
+  z-index: 3;
+  position: absolute;
+  align-content: center;
+  top: 73%;
+  left: 50%;
+  transform: translate(-50%);
+  width: 50%;
+  font-size: 15px;
+  color: red;
+}
+
+ .status409 {
    border-color: red;
  }
+ 
+ .invalidPassword {
+   border-color: rgb(143, 21, 21);
+ }
+
+ .invalidEmail {
+  border-color: rgb(143, 21, 21);
+}
+
+.status500 {
+  border-color: rgb(143, 21, 21);
+}
+
+.noName {
+  border-color: rgb(143, 21, 21);
+
+}
 
  @media screen and (min-width: 1800px) {
    .create-account-form-label {

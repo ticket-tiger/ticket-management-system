@@ -138,6 +138,7 @@ const TicketTable = () => {
         },
       };
       await axios.post('tickets/update-ticket', selectedTicket, config);
+      await getTickets();
       setIsModalOpen(false);
     } catch (error) {
       if (error.response.status === 401) setTicketCreationStatusCSSClass('status-401');
