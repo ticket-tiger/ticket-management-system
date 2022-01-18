@@ -3,21 +3,31 @@ import express from 'express';
 import jwt from 'jsonwebtoken';
 import localConfig from '../localConfig.js';
 import {
-  createTicket, getTicketCollection,
+  createTicket, getCurrentStatusTitleEmail, getTickets, updateTicket,
 } from '../db.js';
+import { sendStatusUpdateByEmail } from '../users/email.js';
 
 const router = express.Router();
 
-const verifyToken = async (req, res, next) => {
-  const authheader = req.headers.authorization;
-  const token = authheader && authheader.split(' ')[1];
+// generate access tokens
+const generateAccessTokens = (email) => jwt.sign(email, localConfig.tokenSecret, { expiresIn: '900s' });
 
+const verifyToken = async (req, res, next) => {
+  const { token } = req.cookies;
+  console.log(token);
   if (token === undefined) {
-    req.userEmail = req.body.email;
+    res.sendStatus(401);
   } else {
-    jwt.verify(token, localConfig.tokenSecret, (err, user) => {
-      if (err) { res.status(403); }
-      req.userEmail = user.email;
+    jwt.verify(token, localConfig.tokenSecret, (err, tokenUser) => {
+      if (err) { res.sendStatus(403); } else {
+        req.userEmail = tokenUser.email;
+        res.clearCookie('token');
+        const newToken = generateAccessTokens({ email: tokenUser.email });
+        res.cookie('token', newToken, { httpOnly: true, maxAge: 900000 });
+        const { user } = req.cookies;
+        res.clearCookie('user');
+        res.cookie('user', user, { maxAge: 900000, encode: (str) => str });
+      }
     });
   }
   next();
@@ -29,9 +39,11 @@ router.post('/create-ticket', verifyToken, async (req, res) => {
     title: req.body.ticket.title,
     description: req.body.ticket.description,
     category: req.body.ticket.category,
+    status: 'Submitted',
     priority: req.body.ticket.priority,
     urgency: req.body.ticket.urgency,
     date: new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }),
+    email: req.userEmail,
   };
   const result = await createTicket(req.userEmail, ticket);
   res.send(result);
@@ -40,7 +52,22 @@ router.post('/create-ticket', verifyToken, async (req, res) => {
 
 router.get('/get-tickets', verifyToken, async (req, res) => {
   console.log('Received GET request.');
-  const result = await getTicketCollection(req.userEmail);
+  const result = await getTickets(req.userEmail);
+  res.send(result);
+  res.end();
+});
+
+router.post('/update-ticket', verifyToken, async (req, res) => {
+  console.log('Received POST request');
+  const { status, title, email } = await getCurrentStatusTitleEmail(
+    req.body.email, req.body._id,
+  );
+  const result = await updateTicket(req.userEmail, req.body._id, req.body);
+  if (status !== req.body.status) {
+    await sendStatusUpdateByEmail(
+      email, title, status, req.body.status,
+    );
+  }
   res.send(result);
   res.end();
 });

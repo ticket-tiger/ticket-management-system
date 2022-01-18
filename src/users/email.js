@@ -2,7 +2,7 @@ import nodemailer from 'nodemailer';
 
 // Test account name: Delphine Waters
 
-const sendOneTimePasswordByEmail = async (email, password) => {
+export const sendOneTimePasswordByEmail = async (email, password) => {
   const transporter = nodemailer.createTransport({
     host: 'smtp.ethereal.email',
     port: 587,
@@ -26,7 +26,7 @@ const sendOneTimePasswordByEmail = async (email, password) => {
   console.log(`Preview URL: ${nodemailer.getTestMessageUrl(info)}`);
 };
 
-const sendStatusUpdateByEmail = async (email, ticketTitle, oldStatus, newStatus) => {
+export const sendStatusUpdateByEmail = async (email, ticketTitle, oldStatus, newStatus) => {
   const transporter = nodemailer.createTransport({
     host: 'smtp.ethereal.email',
     port: 587,
@@ -47,5 +47,3 @@ const sendStatusUpdateByEmail = async (email, ticketTitle, oldStatus, newStatus)
 
   console.log(`Preview URL: ${nodemailer.getTestMessageUrl(info)}`);
 };
-
-export default sendOneTimePasswordByEmail;

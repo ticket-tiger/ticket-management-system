@@ -45,7 +45,10 @@ const userSchema = new Schema({
     status: {
       type: String,
       default: 'Submitted',
-      enum: ['Submitted', 'In Progress', 'Completed'],
+      enum: ['Submitted', 'In Progress', 'Resolved'],
+    },
+    email: {
+      type: String, required: true, set: toLower, validate: emailValidate,
     },
   }],
 });
@@ -97,11 +100,33 @@ export const createTicket = async (userEmail, ticket) => {
   }
 };
 
-export const getTicketCollection = async (userEmail) => {
+export const getTickets = async (userEmail, userRole) => {
   try {
     await mongoose.connect(uri);
-    const result = await User.findOne({ email: userEmail }, 'tickets').exec();
+    let result;
+    if (userRole === 'Engineer' || userRole === 'Manager') {
+      // Grab all tickets
+      result = await User.find({}, 'tickets').exec();
+    } else {
+      result = await User.findOne({ email: userEmail }, 'tickets').exec();
+    }
     return result.tickets;
+  } finally {
+    await client.close();
+  }
+};
+
+export const updateTicket = async (userEmail, ticketId, updatedFieldsObject) => {
+  try {
+    await mongoose.connect(uri);
+    const formattedUpdatedFields = {};
+    Object.entries(updatedFieldsObject).forEach(([key, value]) => {
+      formattedUpdatedFields[`tickets.$.${key}`] = value;
+    });
+    const result = await User.updateOne({ email: userEmail, 'tickets._id': ticketId }, {
+      $set: formattedUpdatedFields,
+    });
+    return result;
   } finally {
     await client.close();
   }
@@ -167,21 +192,22 @@ export const createPermanentPassword = async (email, newPassword) => {
   }
 };
 
-export const getPasswordInfo = async (userEmail) => {
+export const getUserInfo = async (userEmail) => {
   try {
     await mongoose.connect(uri);
-    const result = await User.findOne({ email: userEmail }, 'password isOneTimePassword passwordExpirationDate').exec();
+    const result = await User.findOne({ email: userEmail }, 'password isOneTimePassword passwordExpirationDate role').exec();
     return result;
   } finally {
     await client.close();
   }
 };
 
-export const getCurrentStatus = async (objectId) => {
+export const getCurrentStatusTitleEmail = async (email, objectId) => {
   try {
     await mongoose.connect(uri);
-    const result = await User.findOne({ tickets: { _id: objectId } }, { tickets: { _id: objectId } }).exec();
-    return result.status;
+    // We can probably search for the user by email instead of an id of a ticket
+    const result = await User.findOne({ email, 'tickets._id': objectId }, { 'tickets.$': 1 }).exec();
+    return { status: result.tickets[0].status, title: result.tickets[0].title, email: result.tickets[0].email };
   } finally {
     await client.close();
   }
