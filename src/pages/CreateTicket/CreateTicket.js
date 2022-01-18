@@ -32,17 +32,17 @@ const CreateTicket = () => {
       urgency: state.ticketUrgency,
     };
 
-    const cookieValue = document.cookie
-      .split('; ')
-      .find((row) => row.startsWith('Bearer '));
+    // const cookieValue = document.cookie
+    //   .split('; ')
+    //   .find((row) => row.startsWith('Bearer '));
 
-    const config = {
-      authorization: cookieValue || null,
-    };
+    // const config = {
+    //   authorization: cookieValue || null,
+    // };
 
     try {
-      const email = guestEmail || auth.email;
-      const response = await axios.post('/tickets/create-ticket', { email, ticket }, config);
+      const email = guestEmail || auth.user.email;
+      const response = await axios.post('/tickets/create-ticket', { email, ticket });
       console.log(response);
       return response.status;
     } catch (error) {
@@ -92,7 +92,7 @@ const CreateTicket = () => {
             <div className="label-text">Description</div>
           </label>
         </div>
-        {auth.email
+        {auth.user
           ? null
           : (
             <div className="form-element">

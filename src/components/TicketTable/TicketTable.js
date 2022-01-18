@@ -97,6 +97,11 @@ const TicketTable = () => {
           ...state,
           description: action.payload,
         };
+      case 'email':
+        return {
+          ...state,
+          email: action.payload,
+        };
       case 'ticket':
         return {
           ...action.payload,
@@ -110,17 +115,17 @@ const TicketTable = () => {
 
   const getTickets = async () => {
     try {
-      const cookieValue = document.cookie
-        .split('; ')
-        .find((row) => row.startsWith('Bearer '));
+      // const cookieValue = document.cookie
+      //   .split('; ')
+      //   .find((row) => row.startsWith('Bearer '));
 
-      const config = {
-        headers: {
-          authorization: cookieValue || null,
-        },
-      };
+      // const config = {
+      //   headers: {
+      //     authorization: cookieValue || null,
+      //   },
+      // };
 
-      const response = await axios.get('/tickets/get-tickets', config);
+      const response = await axios.get('/tickets/get-tickets');
       setTickets(response.data);
     } catch (error) {
       auth.signout();
@@ -138,18 +143,20 @@ const TicketTable = () => {
   const handleUpdate = async (e) => {
     e.preventDefault();
     try {
-      const cookieValue = document.cookie
-        .split('; ')
-        .find((row) => row.startsWith('Bearer '));
+      // const cookieValue = document.cookie
+      //   .split('; ')
+      //   .find((row) => row.startsWith('Bearer '));
 
-      const config = {
-        headers: {
-          authorization: cookieValue || null,
-        },
-      };
+      // const config = {
+      //   headers: {
+      //     authorization: cookieValue || null,
+      //   },
+      // };
 
-      await axios.post('tickets/update-ticket', selectedTicket, config);
+      await axios.post('tickets/update-ticket', selectedTicket);
+      await getTickets();
       setIsModalOpen(false);
+      setTicketCreationStatusCSSClass('');
     } catch (error) {
       if (error.response.status === 401) setTicketCreationStatusCSSClass('status-401');
       else if (error.response.status >= 500) setTicketCreationStatusCSSClass('status-500');
@@ -199,6 +206,10 @@ const TicketTable = () => {
                   <label className="selected-ticket-label" htmlFor="selected-ticket-description-input">Description:</label>
                   <input id="selected-ticket-description-input" className="selected-ticket-data" value={selectedTicket.description} onChange={(e) => dispatch({ type: 'description', payload: e.target.value })} />
                 </div>
+                <div>
+                  <label className="selected-ticket-label" htmlFor="selected-ticket-email-input">Email:</label>
+                  <input id="selected-ticket-email-input" className="selected-ticket-data" value={selectedTicket.email} onChange={(e) => dispatch({ type: 'email', payload: e.target.value })} />
+                </div>
                 <button type="button" onClick={() => setTicketisEditable(false)}>Cancel</button>
                 <button type="submit" onClick={(e) => handleUpdate(e)}> Submit</button>
 
@@ -230,6 +241,10 @@ const TicketTable = () => {
                   <div>
                     <label className="selected-ticket-label" htmlFor="selected-ticket-description-p">Description:</label>
                     <p id="selected-ticket-description-p" className="selected-ticket-data">{selectedTicket.description}</p>
+                  </div>
+                  <div>
+                    <label className="selected-ticket-label" htmlFor="selected-ticket-email-p">Email:</label>
+                    <p id="selected-ticket-email-p" className="selected-ticket-data">{selectedTicket.email}</p>
                   </div>
                 </>
               )}

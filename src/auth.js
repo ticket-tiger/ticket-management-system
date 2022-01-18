@@ -9,21 +9,31 @@ const AuthContext = createContext({
 });
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState({
-    email: window.localStorage.getItem('email'),
-    role: window.localStorage.getItem('role'),
-  });
+  const [user, setUser] = useState(
+    // we want to try splitting only if it isn't null
+    document.cookie
+      .split('; ')
+      .find((row) => row.startsWith('user='))
+      ? document.cookie
+        .split('; ')
+        .find((row) => row.startsWith('user='))
+        .split('=')[1]
+      : null,
+    // email: window.localStorage.getItem('email'),
+    // role: window.localStorage.getItem('role'),
+  );
+  console.log(user);
 
   const signin = (newUser) => {
     setUser(newUser);
-    window.localStorage.setItem('email', newUser.email);
-    window.localStorage.setItem('role', newUser.role);
+    // window.localStorage.setItem('email', newUser.email);
+    // window.localStorage.setItem('role', newUser.role);
   };
 
   const signout = () => {
-    setUser({ email: null, role: null });
-    window.localStorage.removeItem('email');
-    window.localStorage.removeItem('role');
+    setUser(null);
+    // window.localStorage.removeItem('email');
+    // window.localStorage.removeItem('role');
   };
 
   const value = { user, signin, signout };
@@ -43,7 +53,7 @@ export const useAuth = () => useContext(AuthContext);
 
 export const RequireAuth = ({ children }) => {
   const auth = useAuth();
-  if (auth.user.email === null) {
+  if (!auth.user) {
     return <Navigate to="/create-ticket" />;
   }
   return children;

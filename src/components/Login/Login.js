@@ -41,7 +41,6 @@ const Login = ({ hideTabs, closeModal }) => {
     try {
       const response = await axios.post('/users/login', credentials);
       setAuthenticationStatusCSSClass('200-status');
-      document.cookie = `Bearer ${response.data.token}`;
       auth.signin({ email: credentials.email, role: response.data.role });
       setIsOneTimePassword(response.data.isOneTimePassword);
       if (!response.data.isOneTimePassword) closeModal();
@@ -59,7 +58,7 @@ const Login = ({ hideTabs, closeModal }) => {
     return <CreatePermanentPassword closeModal={closeModal} />;
   }
 
-  if (auth.email) {
+  if (auth.user) {
     return <Navigate to="/create-ticket" />;
   }
 
