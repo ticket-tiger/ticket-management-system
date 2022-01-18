@@ -9,16 +9,25 @@ import { sendStatusUpdateByEmail } from '../users/email.js';
 
 const router = express.Router();
 
-const verifyToken = async (req, res, next) => {
-  const authheader = req.headers.authorization;
-  const token = authheader && authheader.split(' ')[1];
+// generate access tokens
+const generateAccessTokens = (email) => jwt.sign(email, localConfig.tokenSecret, { expiresIn: '900s' });
 
+const verifyToken = async (req, res, next) => {
+  const { token } = req.cookies;
+  console.log(token);
   if (token === undefined) {
-    req.userEmail = req.body.email;
+    res.sendStatus(401);
   } else {
-    jwt.verify(token, localConfig.tokenSecret, (err, user) => {
-      if (err) { res.sendStatus(403); }
-      req.userEmail = user.email;
+    jwt.verify(token, localConfig.tokenSecret, (err, tokenUser) => {
+      if (err) { res.sendStatus(403); } else {
+        req.userEmail = tokenUser.email;
+        res.clearCookie('token');
+        const newToken = generateAccessTokens({ email: tokenUser.email });
+        res.cookie('token', newToken, { httpOnly: true, maxAge: 900000 });
+        const { user } = req.cookies;
+        res.clearCookie('user');
+        res.cookie('user', user, { maxAge: 900000, encode: (str) => str });
+      }
     });
   }
   next();
@@ -50,18 +59,14 @@ router.get('/get-tickets', verifyToken, async (req, res) => {
 
 router.post('/update-ticket', verifyToken, async (req, res) => {
   console.log('Received POST request');
-  let result;
-  if (req.body.status) {
-    // Get current status and send email to the user
-    const { currentStatus, title, email } = await getCurrentStatusTitleEmail(
-      req.body.email, req.body._id,
+  const { status, title, email } = await getCurrentStatusTitleEmail(
+    req.body.email, req.body._id,
+  );
+  const result = await updateTicket(req.userEmail, req.body._id, req.body);
+  if (status !== req.body.status) {
+    await sendStatusUpdateByEmail(
+      email, title, status, req.body.status,
     );
-    result = await updateTicket(req.userEmail, req.body._id, req.body);
-    sendStatusUpdateByEmail(
-      email, title, currentStatus, req.body.status,
-    );
-  } else {
-    result = await updateTicket(req.userEmail, req.body._id, req.body);
   }
   res.send(result);
   res.end();

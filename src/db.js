@@ -120,7 +120,7 @@ export const updateTicket = async (userEmail, ticketId, updatedFieldsObject) => 
   try {
     await mongoose.connect(uri);
     const formattedUpdatedFields = {};
-    Object.entries(updatedFieldsObject).foreach(([key, value]) => {
+    Object.entries(updatedFieldsObject).forEach(([key, value]) => {
       formattedUpdatedFields[`tickets.$.${key}`] = value;
     });
     const result = await User.updateOne({ email: userEmail, 'tickets._id': ticketId }, {
@@ -205,9 +205,8 @@ export const getCurrentStatusTitleEmail = async (email, objectId) => {
   try {
     await mongoose.connect(uri);
     // We can probably search for the user by email instead of an id of a ticket
-    const result = await User.findOne({ email, tickets: { _id: objectId } }, { tickets: { _id: objectId } }).exec();
-    console.log(result);
-    return { status: result.status, title: result.title, email: result.email };
+    const result = await User.findOne({ email, 'tickets._id': objectId }, { 'tickets.$': 1 }).exec();
+    return { status: result.tickets[0].status, title: result.tickets[0].title, email: result.tickets[0].email };
   } finally {
     await client.close();
   }

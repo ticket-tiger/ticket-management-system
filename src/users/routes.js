@@ -11,23 +11,29 @@ import { sendOneTimePasswordByEmail } from './email.js';
 
 const userRouter = express.Router();
 
+// generate access tokens
+const generateAccessTokens = (email) => jwt.sign(email, localConfig.tokenSecret, { expiresIn: '900s' });
+
 const verifyToken = async (req, res, next) => {
-  const authheader = req.headers.authorization;
-  const token = authheader && authheader.split(' ')[1];
+  const { token } = req.cookies;
 
   if (token === undefined) {
     res.sendStatus(401);
   } else {
-    jwt.verify(token, localConfig.tokenSecret, (err, user) => {
-      if (err) { res.sendStatus(403); }
-      req.managerEmail = user.email;
+    jwt.verify(token, localConfig.tokenSecret, (err, tokenUser) => {
+      if (err) { res.sendStatus(403); } else {
+        req.managerEmail = tokenUser.email;
+        res.clearCookie('token');
+        const newToken = generateAccessTokens({ email: tokenUser.email });
+        res.cookie('token', newToken, { httpOnly: true, maxAge: 900000 });
+        const { user } = req.cookies;
+        res.clearCookie('user');
+        res.cookie('user', user, { maxAge: 900000, encode: (str) => str });
+      }
     });
   }
   next();
 };
-
-// generate access tokens
-const generateAccessTokens = (email) => jwt.sign(email, localConfig.tokenSecret, { expiresIn: '3600s' });
 
 // post request to create user
 userRouter.post('/create-account', async (req, res) => {
@@ -57,8 +63,6 @@ userRouter.post('/create-employee', verifyToken, async (req, res) => {
 userRouter.post('/login', async (req, res, next) => {
   console.log('Received POST request.');
   try {
-    // get password info and user role
-    // Should we send a separate db request for it?
     const userInfo = await getUserInfo(req.body.email);
     const verify = await verifyPassword(userInfo.password, req.body.password);
     res.locals.isOneTimePassword = userInfo.isOneTimePassword;
@@ -78,12 +82,21 @@ userRouter.post('/login', async (req, res, next) => {
   }
 }, (req, res) => {
   const token = generateAccessTokens({ email: req.body.email });
+  res.cookie('token', token, { httpOnly: true, maxAge: 900000 });
+  // Create cookie with session info: user's email and role
+  res.cookie('user', JSON.stringify({ email: req.body.email, role: res.locals.role }), { maxAge: 900000, encode: (str) => str });
   res.send({
-    token,
     isOneTimePassword: res.locals.isOneTimePassword,
     passwordExpirationDate: res.locals.passwordExpirationDate,
     role: res.locals.role,
   });
+  res.end();
+});
+
+userRouter.post('/logout', (req, res) => {
+  console.log('Received Post request.');
+  res.clearCookie('token');
+  res.clearCookie('user');
   res.end();
 });
 
