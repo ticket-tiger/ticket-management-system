@@ -9,17 +9,19 @@ import { sendStatusUpdateByEmail } from '../users/email.js';
 
 const router = express.Router();
 
-// generate access tokens
 const generateAccessTokens = (email) => jwt.sign(email, localConfig.tokenSecret, { expiresIn: '900s' });
 
 const verifyToken = async (req, res, next) => {
   const { token } = req.cookies;
-  console.log(token);
   if (token === undefined) {
     res.sendStatus(401);
+    res.end();
   } else {
-    jwt.verify(token, localConfig.tokenSecret, (err, tokenUser) => {
-      if (err) { res.sendStatus(403); } else {
+    jwt.verify(token, localConfig.tokenSecret, { maxAge: '900s' }, (err, tokenUser) => {
+      if (err) {
+        res.sendStatus(403);
+        res.end();
+      } else {
         req.userEmail = tokenUser.email;
         res.clearCookie('token');
         const newToken = generateAccessTokens({ email: tokenUser.email });
@@ -27,10 +29,10 @@ const verifyToken = async (req, res, next) => {
         const { user } = req.cookies;
         res.clearCookie('user');
         res.cookie('user', user, { maxAge: 900000, encode: (str) => str });
+        next();
       }
     });
   }
-  next();
 };
 
 router.post('/create-ticket', verifyToken, async (req, res) => {

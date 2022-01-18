@@ -11,7 +11,6 @@ import { sendOneTimePasswordByEmail } from './email.js';
 
 const userRouter = express.Router();
 
-// generate access tokens
 const generateAccessTokens = (email) => jwt.sign(email, localConfig.tokenSecret, { expiresIn: '900s' });
 
 const verifyToken = async (req, res, next) => {
@@ -20,7 +19,7 @@ const verifyToken = async (req, res, next) => {
   if (token === undefined) {
     res.sendStatus(401);
   } else {
-    jwt.verify(token, localConfig.tokenSecret, (err, tokenUser) => {
+    jwt.verify(token, localConfig.tokenSecret, { maxAge: '900s' }, (err, tokenUser) => {
       if (err) { res.sendStatus(403); } else {
         req.managerEmail = tokenUser.email;
         res.clearCookie('token');
@@ -29,10 +28,10 @@ const verifyToken = async (req, res, next) => {
         const { user } = req.cookies;
         res.clearCookie('user');
         res.cookie('user', user, { maxAge: 900000, encode: (str) => str });
+        next();
       }
     });
   }
-  next();
 };
 
 // post request to create user
