@@ -81,7 +81,6 @@ const Login = ({ hideTabs, closeModal }) => {
             <input
               type="text"
               className={`login-form-input ${authenticationStatusCSSClass}`}
-              placeholder="Email"
               id="login-form-email"
               value={credentials.username}
               onChange={(e) => dispatch({ type: 'email', payload: e.target.value })}
@@ -92,7 +91,6 @@ const Login = ({ hideTabs, closeModal }) => {
             <input
               type="password"
               className={`login-form-input ${authenticationStatusCSSClass}`}
-              placeholder="Password"
               id="login-form-password"
               value={credentials.passsword}
               onChange={(e) => dispatch({ type: 'password', payload: e.target.value })}

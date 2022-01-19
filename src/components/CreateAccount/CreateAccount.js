@@ -46,37 +46,47 @@ const CreateAccount = ({ closeModal }) => {
       case 409:
         return {
           ...state,
-          email: 'status409',
-          message: 'This email already exists',
+          email: action.valid ? '' : 'status409',
+          message: action.valid ? state.message : 'This email already exists',
         };
       case 500:
         return {
           ...state,
-          message: 'We are having some problems, please try again',
+          email: action.valid ? '' : 'status500',
+          message: action.valid ? state.message : 'We are having some problems, please try again',
         };
-      case 'noName':
+      case 'Name':
         return {
           ...state,
-          message: 'Enter your name',
+          name: action.valid ? '' : 'noName',
+          message: action.valid ? state.message : 'Enter your name',
         };
-      case 'invalidPassword':
+      case 'Password':
         return {
           ...state,
-          message: 'Passwords do not match, please retype',
+          password: action.valid ? '' : 'invalidPassword',
+          message: action.valid ? state.message : 'Passwords do not match, please retype',
         };
-      case 'invalidEmail':
+      case 'passwordLength':
         return {
           ...state,
-          message: 'Invalid Email',
+          password: action.valid ? '' : 'passwordLength',
+          verifyPassword: action.valid ? '' : 'passwordLength',
+          message: 'Use 8 characters or more for your password',
+        };
+      case 'Email':
+        return {
+          ...state,
+          email: action.valid ? '' : 'invalidEmail',
+          message: action.valid ? state.message : 'Invalid Email',
         };
       case 'noError':
         return {
-          email: '',
           name: '',
+          email: '',
           password: '',
+          varifyPassword: '',
           message: '',
-          verificationPassword: '',
-          validEmail: '',
         };
       default:
         return {
@@ -87,11 +97,12 @@ const CreateAccount = ({ closeModal }) => {
   };
 
   const initialErrorObject = {
-    email: '',
     name: '',
+    email: '',
     password: '',
-    message: '',
-    verificationPassword: '',
+    varifyPassword: '',
+    message: [],
+
   };
 
   const [errorObject, errorDispatch] = useReducer(errorReducer, initialErrorObject);
@@ -100,19 +111,28 @@ const CreateAccount = ({ closeModal }) => {
     e.preventDefault();
 
     if (validator.isEmpty(credentials.name)) {
-      errorDispatch({ type: 'noName' });
+      errorDispatch({ type: 'Name', valid: false });
       return;
     }
+    errorDispatch({ type: 'Name', valid: true });
 
     if (!validator.isEmail(credentials.email)) {
-      errorDispatch({ type: 'invalidEmail' });
+      errorDispatch({ type: 'Email', valid: false });
       return;
     }
+    errorDispatch({ type: 'Email', valid: true });
+
+    if (credentials.password.length < 8) {
+      errorDispatch({ type: 'passwordLength', valid: false });
+      return;
+    }
+    errorDispatch({ type: 'passwordLength', valid: true });
 
     if (credentials.password !== credentials.verificationPassword) {
-      errorDispatch({ type: 'invalidPassword' });
+      errorDispatch({ type: 'Password', valid: false });
       return;
     }
+    errorDispatch({ type: 'Password', valid: true });
 
     try {
       await axios.post('/users/create-account', credentials);
@@ -124,11 +144,11 @@ const CreateAccount = ({ closeModal }) => {
 
   return (
     <>
-      <div className="yo">
-        <p className="error-message-group-1">
-          {errorObject.message}
-        </p>
-      </div>
+
+      <p className="error-message">
+        {errorObject.message}
+      </p>
+
       {/* <h2 className="create-account-heading">Create an account with us</h2> */}
       <form>
         <div className="create-account-form-input-group">
@@ -162,9 +182,9 @@ const CreateAccount = ({ closeModal }) => {
               type="password"
               id="create-account-form-password"
               onChange={(e) => credentialsDispatch({ type: 'verificationPassword', payload: e.target.value })}
-              className={`create-account-form-input ${errorObject.verificationPassword}`}
+              className={`create-account-form-input ${errorObject.verifyPassword}`}
             />
-            <label className="create-account-form-label" type="text" htmlFor="create-account-form-password">Retype Password</label>
+            <label className="create-account-form-label" type="text" htmlFor="create-account-form-password">Confirm Password</label>
           </div>
         </div>
         <button className="create-account-submit-button" type="submit" onClick={(e) => handleSubmit(e)}>Create Your Account</button>

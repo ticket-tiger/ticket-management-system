@@ -71,11 +71,9 @@
   color: var(--purple);
 }
 
-.yo {
-  border: 3px solid tan;
-}
 
-.error-message-group-1 {
+
+.error-message{
   border: orangered 1px;
   z-index: 3;
   position: absolute;
@@ -83,7 +81,7 @@
   top: 73%;
   left: 50%;
   transform: translate(-50%);
-  width: 50%;
+  width: fit-content;
   font-size: 15px;
   color: red;
 }
@@ -91,23 +89,29 @@
  .status409 {
    border-color: red;
  }
- 
- .invalidPassword {
-   border-color: rgb(143, 21, 21);
+
+ .status500 {
+  border-color: red;
  }
 
- .invalidEmail {
-  border-color: rgb(143, 21, 21);
-}
-
-.status500 {
-  border-color: rgb(143, 21, 21);
-}
 
 .noName {
-  border-color: rgb(143, 21, 21);
+  border-color: red;
 
 }
+ 
+ .invalidPassword {
+  border-color: red;
+  
+ }
+ .passwordLength {
+  border-color: red;
+
+ }
+ .invalidEmail {
+  border-color: red;
+}
+
 
  @media screen and (min-width: 1800px) {
    .create-account-form-label {
