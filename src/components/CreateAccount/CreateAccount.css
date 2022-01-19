@@ -20,7 +20,7 @@
 }
 
 .create-account-form-label {
-  font-size: 32px;
+  font-size: var(--heading-font-size);
   color: black;
   display: block;
   font-weight: bold;
@@ -28,7 +28,7 @@
 }
 
 .create-account-form-input {
-  font-size: 20px;
+  font-size: var(--body-font-size);
   height: 50px;
   width: 100%;
   border: 2px solid transparent;
@@ -56,11 +56,10 @@
   width: 60%;
   border-radius: 5px;
   border: 2px solid black;
-  font-size: 20px;
+  font-size: var(--body-font-size);
   font-weight: 700;
   background-color: white;
   color: black;
-  /* box-shadow: 0px 2px 2px #5C5696; */
   transition: .3s;
 }
 
@@ -75,7 +74,7 @@
   left: 50%;
   transform: translate(-50%);
   width: 80%;
-  font-size: 32px;
+  font-size: var(--heading-font-size);
 }
 
  .status-400 {

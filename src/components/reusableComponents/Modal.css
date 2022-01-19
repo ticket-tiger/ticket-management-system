@@ -14,7 +14,7 @@
   top: 50%;
   transform: translate(-50%, -50%);
   height: 80vh;
-  width: 25vw;
+  width: 350px;
   background-color: white;
   border-radius: 5px;
   border: 15px solid black;
@@ -56,6 +56,12 @@
 
 .display-none {
   display: none;
+}
+
+@media screen and (max-width: 410px) {
+  .modal {
+    box-sizing: border-box;
+  }
 }
 
 @media screen and (min-width: 1800px) {

@@ -115,17 +115,8 @@ const TicketTable = () => {
 
   const getTickets = async () => {
     try {
-      // const cookieValue = document.cookie
-      //   .split('; ')
-      //   .find((row) => row.startsWith('Bearer '));
-
-      // const config = {
-      //   headers: {
-      //     authorization: cookieValue || null,
-      //   },
-      // };
-
       const response = await axios.get('/tickets/get-tickets');
+      // Maybe convert strings to numbers here.
       setTickets(response.data);
     } catch (error) {
       auth.signout();
@@ -143,16 +134,6 @@ const TicketTable = () => {
   const handleUpdate = async (e) => {
     e.preventDefault();
     try {
-      // const cookieValue = document.cookie
-      //   .split('; ')
-      //   .find((row) => row.startsWith('Bearer '));
-
-      // const config = {
-      //   headers: {
-      //     authorization: cookieValue || null,
-      //   },
-      // };
-
       await axios.post('tickets/update-ticket', selectedTicket);
       await getTickets();
       setIsModalOpen(false);
@@ -272,16 +253,6 @@ const TicketTable = () => {
                     <button
                       className="ticket-table-header-button"
                       type="button"
-                      onClick={() => requestSort('description')}
-                    >
-                      Description
-                    </button>
-                  </th>
-
-                  <th className="ticket-table-header">
-                    <button
-                      className="ticket-table-header-button"
-                      type="button"
                       onClick={() => requestSort('status')}
                     >
                       Status
@@ -324,7 +295,6 @@ const TicketTable = () => {
                 {sortItems.map((ticket) => (
                   <tr className="ticket-table-row" onClick={() => openModal(ticket.title)} key={ticket._id}>
                     <td key="title">{ticket.title}</td>
-                    <td key="description">{ticket.description}</td>
                     <td key="status">{ticket.status}</td>
                     <td key="priority">{ticket.priority}</td>
                     <td key="urgency">{ticket.urgency}</td>
