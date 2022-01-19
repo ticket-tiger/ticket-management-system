@@ -2,22 +2,33 @@ import React, { useState, useContext, createContext } from 'react';
 import PropTypes from 'prop-types';
 import { Navigate } from 'react-router-dom';
 
-const AuthContext = createContext({ email: null, signin: null, signout: null });
+const AuthContext = createContext({
+  user: { email: null, role: null },
+  signin: null,
+  signout: null,
+});
 
 export const AuthProvider = ({ children }) => {
-  const [email, setEmail] = useState(() => window.localStorage.getItem('email'));
+  const [user, setUser] = useState(
+    document.cookie
+      .split('; ')
+      .find((row) => row.startsWith('user='))
+      ? document.cookie
+        .split('; ')
+        .find((row) => row.startsWith('user='))
+        .split('=')[1]
+      : null,
+  );
 
   const signin = (newUser) => {
-    setEmail(newUser);
-    window.localStorage.setItem('email', newUser);
+    setUser(newUser);
   };
 
   const signout = () => {
-    setEmail(null);
-    window.localStorage.removeItem('email');
+    setUser(null);
   };
 
-  const value = { email, signin, signout };
+  const value = { user, signin, signout };
 
   return (
     <AuthContext.Provider value={value}>
@@ -34,8 +45,8 @@ export const useAuth = () => useContext(AuthContext);
 
 export const RequireAuth = ({ children }) => {
   const auth = useAuth();
-  if (auth.email === null) {
-    return <Navigate to="/login" />;
+  if (!auth.user) {
+    return <Navigate to="/create-ticket" />;
   }
   return children;
 };

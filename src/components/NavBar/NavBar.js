@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, Outlet } from 'react-router-dom';
+import axios from 'axios';
 import { useAuth } from '../../auth';
 import Modal from '../reusableComponents/Modal';
 import Login from '../Login/Login';
@@ -14,8 +15,13 @@ const NavBar = () => {
   const [isPermanentPasswordModalOpen, setIsPermanentPasswordModalOpen] = useState(false);
 
   const auth = useAuth();
-  const handleLogout = () => {
-    auth.signout();
+  const handleLogout = async () => {
+    try {
+      await axios.post('/users/logout');
+      auth.signout();
+    } catch (error) {
+      console.log(error.response.status);
+    }
   };
 
   const openLoginModal = () => {
@@ -44,7 +50,7 @@ const NavBar = () => {
     <div>
       <h1 className="logo">Ticket Management System</h1>
       <nav className="navbar">
-        {auth.email ? (
+        {auth.user ? (
           <>
             <Link to="/create-ticket" className="navbar-button">
               <button type="button" className="navbar-button">
@@ -75,7 +81,6 @@ const NavBar = () => {
             </>
           )}
       </nav>
-      <p>{auth.email}</p>
       {isModalOpen
         ? (
           <Modal hideCloseModalButton={isPermanentPasswordModalOpen} close={closeUserForm}>

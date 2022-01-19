@@ -1,26 +1,31 @@
 import React from 'react';
 import { Route, Routes, Navigate } from 'react-router-dom';
-import { AuthProvider } from './auth';
-import SubmitTicket from './pages/SubmitTicket/SubmitTicket';
+// import axios from 'axios';
+import { AuthProvider, RequireAuth } from './auth';
+import CreateTicket from './pages/CreateTicket/CreateTicket';
 import ViewTickets from './pages/ViewTickets/ViewTickets';
 import NavBar from './components/NavBar/NavBar';
 import './App.css';
 
 const App = () => {
+  // const auth = useAuth();
   window.onload = () => {
     const numTabs = Number(window.localStorage.getItem('tabCounter'));
-    if (!window.sessionStorage.getItem('refreshed')) {
-      if (numTabs < 1) {
-        window.localStorage.removeItem('email');
-      }
-    }
     window.localStorage.setItem('tabCounter', numTabs + 1);
   };
-  window.onbeforeunload = () => {
+  window.onunload = () => {
     const numTabs = Number(window.localStorage.getItem('tabCounter'));
+    // if (numTabs === 1 && window.localStorage.getItem('email')) {
+    //   try {
+    //     axios.post('/users/logout');
+    //     auth.signout();
+    //   } catch (error) {
+    //     console.log(error.response.status);
+    //   }
+    // }
     window.localStorage.setItem('tabCounter', numTabs - 1);
-    window.sessionStorage.setItem('refreshed', true);
   };
+
   return (
     <AuthProvider>
       <Routes>
@@ -29,16 +34,15 @@ const App = () => {
           <Route
             path="/create-ticket"
             element={(
-              <SubmitTicket />
+              <CreateTicket />
       )}
           />
           <Route
             path="/view-tickets"
             element={(
-              <ViewTickets />
-            // <RequireAuth>
-            //   <ViewTickets />
-            // </RequireAuth>
+              <RequireAuth>
+                <ViewTickets />
+              </RequireAuth>
           )}
           />
         </Route>

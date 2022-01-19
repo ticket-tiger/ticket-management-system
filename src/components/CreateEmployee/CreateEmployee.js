@@ -37,17 +37,17 @@ const CreateEmployee = ({ closeModal }) => {
       setErrorCSSClass('invalid-email');
     } else {
       try {
-        const cookieValue = document.cookie
-          .split('; ')
-          .find((row) => row.startsWith('Bearer '));
+        // const cookieValue = document.cookie
+        //   .split('; ')
+        //   .find((row) => row.startsWith('Bearer '));
 
-        const config = {
-          headers: {
-            authorization: cookieValue || null,
-          },
-        };
+        // const config = {
+        //   headers: {
+        //     authorization: cookieValue || null,
+        //   },
+        // };
 
-        await axios.post('/users/create-employee', employee, config);
+        await axios.post('/users/create-employee', employee);
         closeModal();
         // setAccountCreationSuccessful(true);
       } catch (error) {

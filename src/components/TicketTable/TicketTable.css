@@ -1,8 +1,15 @@
 .ticket-table-container {
   position: absolute;
-  top: 50%;
+  top: 55%;
   left: 50%;
   transform: translate(-50%, -50%);
+  height: fit-content;
+  max-height: 60vh;
+  width: fit-content;
+  max-width: 80vw;
+  overflow-y: scroll;
+  border: 5px solid black;
+  border-radius: 5px;
 }
 
 .ticket-table {
@@ -12,7 +19,7 @@
   margin-left: auto;
   margin-right: auto;
   padding: 0;
-  font-size: 20px;
+  font-size: var(--body-font-size);
   font-family: sans-serif;
   min-width: 400px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
@@ -28,6 +35,7 @@
 .ticket-table td {
   padding: 12px 15px;
   border: 1px solid #ffffff;
+  max-width: 250px;
 }
 
 .ticket-table tbody tr {
@@ -52,7 +60,7 @@
 }
 
 .ticket-table tbody {
-  font-size: 20px;
+  font-size: var(--body-font-size);
 }
 
 .ticket-table-header {
@@ -68,7 +76,7 @@
   width: 100%;
   background: black;
   color: white;
-  font-size: 20px;
+  font-size: var(--body-font-size);
   font-weight: 700;
   border: 2px solid transparent;
   transition: .3s;
@@ -97,7 +105,7 @@
 .selected-ticket-label {
   display: inline-block;
   margin-right: 5px;
-  font-size: 20px;
+  font-size: var(--body-font-size);
   color: black;
   font-weight: bold;
   transition: .3s;
@@ -105,4 +113,12 @@
 
 .selected-ticket-data {
   display: inline-block;
+}
+
+@media screen and (max-width: 768px) {
+  .ticket-table-container {
+    top: 30vh;
+    transform: translateX(-50%);
+    max-width: 100vw;
+  }
 }

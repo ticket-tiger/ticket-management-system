@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useAuth } from '../../auth';
-import './SubmitTicket.css';
+import './CreateTicket.css';
 
-const SubmitTicket = () => {
+const CreateTicket = () => {
   const auth = useAuth();
   const [responseStatus, setResponseStatus] = useState(null);
-  const [guestEmail, setGuestEmail] = useState(auth.email);
+  const [guestEmail, setGuestEmail] = useState(null);
   const [state, setState] = useState({
     ticketCategory: '',
     ticketPriority: 'Low',
@@ -32,17 +32,17 @@ const SubmitTicket = () => {
       urgency: state.ticketUrgency,
     };
 
-    const cookieValue = document.cookie
-      .split('; ')
-      .find((row) => row.startsWith('Bearer '));
+    // const cookieValue = document.cookie
+    //   .split('; ')
+    //   .find((row) => row.startsWith('Bearer '));
 
-    const config = {
-      authorization: cookieValue || null,
-    };
+    // const config = {
+    //   authorization: cookieValue || null,
+    // };
 
-    console.log('Ticket sent');
     try {
-      const response = await axios.post('/tickets/create-ticket', { email: guestEmail, ticket }, config);
+      const email = guestEmail || auth.user.email;
+      const response = await axios.post('/tickets/create-ticket', { email, ticket });
       console.log(response);
       return response.status;
     } catch (error) {
@@ -92,12 +92,12 @@ const SubmitTicket = () => {
             <div className="label-text">Description</div>
           </label>
         </div>
-        {auth.email
+        {auth.user
           ? null
           : (
             <div className="form-element">
-              <input id="submit-ticket-email" className="form-input" onChange={(e) => setGuestEmail(e.target.value)} />
-              <label className="form-label" htmlFor="submit-ticket-email">Email</label>
+              <input id="create-ticket-email" className="form-input" onChange={(e) => setGuestEmail(e.target.value)} />
+              <label className="form-label" htmlFor="create-ticket-email">Email</label>
             </div>
           )}
         <div className="form-button-group">
@@ -107,7 +107,6 @@ const SubmitTicket = () => {
           <button
             className="form-button form-submit-button"
             type="submit"
-            // className = 'submit-ticket__button'
             onClick={(e) => clickHandler(e)}
           >
             Submit Your Issue
@@ -117,4 +116,4 @@ const SubmitTicket = () => {
     </>
   );
 };
-export default SubmitTicket;
+export default CreateTicket;
