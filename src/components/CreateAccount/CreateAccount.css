@@ -1,5 +1,3 @@
-
-
 .create-account-heading {
   position: absolute;
   top: 20%;
@@ -11,7 +9,7 @@
 
 .create-account-form-input-group {
   position: absolute;
-  top: 30%;
+  top: 27%;
   left: 50%;
   transform: translate(-50%, -50%);
   height: 25%;
@@ -54,7 +52,7 @@
   top: 80%;
   left: 50%;
   transform: translate(-50%, 50%);
-  height: 45px;
+  height: 55px;
   width: 60%;
   border-radius: 5px;
   border: 2px solid black;
@@ -69,8 +67,6 @@
   border: 3px solid var(--purple);
   color: var(--purple);
 }
-
-
 
 .error-message{
   border: orangered 1px;
@@ -93,20 +89,18 @@
   border-color: red;
  }
 
-
 .noName {
   border-color: red;
-
 }
  
  .invalidPassword {
   border-color: red;
-  
  }
+
  .passwordLength {
   border-color: red;
-
  }
+ 
  .invalidEmail {
   border-color: red;
 }
