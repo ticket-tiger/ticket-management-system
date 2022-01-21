@@ -44,7 +44,8 @@ router.post('/create-ticket', verifyToken, async (req, res) => {
     status: 'Submitted',
     priority: req.body.ticket.priority,
     urgency: req.body.ticket.urgency,
-    date: new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }),
+    date: new Date(),
+    // .toLocaleString('en-US', { timeZone: 'America/New_York' }),
     email: req.userEmail,
   };
   const result = await createTicket(req.userEmail, ticket);
