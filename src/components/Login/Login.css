@@ -24,7 +24,6 @@
   color: black;
   display: block;
   font-weight: bold;
-  transition: .3s;
 }
 
 .login-form-input {
@@ -34,7 +33,7 @@
   border: 2px solid transparent;
   border-bottom: 2px solid black;
   box-sizing: border-box;
-  transition: .3s;
+
 }
 
 .login-form-input:focus, .login-form-input:hover {
@@ -60,7 +59,6 @@
   font-weight: 700;
   background-color: white;
   color: black;
-  transition: .3s;
 }
 
 .login-submit-button:hover {
