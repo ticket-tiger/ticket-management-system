@@ -40,12 +40,18 @@ userRouter.post('/create-account', async (req, res) => {
     password: hash,
   };
   // send the result to mongo
-  const result = await createUser(account.email, account.name, account.password);
-  if (result === 11000) {
-    res.status(409);
-    res.send('Your email is not unique.');
-  } else { res.send(result); }
-  res.end();
+  try {
+    const result = await createUser(account.email, account.name, account.password);
+    res.send(result);
+  } catch (error) {
+    if (error.code === 11000) {
+      res.status(409);
+      res.send('Your email is not unique.');
+    } else {
+      res.status(500);
+      res.send('There was a problem');
+    }
+  } res.end();
 });
 
 userRouter.post('/create-employee', verifyToken, async (req, res) => {
