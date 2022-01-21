@@ -11,19 +11,33 @@ const emailValidate = [
   validate({
     validator: 'isLength',
     arguments: [3, 50],
+    message: 'Email should be between {ARGS[0]} and {ARGS[1]} characters',
+    httpStatus: 400,
+  }),
+];
+
+const nameValidate = [
+  validate({
+    validator: 'isLength',
+    arguments: [1, 45],
     message: 'Name should be between {ARGS[0]} and {ARGS[1]} characters',
     httpStatus: 400,
   }),
 ];
 
-// setter function
+// setter function to make all emails lowercase
 const toLower = (v) => v.toLowerCase();
 
 const userSchema = new Schema({
   email: {
     type: String, unique: true, default: null, set: toLower, validate: emailValidate, index: { unique: true },
   },
-  password: { type: String },
+  name: {
+    type: String, default: null, validate: nameValidate,
+  },
+  password: {
+    type: String,
+  },
   isOneTimePassword: { type: Boolean, required: false },
   passwordExpirationDate: { type: Date, required: false },
   role: {
@@ -132,18 +146,20 @@ export const updateTicket = async (userEmail, ticketId, updatedFieldsObject) => 
   }
 };
 
-export const createUser = async (userEmail, userPassword) => {
+export const createUser = async (userEmail, userName, userPassword) => {
   try {
     await mongoose.connect(uri);
     // a document instance of user
-    const user1 = new User({ email: userEmail, password: userPassword, tickets: [] });
-    console.log('hello');
-
+    const user1 = new User({
+      email: userEmail, name: userName, password: userPassword, tickets: [],
+    });
     // save model to database
     const result = await user1.save();
     return result;
   } catch (error) {
-    return error.code;
+    console.log(error);
+    // return error.code;
+    throw error;
   } finally {
     await client.close();
   }
