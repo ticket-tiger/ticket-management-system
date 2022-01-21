@@ -1,6 +1,5 @@
-# Getting Started with Create React App
+![alt text](https://github.com/Coffee-Express/ce-tms-frontend/blob/main/public/MainPage.png?raw=true) 
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
 
