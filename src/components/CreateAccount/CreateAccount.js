@@ -72,7 +72,7 @@ const CreateAccount = ({ closeModal }) => {
           ...state,
           password: action.valid ? '' : 'passwordLength',
           verifyPassword: action.valid ? '' : 'passwordLength',
-          message: 'Use 8 characters or more for your password',
+          message: action.valid ? state.message : 'Use 8 characters or more for your password',
         };
       case 'Email':
         return {
@@ -138,7 +138,7 @@ const CreateAccount = ({ closeModal }) => {
       await axios.post('/users/create-account', credentials);
       closeModal();
     } catch (error) {
-      errorDispatch({ type: error.response.status });
+      errorDispatch({ type: error.response.status, valid: false });
     }
   };
 
@@ -154,19 +154,19 @@ const CreateAccount = ({ closeModal }) => {
         <div className="create-account-form-input-group">
           <div>
             <input
-              id="create-account-form-username"
+              id="create-account-form-name"
               onChange={(e) => credentialsDispatch({ type: 'name', payload: e.target.value })}
               className={`create-account-form-input ${errorObject.name}`}
             />
-            <label className="create-account-form-label" type="text" htmlFor="create-account-form-username">Name</label>
+            <label className="create-account-form-label" type="text" htmlFor="create-account-form-name">Name</label>
           </div>
           <div>
             <input
-              id="create-account-form-username"
+              id="create-account-form-email"
               onChange={(e) => credentialsDispatch({ type: 'email', payload: e.target.value })}
               className={`create-account-form-input ${errorObject.email}`}
             />
-            <label className="create-account-form-label" type="text" htmlFor="create-account-form-username">Email</label>
+            <label className="create-account-form-label" type="text" htmlFor="create-account-form-email">Email</label>
           </div>
           <div>
             <input
@@ -180,11 +180,11 @@ const CreateAccount = ({ closeModal }) => {
           <div>
             <input
               type="password"
-              id="create-account-form-password"
+              id="create-account-form-verification-password"
               onChange={(e) => credentialsDispatch({ type: 'verificationPassword', payload: e.target.value })}
               className={`create-account-form-input ${errorObject.verifyPassword}`}
             />
-            <label className="create-account-form-label" type="text" htmlFor="create-account-form-password">Confirm Password</label>
+            <label className="create-account-form-label" type="text" htmlFor="create-account-form-verification-password">Confirm Password</label>
           </div>
         </div>
         <button className="create-account-submit-button" type="submit" onClick={(e) => handleSubmit(e)}>Create Your Account</button>

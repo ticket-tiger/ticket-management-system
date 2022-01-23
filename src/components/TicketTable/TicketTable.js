@@ -16,10 +16,12 @@ const useSortableData = (items, config = null) => {
     const sortedItems = [...items];
     if (sortConfig != null) {
       sortedItems.sort((a, b) => {
-        if (a[sortConfig.field].toLowerCase() < b[sortConfig.field].toLowerCase()) {
+        if ((typeof a[sortConfig.field] === 'string' ? a[sortConfig.field].toLowerCase() : a[sortConfig.field])
+          < (typeof b[sortConfig.field] === 'string' ? b[sortConfig.field].toLowerCase() : b[sortConfig.field])) {
           return sortConfig.direction === 'ascending' ? -1 : 1;
         }
-        if (a[sortConfig.field].toLowerCase() > b[sortConfig.field].toLowerCase()) {
+        if ((typeof a[sortConfig.field] === 'string' ? a[sortConfig.field].toLowerCase() : a[sortConfig.field])
+        > (typeof b[sortConfig.field] === 'string' ? b[sortConfig.field].toLowerCase() : b[sortConfig.field])) {
           return sortConfig.direction === 'ascending' ? 1 : -1;
         }
         return 0;
@@ -116,7 +118,11 @@ const TicketTable = () => {
   const getTickets = async () => {
     try {
       const response = await axios.get('/tickets/get-tickets');
-      // Maybe convert strings to numbers here.
+      response.data.forEach((ticket) => {
+        const oldDateFormat = ticket.date;
+        // eslint-disable-next-line no-param-reassign
+        ticket.date = new Date(oldDateFormat);
+      });
       setTickets(response.data);
     } catch (error) {
       auth.signout();
@@ -168,10 +174,6 @@ const TicketTable = () => {
                   <input id="selected-ticket-title-input" type="text" value={selectedTicket.title} onChange={(e) => dispatch({ type: 'title', payload: e.target.value })} />
                 </div>
                 <div>
-                  <label className="selected-ticket-label" htmlFor="selected-ticket-date-input">Date Created:</label>
-                  <input id="selected-ticket-date-input" className="selected-ticket-data" value={selectedTicket.date} onChange={(e) => dispatch({ type: 'date', payload: e.target.value })} />
-                </div>
-                <div>
                   <label className="selected-ticket-label" htmlFor="selected-ticket-status-input">Status:</label>
                   <input id="selected-ticket-status-input" className="selected-ticket-data" value={selectedTicket.status} onChange={(e) => dispatch({ type: 'status', payload: e.target.value })} />
                 </div>
@@ -191,6 +193,13 @@ const TicketTable = () => {
                   <label className="selected-ticket-label" htmlFor="selected-ticket-email-input">Email:</label>
                   <input id="selected-ticket-email-input" className="selected-ticket-data" value={selectedTicket.email} onChange={(e) => dispatch({ type: 'email', payload: e.target.value })} />
                 </div>
+                {/* <div>
+                  <label className="selected-ticket-label"
+                  htmlFor="selected-ticket-date-input">Date Created:</label>
+                  <input id="selected-ticket-date-input" className="selected-ticket-data"
+                  value={selectedTicket.date.toLocaleString('en-US', { timeZone: 'America/New_York'
+                })} onChange={(e) => dispatch({ type: 'date', payload: e.target.value })} />
+                </div> */}
                 <button type="button" onClick={() => setTicketisEditable(false)}>Cancel</button>
                 <button type="submit" onClick={(e) => handleUpdate(e)}> Submit</button>
 
@@ -202,10 +211,6 @@ const TicketTable = () => {
                   <div>
                     <label className="selected-ticket-label" htmlFor="selected-ticket-title-p">Title:</label>
                     <p id="selected-ticket-title-p" className="selected-ticket-data">{selectedTicket.title}</p>
-                  </div>
-                  <div>
-                    <label className="selected-ticket-label" htmlFor="selected-ticket-date-p">Date Created:</label>
-                    <p id="selected-ticket-date-p" className="selected-ticket-data">{selectedTicket.date}</p>
                   </div>
                   <div>
                     <label className="selected-ticket-label" htmlFor="selected-ticket-status-p">Status:</label>
@@ -229,6 +234,10 @@ const TicketTable = () => {
                   </div>
                 </>
               )}
+            <div>
+              <label className="selected-ticket-label" htmlFor="selected-ticket-date-p">Date Created:</label>
+              <p id="selected-ticket-date-p" className="selected-ticket-data">{selectedTicket.date.toLocaleString('en-US', { timeZone: 'America/New_York' })}</p>
+            </div>
           </div>
 
         </Modal>
@@ -298,7 +307,7 @@ const TicketTable = () => {
                     <td key="status">{ticket.status}</td>
                     <td key="priority">{ticket.priority}</td>
                     <td key="urgency">{ticket.urgency}</td>
-                    <td key="date">{ticket.date}</td>
+                    <td key="date">{ticket.date.toLocaleString('en-US', { timeZone: 'America/New_York', dateStyle: 'long', timeStyle: 'long' })}</td>
                   </tr>
                 ))}
               </tbody>

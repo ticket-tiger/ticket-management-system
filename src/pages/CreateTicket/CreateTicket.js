@@ -43,7 +43,6 @@ const CreateTicket = () => {
     try {
       const email = guestEmail || auth.user.email;
       const response = await axios.post('/tickets/create-ticket', { email, ticket });
-      console.log(response);
       return response.status;
     } catch (error) {
       return error.response.status;
