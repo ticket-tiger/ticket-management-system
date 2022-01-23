@@ -26,7 +26,6 @@
   top: 30px;
   right: 30px;
   cursor: pointer;
-  transition: .3s;
 }
 
 .modal-close-x:hover {
