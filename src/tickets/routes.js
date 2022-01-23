@@ -35,7 +35,7 @@ const verifyToken = async (req, res, next) => {
   }
 };
 
-router.post('/create-ticket', verifyToken, async (req, res) => {
+router.post('/create-ticket', async (req, res) => {
   console.log('Received POST request.');
   const ticket = {
     title: req.body.ticket.title,
@@ -46,9 +46,9 @@ router.post('/create-ticket', verifyToken, async (req, res) => {
     urgency: req.body.ticket.urgency,
     date: new Date(),
     // .toLocaleString('en-US', { timeZone: 'America/New_York' }),
-    email: req.userEmail,
+    email: req.body.email,
   };
-  const result = await createTicket(req.userEmail, ticket);
+  const result = await createTicket(req.body.email, ticket);
   res.send(result);
   res.end();
 });

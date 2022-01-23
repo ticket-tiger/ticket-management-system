@@ -49,9 +49,9 @@ userRouter.post('/create-account', async (req, res) => {
     const result = await createUser(account.email, account.name, account.password);
     res.send(result);
   } catch (error) {
-    if (error.code === 11000) {
+    if (error.message === 'Email') {
       res.status(409);
-      res.send('Your email is not unique.');
+      res.send('Email');
     } else {
       res.status(500);
       res.send('There was a problem');

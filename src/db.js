@@ -20,6 +20,7 @@ const nameValidate = [
   validate({
     validator: 'isLength',
     arguments: [1, 45],
+    passIfEmpty: true,
     message: 'Name should be between {ARGS[0]} and {ARGS[1]} characters',
     httpStatus: 400,
   }),
@@ -33,10 +34,10 @@ const userSchema = new Schema({
     type: String, unique: true, default: null, set: toLower, validate: emailValidate, index: { unique: true },
   },
   name: {
-    type: String, default: null, validate: nameValidate,
+    type: String, default: null, validate: nameValidate, required: false,
   },
   password: {
-    type: String,
+    type: String, required: false,
   },
   isOneTimePassword: { type: Boolean, required: false },
   passwordExpirationDate: { type: Date, required: false },
@@ -107,6 +108,14 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 export const createTicket = async (userEmail, ticket) => {
   try {
     await mongoose.connect(uri);
+    // Create user if they don't exist.
+    if (!await User.findOne({ email: userEmail })) {
+      console.log('User does not exist');
+      const user1 = new User({
+        email: userEmail, role: 'Basic', tickets: [],
+      });
+      await user1.save();
+    }
     const result = User.updateOne({ email: userEmail }, { $push: { tickets: ticket } });
     return result;
   } finally {
@@ -149,17 +158,25 @@ export const updateTicket = async (userEmail, ticketId, updatedFieldsObject) => 
 export const createUser = async (userEmail, userName, userPassword) => {
   try {
     await mongoose.connect(uri);
-    // a document instance of user
-    const user1 = new User({
-      email: userEmail, name: userName, password: userPassword, tickets: [],
-    });
-    // save model to database
-    const result = await user1.save();
+    let result;
+    // Check if the user exists first
+    // by checking if a user document exists and has a password
+    if (!await User.findOne({ email: userEmail })) {
+      // Create a new user
+      const user1 = new User({
+        email: userEmail, name: userName, password: userPassword, tickets: [],
+      });
+      result = await user1.save();
+    } else if (!await User.findOne({ email: userEmail, password: { $exists: true } })) {
+      // The user exists as a guest
+      result = await User.updateOne({ email: userEmail }, {
+        $set: {
+          password: userPassword,
+          name: userName,
+        },
+      });
+    } else throw new Error('Email');
     return result;
-  } catch (error) {
-    console.log(error);
-    // return error.code;
-    throw error;
   } finally {
     await client.close();
   }
