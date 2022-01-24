@@ -21,9 +21,12 @@ const verifyToken = async (req, res, next) => {
   } else {
     jwt.verify(token, localConfig.tokenSecret, { maxAge: '900s' }, (err, tokenUser) => {
       if (err) { res.sendStatus(403); } else {
-        req.managerEmail = tokenUser.email;
+        res.locals.managerEmail = tokenUser.email;
+        res.locals.managerRole = tokenUser.role;
+        // req.managerEmail = tokenUser.email;
+        // req.managerRole = tokenUser.role;
         res.clearCookie('token');
-        const newToken = generateAccessTokens({ email: tokenUser.email });
+        const newToken = generateAccessTokens({ email: tokenUser.email, role: tokenUser.role });
         res.cookie('token', newToken, { httpOnly: true, maxAge: 900000 });
         const { user } = req.cookies;
         res.clearCookie('user');
@@ -61,11 +64,13 @@ userRouter.post('/create-account', async (req, res) => {
 
 userRouter.post('/create-employee', verifyToken, async (req, res) => {
   console.log('Received POST request.');
-  const tempPassword = randomBytes(10).toString('hex');
-  const hashedTempPassword = await hashPassword(tempPassword);
-  const result = await createEmployee(req.managerEmail, req.body, hashedTempPassword);
-  sendOneTimePasswordByEmail(req.body.email, tempPassword);
-  res.send(result);
+  if (res.locals.managerRole === 'Manager') {
+    const tempPassword = randomBytes(10).toString('hex');
+    const hashedTempPassword = await hashPassword(tempPassword);
+    const result = await createEmployee(req.body, hashedTempPassword);
+    sendOneTimePasswordByEmail(req.body.email, tempPassword);
+    res.send(result);
+  }
   res.end();
 });
 
@@ -90,7 +95,7 @@ userRouter.post('/login', async (req, res, next) => {
     res.end();
   }
 }, (req, res) => {
-  const token = generateAccessTokens({ email: req.body.email });
+  const token = generateAccessTokens({ email: req.body.email, role: res.locals.role });
   res.cookie('token', token, { httpOnly: true, maxAge: 900000 });
   // Create cookie with session info: user's email and role
   res.cookie('user', JSON.stringify({ email: req.body.email, role: res.locals.role }), { maxAge: 900000, encode: (str) => str });
@@ -112,7 +117,7 @@ userRouter.post('/logout', (req, res) => {
 userRouter.post('/create-permanent-password', verifyToken, async (req, res) => {
   console.log('Received POST request.');
   const hashedPassword = await hashPassword(req.body.newPassword);
-  const result = await createPermanentPassword(req.managerEmail, hashedPassword);
+  const result = await createPermanentPassword(res.locals.managerEmail, hashedPassword);
   res.send(result);
   res.end();
 });

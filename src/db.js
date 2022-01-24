@@ -155,6 +155,20 @@ export const updateTicket = async (userEmail, ticketId, updatedFieldsObject) => 
   }
 };
 
+export const deleteTicket = async (email, _id) => {
+  try {
+    await mongoose.connect(uri);
+    const result = await User.updateOne({ email }, {
+      $pull: {
+        tickets: { _id },
+      },
+    });
+    return result;
+  } finally {
+    client.close();
+  }
+};
+
 export const createUser = async (userEmail, userName, userPassword) => {
   try {
     await mongoose.connect(uri);
@@ -182,25 +196,22 @@ export const createUser = async (userEmail, userName, userPassword) => {
   }
 };
 
-export const createEmployee = async (managerEmail, employeeObject, oneTimePassword) => {
+export const createEmployee = async (employeeObject, oneTimePassword) => {
   const expirationDate = Date.now() + 6.048e+8;
   try {
     await mongoose.connect(uri);
-    const userObject = await User.findOne({ email: managerEmail }, 'role').exec();
-    if (userObject.role === 'Manager') {
-      const newEmployee = new User({
-        email: employeeObject.email,
-        password: oneTimePassword,
-        isOneTimePassword: true,
-        passwordExpirationDate: expirationDate,
-        role: employeeObject.type,
-        tickets: [],
-      });
-      newEmployee.save((err, user) => {
-        if (err) console.log(err);
-        console.log(`${user.email} saved to user collection.`);
-      });
-    }
+    const newEmployee = new User({
+      email: employeeObject.email,
+      password: oneTimePassword,
+      isOneTimePassword: true,
+      passwordExpirationDate: expirationDate,
+      role: employeeObject.role,
+      tickets: [],
+    });
+    newEmployee.save((err, user) => {
+      if (err) console.log(err);
+      console.log(`${user.email} saved to user collection.`);
+    });
   } catch (error) {
     console.log(error);
   } finally {

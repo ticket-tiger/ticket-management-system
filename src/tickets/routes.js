@@ -3,7 +3,7 @@ import express from 'express';
 import jwt from 'jsonwebtoken';
 import localConfig from '../localConfig.js';
 import {
-  createTicket, getCurrentStatusTitleEmail, getTickets, updateTicket,
+  createTicket, getCurrentStatusTitleEmail, getTickets, updateTicket, deleteTicket,
 } from '../db.js';
 import { sendStatusUpdateByEmail } from '../users/email.js';
 
@@ -22,9 +22,10 @@ const verifyToken = async (req, res, next) => {
         res.sendStatus(403);
         res.end();
       } else {
-        req.userEmail = tokenUser.email;
+        res.locals.userEmail = tokenUser.email;
+        res.locals.userRole = tokenUser.role;
         res.clearCookie('token');
-        const newToken = generateAccessTokens({ email: tokenUser.email });
+        const newToken = generateAccessTokens({ email: tokenUser.email, role: tokenUser.role });
         res.cookie('token', newToken, { httpOnly: true, maxAge: 900000 });
         const { user } = req.cookies;
         res.clearCookie('user');
@@ -55,23 +56,35 @@ router.post('/create-ticket', async (req, res) => {
 
 router.get('/get-tickets', verifyToken, async (req, res) => {
   console.log('Received GET request.');
-  const result = await getTickets(req.userEmail);
+  const result = await getTickets(res.locals.userEmail);
   res.send(result);
   res.end();
 });
 
 router.post('/update-ticket', verifyToken, async (req, res) => {
   console.log('Received POST request');
-  const { status, title, email } = await getCurrentStatusTitleEmail(
-    req.body.email, req.body._id,
-  );
-  const result = await updateTicket(req.userEmail, req.body._id, req.body);
-  if (status !== req.body.status) {
-    await sendStatusUpdateByEmail(
-      email, title, status, req.body.status,
+  if (res.locals.userRole === 'Employee' || res.locals.userRole === 'Manager') {
+    const { status, title, email } = await getCurrentStatusTitleEmail(
+      req.body.email, req.body._id,
     );
+    const result = await updateTicket(res.locals.userEmail, req.body._id, req.body);
+    if (status !== req.body.status) {
+      await sendStatusUpdateByEmail(
+        email, title, status, req.body.status,
+      );
+    }
+    res.send(result);
   }
-  res.send(result);
+  res.end();
+});
+
+router.post('/delete-ticket', verifyToken, async (req, res) => {
+  console.log('Received POST request');
+  // Check that the user submitting the request is a Manager
+  if (res.locals.userRole === 'Manager') {
+    const result = await deleteTicket(req.body.email, req.body._id);
+    res.send(result);
+  }
   res.end();
 });
 
