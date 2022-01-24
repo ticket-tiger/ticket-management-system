@@ -3,14 +3,13 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import validator from 'validator';
 import './CreateEmployee.css';
-// import isEmail from 'validator/lib/isEmail';
 
 const CreateEmployee = ({ closeModal }) => {
-  // const [accountCreationSuccessful, setAccountCreationSuccessful] = useState(false);
   const [accountCreationStatusCSSClass, setAccountCreationStatusCSSClass] = useState('');
   const [errorCSSClass, setErrorCSSClass] = useState('');
 
   const initialEmployee = { email: '', role: 'Employee' };
+  // To manage state of new employee fields
   const reducer = (state, action) => {
     switch (action.type) {
       case 'email':
@@ -39,7 +38,6 @@ const CreateEmployee = ({ closeModal }) => {
       try {
         await axios.post('/users/create-employee', employee);
         closeModal();
-        // setAccountCreationSuccessful(true);
       } catch (error) {
         if (error.response.status >= 400 && error.response.status < 500) setAccountCreationStatusCSSClass('status-400');
         else if (error.response.status >= 500) setAccountCreationStatusCSSClass('status-500');
@@ -56,7 +54,6 @@ const CreateEmployee = ({ closeModal }) => {
         {accountCreationStatusCSSClass === 'status-default-error' ? <p>There was an unexpected error.  Please try again in a little while.</p> : null}
         {errorCSSClass === 'invalid-email' ? <p>The email you entered is invalid.  Please try again.</p> : null}
       </div>
-      {/* <h2 className="create-employee-heading">Create an account with us</h2> */}
       <form>
         <div className="create-employee-form-input-group">
           <input

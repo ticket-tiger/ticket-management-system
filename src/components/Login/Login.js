@@ -15,6 +15,7 @@ const Login = ({ hideTabs, closeModal }) => {
     password: '',
   };
 
+  // To manage login credentials
   const reducer = (state, action) => {
     switch (action.type) {
       case 'email':
@@ -64,11 +65,6 @@ const Login = ({ hideTabs, closeModal }) => {
 
   return (
     <>
-      {/* <Link to="/create-ticket">
-        <button type="button">
-          Continue As Guest
-        </button>
-      </Link> */}
       <div className="error-message-group">
         {authenticationStatusCSSClass === 'status-400' ? <p>Your credentials were incorrect.  Please try again.</p> : null}
         {authenticationStatusCSSClass === 'status-500' ? <p>There was a problem with the server.  Sorry for the inconvenience.</p> : null}

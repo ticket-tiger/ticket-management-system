@@ -9,6 +9,7 @@ const AuthContext = createContext({
 });
 
 export const AuthProvider = ({ children }) => {
+  // Get initial user state from cookie
   const [user, setUser] = useState(
     document.cookie
       .split('; ')
@@ -43,6 +44,7 @@ AuthProvider.propTypes = {
 
 export const useAuth = () => useContext(AuthContext);
 
+// Restrict certain routes if the user is not signed in
 export const RequireAuth = ({ children }) => {
   const auth = useAuth();
   if (!auth.user) {

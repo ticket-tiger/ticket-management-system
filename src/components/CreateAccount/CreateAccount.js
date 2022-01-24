@@ -12,6 +12,7 @@ const CreateAccount = ({ closeModal }) => {
     password: '',
   };
 
+  // To manage state of new account fields
   const emailReducer = (state, action) => {
     switch (action.type) {
       case 'email':
@@ -41,6 +42,7 @@ const CreateAccount = ({ closeModal }) => {
 
   const [credentials, credentialsDispatch] = useReducer(emailReducer, initialCredentials);
 
+  // To manage state of error messages and css classes
   const errorReducer = (state, action) => {
     switch (action.type) {
       case 409:
@@ -110,6 +112,8 @@ const CreateAccount = ({ closeModal }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Validate each field before http request is sent
+
     if (validator.isEmpty(credentials.name)) {
       errorDispatch({ type: 'Name', valid: false });
       return;
@@ -149,7 +153,6 @@ const CreateAccount = ({ closeModal }) => {
         {errorObject.message}
       </p>
 
-      {/* <h2 className="create-account-heading">Create an account with us</h2> */}
       <form>
         <div className="create-account-form-input-group">
           <div>
