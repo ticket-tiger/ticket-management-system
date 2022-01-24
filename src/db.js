@@ -71,36 +71,6 @@ const userSchema = new Schema({
 // exporting userSchema to the user collection
 const User = model('User', userSchema, 'users');
 
-// const guestUserSchema = new Schema({
-//   tickets: [{
-//     email: { type: String, required: true },
-//     title: { type: String, required: true, default: 'anonymous' },
-//     description: { type: String, required: true, default: 'anonymous' },
-//     category: { type: String, required: true, default: 'anonymous' },
-//     priority: {
-//       type: Number, required: true, min: 0, max: 10,
-//     },
-//     urgency: {
-//       type: Number, required: true, min: 0, max: 10, index: true,
-//     },
-//     date: { type: Date, default: Date.now },
-//   }],
-// });
-
-// const GuestUser = model('GuestUser', guestUserSchema, 'users');
-
-// const comment1 = new userModel({
-//   title: 'help',
-//   description: 'there is a problem',
-//   priority: '5',
-//   urgency: '10',
-// });
-
-// comment1.save((err, comment) => {
-//   if (err) console.log(err);
-//   else console.log('fallowing comment was saved:', comment);
-// });
-
 const uri = `mongodb+srv://${localConfig.mongodb.username}:${localConfig.mongodb.password}@${config.mongodb.cluster}/${config.mongodb.database}?retryWrites=true&w=majority`;
 
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
@@ -110,7 +80,6 @@ export const createTicket = async (userEmail, ticket) => {
     await mongoose.connect(uri);
     // Create user if they don't exist.
     if (!await User.findOne({ email: userEmail })) {
-      console.log('User does not exist');
       const user1 = new User({
         email: userEmail, role: 'Basic', tickets: [],
       });
@@ -173,16 +142,16 @@ export const createUser = async (userEmail, userName, userPassword) => {
   try {
     await mongoose.connect(uri);
     let result;
-    // Check if the user exists first
-    // by checking if a user document exists and has a password
+    // If the user doesn't exist...
     if (!await User.findOne({ email: userEmail })) {
       // Create a new user
       const user1 = new User({
         email: userEmail, name: userName, password: userPassword, tickets: [],
       });
       result = await user1.save();
+    // If the user exists as a 'guest'...
     } else if (!await User.findOne({ email: userEmail, password: { $exists: true } })) {
-      // The user exists as a guest
+      // Add name and password properties to their document
       result = await User.updateOne({ email: userEmail }, {
         $set: {
           password: userPassword,
@@ -198,6 +167,8 @@ export const createUser = async (userEmail, userName, userPassword) => {
 
 export const createEmployee = async (employeeObject, oneTimePassword) => {
   const expirationDate = Date.now() + 6.048e+8;
+  console.log(expirationDate);
+  console.log(Date.now());
   try {
     await mongoose.connect(uri);
     const newEmployee = new User({
@@ -223,10 +194,8 @@ export const createPermanentPassword = async (email, newPassword) => {
   try {
     await mongoose.connect(uri);
     const userObject = await User.findOne({ email }, 'passwordExpirationDate');
-    const passwordExpirationDate = Date.parse(Date(userObject.passwordExpirationDate));
-    console.log(passwordExpirationDate);
-    console.log(Date.now());
-    if (passwordExpirationDate <= Date.now()) {
+    const passwordExpirationDate = Date.parse(new Date(userObject.passwordExpirationDate));
+    if (passwordExpirationDate >= Date.now()) {
       const result = await User.updateOne({ email }, { password: newPassword, isOneTimePassword: false, $unset: { passwordExpirationDate: '' } });
       return result;
     }
@@ -249,18 +218,9 @@ export const getUserInfo = async (userEmail) => {
 export const getCurrentStatusTitleEmail = async (email, objectId) => {
   try {
     await mongoose.connect(uri);
-    // We can probably search for the user by email instead of an id of a ticket
     const result = await User.findOne({ email, 'tickets._id': objectId }, { 'tickets.$': 1 }).exec();
     return { status: result.tickets[0].status, title: result.tickets[0].title, email: result.tickets[0].email };
   } finally {
     await client.close();
   }
 };
-
-// const connectDatabase = async (req, res) => {
-//   try {
-//     await mongoose.connect(config.mongodb);
-//   } catch (error) {
-//     res.status(500);
-//   }
-// };

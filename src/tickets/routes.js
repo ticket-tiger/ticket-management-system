@@ -1,5 +1,4 @@
 import express from 'express';
-// import { MongoClient } from 'mongodb';
 import jwt from 'jsonwebtoken';
 import localConfig from '../localConfig.js';
 import {
@@ -24,6 +23,7 @@ const verifyToken = async (req, res, next) => {
       } else {
         res.locals.userEmail = tokenUser.email;
         res.locals.userRole = tokenUser.role;
+        // Generate new token to extend user session to 15 minutes again
         res.clearCookie('token');
         const newToken = generateAccessTokens({ email: tokenUser.email, role: tokenUser.role });
         res.cookie('token', newToken, { httpOnly: true, maxAge: 900000 });
@@ -46,7 +46,6 @@ router.post('/create-ticket', async (req, res) => {
     priority: req.body.ticket.priority,
     urgency: req.body.ticket.urgency,
     date: new Date(),
-    // .toLocaleString('en-US', { timeZone: 'America/New_York' }),
     email: req.body.email,
   };
   const result = await createTicket(req.body.email, ticket);
@@ -80,7 +79,6 @@ router.post('/update-ticket', verifyToken, async (req, res) => {
 
 router.post('/delete-ticket', verifyToken, async (req, res) => {
   console.log('Received POST request');
-  // Check that the user submitting the request is a Manager
   if (res.locals.userRole === 'Manager') {
     const result = await deleteTicket(req.body.email, req.body._id);
     res.send(result);

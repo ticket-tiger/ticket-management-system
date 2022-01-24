@@ -1,5 +1,4 @@
 import express from 'express';
-// import { MongoClient } from 'mongodb';
 import jwt from 'jsonwebtoken';
 import { randomBytes } from 'crypto';
 import localConfig from '../localConfig.js';
@@ -23,8 +22,7 @@ const verifyToken = async (req, res, next) => {
       if (err) { res.sendStatus(403); } else {
         res.locals.managerEmail = tokenUser.email;
         res.locals.managerRole = tokenUser.role;
-        // req.managerEmail = tokenUser.email;
-        // req.managerRole = tokenUser.role;
+        // Generate new token to extend user session to 15 minutes again
         res.clearCookie('token');
         const newToken = generateAccessTokens({ email: tokenUser.email, role: tokenUser.role });
         res.cookie('token', newToken, { httpOnly: true, maxAge: 900000 });
@@ -37,17 +35,14 @@ const verifyToken = async (req, res, next) => {
   }
 };
 
-// post request to create user
 userRouter.post('/create-account', async (req, res) => {
   console.log('Received POST request.');
-  // hashpassword using argon2,
   const hash = await hashPassword(req.body.password);
   const account = {
     email: req.body.email,
     name: req.body.name,
     password: hash,
   };
-  // send the result to mongo
   try {
     const result = await createUser(account.email, account.name, account.password);
     res.send(result);
@@ -95,9 +90,9 @@ userRouter.post('/login', async (req, res, next) => {
     res.end();
   }
 }, (req, res) => {
+  // Tokens expire after 15 minutes (900000ms)
   const token = generateAccessTokens({ email: req.body.email, role: res.locals.role });
   res.cookie('token', token, { httpOnly: true, maxAge: 900000 });
-  // Create cookie with session info: user's email and role
   res.cookie('user', JSON.stringify({ email: req.body.email, role: res.locals.role }), { maxAge: 900000, encode: (str) => str });
   res.send({
     isOneTimePassword: res.locals.isOneTimePassword,

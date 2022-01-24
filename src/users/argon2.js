@@ -11,7 +11,7 @@ export const hashPassword = async (password) => {
   }
 };
 
-// verify password
+// verify a password
 export const verifyPassword = async (hashedPassword, password) => {
   try {
     if (await argon2.verify(hashedPassword, password)) {
