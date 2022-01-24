@@ -151,6 +151,16 @@ const TicketTable = () => {
     }
   };
 
+  const deleteTicket = async () => {
+    try {
+      await axios.post('tickets/delete-ticket', { email: selectedTicket.email, _id: selectedTicket._id });
+      await getTickets();
+      setIsModalOpen(false);
+    } catch (error) {
+      // Handle error
+    }
+  };
+
   return (
     <>
       {isModalOpen ? (
@@ -163,7 +173,7 @@ const TicketTable = () => {
           {auth.user.role === 'Manager' ? (
             <div className="ticket-button-group">
               <FontAwesomeIcon className="edit-ticket-button" icon={faEdit} size="2x" onClick={() => setTicketisEditable(true)} />
-              <FontAwesomeIcon className="delete-ticket-button" icon={faTrashAlt} size="2x" />
+              <FontAwesomeIcon className="delete-ticket-button" icon={faTrashAlt} size="2x" onClick={() => deleteTicket()} />
             </div>
           ) : null}
           <div className="selected-ticket-data-group">

@@ -10,7 +10,7 @@ const CreateEmployee = ({ closeModal }) => {
   const [accountCreationStatusCSSClass, setAccountCreationStatusCSSClass] = useState('');
   const [errorCSSClass, setErrorCSSClass] = useState('');
 
-  const initialEmployee = { email: '', type: '' };
+  const initialEmployee = { email: '', role: 'Employee' };
   const reducer = (state, action) => {
     switch (action.type) {
       case 'email':
@@ -18,10 +18,10 @@ const CreateEmployee = ({ closeModal }) => {
           ...state,
           email: action.payload,
         };
-      case 'type':
+      case 'role':
         return {
           ...state,
-          type: action.payload,
+          role: action.payload,
         };
       default:
         return state;
@@ -37,16 +37,6 @@ const CreateEmployee = ({ closeModal }) => {
       setErrorCSSClass('invalid-email');
     } else {
       try {
-        // const cookieValue = document.cookie
-        //   .split('; ')
-        //   .find((row) => row.startsWith('Bearer '));
-
-        // const config = {
-        //   headers: {
-        //     authorization: cookieValue || null,
-        //   },
-        // };
-
         await axios.post('/users/create-employee', employee);
         closeModal();
         // setAccountCreationSuccessful(true);
@@ -75,11 +65,11 @@ const CreateEmployee = ({ closeModal }) => {
             className={`create-employee-form-input ${accountCreationStatusCSSClass} ${errorCSSClass}`}
           />
           <label className="create-employee-form-label" type="text" htmlFor="create-employee-form-email">Employee Email</label>
-          <select id="employee-type-dropdown" className="create-employee-form-dropdown" onChange={(e) => dispatch({ type: 'type', payload: e.target.value })}>
+          <select id="create-employee-form-role-dropdown" className="create-employee-form-dropdown" value={employee.role} onChange={(e) => dispatch({ type: 'role', payload: e.target.value })}>
             <option value="Engineer">Engineer</option>
             <option value="Manager">Manager</option>
           </select>
-          <label className="create-employee-form-label" type="text" htmlFor="create-employee-form-employee-type">Employee Type</label>
+          <label className="create-employee-form-label" type="text" htmlFor="create-employee-form-role-dropdown">Employee Role</label>
         </div>
         <button className="create-employee-submit-button" type="submit" onClick={(e) => handleSubmit(e)}>Create Account</button>
       </form>
