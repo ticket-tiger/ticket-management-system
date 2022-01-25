@@ -6,8 +6,7 @@ export const hashPassword = async (password) => {
     const hash = await argon2.hash(password);
     return hash;
   } catch (err) {
-    console.log('could not hash password');
-    throw err;
+    throw new Error('Hash');
   }
 };
 
@@ -19,6 +18,6 @@ export const verifyPassword = async (hashedPassword, password) => {
     }
     return false;
   } catch (err) {
-    return false;
+    throw new Error('Verify');
   }
 };

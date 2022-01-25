@@ -4,7 +4,7 @@ import { randomBytes } from 'crypto';
 import localConfig from '../localConfig.js';
 import { hashPassword, verifyPassword } from './argon2.js';
 import {
-  createUser, createEmployee, createPermanentPassword, getUserInfo,
+  createUser, createEmployee, createPermanentPassword, getUserInfo, updateOneTimePassword,
 } from '../db.js';
 import { sendOneTimePasswordByEmail } from './email.js';
 
@@ -51,20 +51,30 @@ userRouter.post('/create-account', async (req, res) => {
       res.status(409);
       res.send('Email');
     } else {
-      res.status(500);
-      res.send('There was a problem');
+      res.sendStatus(500);
     }
   } res.end();
 });
 
 userRouter.post('/create-employee', verifyToken, async (req, res) => {
   console.log('Received POST request.');
-  if (res.locals.managerRole === 'Manager') {
-    const tempPassword = randomBytes(10).toString('hex');
-    const hashedTempPassword = await hashPassword(tempPassword);
-    const result = await createEmployee(req.body, hashedTempPassword);
-    sendOneTimePasswordByEmail(req.body.email, tempPassword);
-    res.send(result);
+  try {
+    if (res.locals.managerRole === 'Manager') {
+      const tempPassword = randomBytes(10).toString('hex');
+      const hashedTempPassword = await hashPassword(tempPassword);
+      const result = await createEmployee(req.body, hashedTempPassword);
+      sendOneTimePasswordByEmail(req.body.email, tempPassword);
+      res.send(result);
+    } else res.sendStatus(403);
+  } catch (error) {
+    if (error.message === 'Send new password') {
+      const tempPassword = randomBytes(10).toString('hex');
+      const hashedTempPassword = await hashPassword(tempPassword);
+      const result = await updateOneTimePassword(req.body.email, hashedTempPassword);
+      sendOneTimePasswordByEmail(req.body.email, tempPassword);
+      res.send(result);
+    } else if (error.message === 'Has permanent password') res.sendStatus(409);
+    else res.sendStatus(500);
   }
   res.end();
 });
@@ -85,7 +95,6 @@ userRouter.post('/login', async (req, res, next) => {
       res.end();
     }
   } catch (error) {
-    console.log(error);
     res.sendStatus(500);
     res.end();
   }
@@ -111,9 +120,13 @@ userRouter.post('/logout', (req, res) => {
 
 userRouter.post('/create-permanent-password', verifyToken, async (req, res) => {
   console.log('Received POST request.');
-  const hashedPassword = await hashPassword(req.body.newPassword);
-  const result = await createPermanentPassword(res.locals.managerEmail, hashedPassword);
-  res.send(result);
+  try {
+    const hashedPassword = await hashPassword(req.body.newPassword);
+    const result = await createPermanentPassword(res.locals.managerEmail, hashedPassword);
+    res.send(result);
+  } catch (error) {
+    res.sendStatus(403);
+  }
   res.end();
 });
 

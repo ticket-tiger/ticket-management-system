@@ -166,11 +166,21 @@ export const createUser = async (userEmail, userName, userPassword) => {
 };
 
 export const createEmployee = async (employeeObject, oneTimePassword) => {
-  const expirationDate = Date.now() + 6.048e+8;
-  console.log(expirationDate);
-  console.log(Date.now());
+  // const expirationDate = Date.now() + 6.048e+8;
+  const expirationDate = Date.now();
   try {
     await mongoose.connect(uri);
+    const existingEmployee = await User.findOne({ email: employeeObject.email }, 'isOneTimePassword');
+    if (existingEmployee) {
+      // The employee already exists
+      // Do they have a one-time password?
+      if (existingEmployee.isOneTimePassword) {
+        // Send a new one-time password
+        throw new Error('Send new password');
+      }
+      // Else the user already has a permanent password
+      throw new Error('Has permanent password');
+    }
     const newEmployee = new User({
       email: employeeObject.email,
       password: oneTimePassword,
@@ -183,8 +193,16 @@ export const createEmployee = async (employeeObject, oneTimePassword) => {
       if (err) console.log(err);
       console.log(`${user.email} saved to user collection.`);
     });
-  } catch (error) {
-    console.log(error);
+  } finally {
+    await client.close();
+  }
+};
+
+export const updateOneTimePassword = async (email, oneTimePassword) => {
+  const expirationDate = Date.now() + 6.048e+8;
+  try {
+    await mongoose.connect(uri);
+    await User.updateOne({ email }, { password: oneTimePassword, passwordExpirationDate: expirationDate });
   } finally {
     await client.close();
   }
@@ -199,7 +217,7 @@ export const createPermanentPassword = async (email, newPassword) => {
       const result = await User.updateOne({ email }, { password: newPassword, isOneTimePassword: false, $unset: { passwordExpirationDate: '' } });
       return result;
     }
-    throw new Error('Your one-time password has expired. Please request a new one to be issued.');
+    throw new Error('Expired');
   } finally {
     await client.close();
   }
