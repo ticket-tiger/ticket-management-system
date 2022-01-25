@@ -59,7 +59,7 @@ const Login = ({ hideTabs, closeModal }) => {
     return <CreatePermanentPassword closeModal={closeModal} />;
   }
 
-  if (auth.user) {
+  if (auth.user.email) {
     return <Navigate to="/create-ticket" />;
   }
 

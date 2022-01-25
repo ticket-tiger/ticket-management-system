@@ -50,7 +50,7 @@ const NavBar = () => {
     <div>
       <h1 className="logo">Ticket Management System</h1>
       <nav className="navbar">
-        {auth.user ? (
+        {auth.user.email ? (
           <>
             <Link to="/create-ticket" className="navbar-button">
               <button type="button" className="navbar-button">

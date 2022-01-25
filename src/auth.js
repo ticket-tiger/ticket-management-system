@@ -18,7 +18,7 @@ export const AuthProvider = ({ children }) => {
         .split('; ')
         .find((row) => row.startsWith('user='))
         .split('=')[1]
-      : null,
+      : { email: null, role: null },
   );
 
   const signin = (newUser) => {
@@ -47,7 +47,7 @@ export const useAuth = () => useContext(AuthContext);
 // Restrict certain routes if the user is not signed in
 export const RequireAuth = ({ children }) => {
   const auth = useAuth();
-  if (!auth.user) {
+  if (!auth.user.email) {
     return <Navigate to="/create-ticket" />;
   }
   return children;
