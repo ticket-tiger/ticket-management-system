@@ -92,7 +92,7 @@ const CreateTicket = () => {
             <div className="label-text">Description</div>
           </label>
         </div>
-        {auth.user
+        {auth.user.email
           ? null
           : (
             <div className="form-element">

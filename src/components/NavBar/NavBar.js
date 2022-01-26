@@ -38,12 +38,16 @@ const NavBar = () => {
     setIsModalOpen(false);
   };
 
-  const openCreateEmployeeModal = () => {
+  const openManageEmployeesModal = () => {
     setIsEmployeeModalOpen(true);
   };
 
   const closeEmployeeForm = () => {
     setIsEmployeeModalOpen(false);
+  };
+
+  const hideTabs = (bool) => {
+    setIsPermanentPasswordModalOpen(bool);
   };
 
   return (
@@ -62,9 +66,11 @@ const NavBar = () => {
                 View Your Tickets
               </button>
             </Link>
-            <button type="button" onClick={openCreateEmployeeModal} className="navbar-button">
-              Create Employee
-            </button>
+            {auth.user.role === 'Manager' ? (
+              <button type="button" onClick={openManageEmployeesModal} className="navbar-button">
+                Manage Employees
+              </button>
+            ) : null}
             <button type="button" onClick={handleLogout} className="navbar-button">
               Logout
             </button>
@@ -90,7 +96,7 @@ const NavBar = () => {
                 <button className="user-modal-button" type="button" onClick={() => setHasAccount(false)} disabled={!hasAccount}>Sign Up</button>
               </div>
               {hasAccount
-                ? <Login hideTabs={setIsPermanentPasswordModalOpen} closeModal={closeUserForm} />
+                ? <Login hideTabs={hideTabs} closeModal={closeUserForm} />
                 : <CreateAccount closeModal={closeUserForm} />}
             </div>
           </Modal>
