@@ -60,7 +60,7 @@ router.post('/create-ticket', async (req, res) => {
 router.get('/get-tickets', verifyToken, async (req, res) => {
   console.log('Received GET request.');
   try {
-    const result = await getTickets(res.locals.userEmail);
+    const result = await getTickets(res.locals.userEmail, res.locals.userRole);
     res.send(result);
   } catch (error) {
     res.sendStatus(500);
@@ -71,14 +71,16 @@ router.get('/get-tickets', verifyToken, async (req, res) => {
 router.post('/update-ticket', verifyToken, async (req, res) => {
   console.log('Received POST request');
   try {
-    if (res.locals.userRole === 'Employee' || res.locals.userRole === 'Manager') {
-      const { status, title, email } = await getCurrentStatusTitleEmail(
+    if (res.locals.userRole === 'Engineer' || res.locals.userRole === 'Manager') {
+      const {
+        status, title, email, name,
+      } = await getCurrentStatusTitleEmail(
         req.body.email, req.body._id,
       );
       const result = await updateTicket(res.locals.userEmail, req.body._id, req.body);
       if (status !== req.body.status) {
         await sendStatusUpdateByEmail(
-          email, title, status, req.body.status,
+          name, email, title, status, req.body.status,
         );
       }
       res.send(result);

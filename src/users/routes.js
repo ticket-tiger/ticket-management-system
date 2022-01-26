@@ -4,7 +4,9 @@ import { randomBytes } from 'crypto';
 import localConfig from '../localConfig.js';
 import { hashPassword, verifyPassword } from './argon2.js';
 import {
-  createUser, createEmployee, createPermanentPassword, getUserInfo, updateOneTimePassword,
+  createUser,
+  createEmployee,
+  createPermanentPassword, getLoginUserInfo, updateOneTimePassword, getOneTimeEmployees,
 } from '../db.js';
 import { sendOneTimePasswordByEmail } from './email.js';
 
@@ -63,17 +65,11 @@ userRouter.post('/create-employee', verifyToken, async (req, res) => {
       const tempPassword = randomBytes(10).toString('hex');
       const hashedTempPassword = await hashPassword(tempPassword);
       const result = await createEmployee(req.body, hashedTempPassword);
-      sendOneTimePasswordByEmail(req.body.email, tempPassword);
+      sendOneTimePasswordByEmail(req.body.name, req.body.email, tempPassword);
       res.send(result);
     } else res.sendStatus(403);
   } catch (error) {
-    if (error.message === 'Send new password') {
-      const tempPassword = randomBytes(10).toString('hex');
-      const hashedTempPassword = await hashPassword(tempPassword);
-      const result = await updateOneTimePassword(req.body.email, hashedTempPassword);
-      sendOneTimePasswordByEmail(req.body.email, tempPassword);
-      res.send(result);
-    } else if (error.message === 'Has permanent password') res.sendStatus(409);
+    if (error.message === 'User already exists') res.sendStatus(409);
     else res.sendStatus(500);
   }
   res.end();
@@ -82,22 +78,34 @@ userRouter.post('/create-employee', verifyToken, async (req, res) => {
 userRouter.post('/login', async (req, res, next) => {
   console.log('Received POST request.');
   try {
-    const userInfo = await getUserInfo(req.body.email);
-    const verify = await verifyPassword(userInfo.password, req.body.password);
-    res.locals.isOneTimePassword = userInfo.isOneTimePassword;
-    res.locals.passwordExpirationDate = userInfo.passwordExpirationDate;
-    res.locals.role = userInfo.role;
-    if (verify) {
-      res.status(200);
-      next();
+    const userInfo = await getLoginUserInfo(req.body.email);
+    // Check if the result is not null, i.e. the email exists in the db.
+    if (userInfo) {
+      if (await verifyPassword(userInfo.password, req.body.password)) {
+        res.status(200);
+        res.locals.isOneTimePassword = userInfo.isOneTimePassword;
+        res.locals.passwordExpirationDate = userInfo.passwordExpirationDate;
+        res.locals.role = userInfo.role;
+        next();
+      } else {
+        res.status(401);
+        res.end();
+      }
     } else {
-      res.status(401);
+      res.sendStatus(401);
       res.end();
     }
   } catch (error) {
     res.sendStatus(500);
     res.end();
   }
+}, (req, res, next) => {
+  // Check if one-time password has expired
+  const formattedPasswordExpirationDate = Date.parse(new Date(res.locals.passwordExpirationDate));
+  if (formattedPasswordExpirationDate < Date.now()) {
+    res.sendStatus(403);
+    res.end();
+  } else next();
 }, (req, res) => {
   // Tokens expire after 15 minutes (900000ms)
   const token = generateAccessTokens({ email: req.body.email, role: res.locals.role });
@@ -128,6 +136,30 @@ userRouter.post('/create-permanent-password', verifyToken, async (req, res) => {
     res.sendStatus(403);
   }
   res.end();
+});
+
+userRouter.get('/get-one-time-employees', verifyToken, async (req, res) => {
+  console.log('Received GET request.');
+  try {
+    const result = await getOneTimeEmployees();
+    res.send(result);
+  } catch (error) {
+    res.sendStatus(500);
+  }
+});
+
+userRouter.post('/resend-one-time-password', verifyToken, async (req, res) => {
+  console.log('Received POST request');
+  try {
+    const tempPassword = randomBytes(10).toString('hex');
+    const hashedTempPassword = await hashPassword(tempPassword);
+    const result = await updateOneTimePassword(req.body.email, hashedTempPassword);
+    await sendOneTimePasswordByEmail(req.body.name, req.body.email, tempPassword);
+    res.send(result);
+  } catch (error) {
+    res.sendStatus(500);
+    res.end();
+  }
 });
 
 export default userRouter;

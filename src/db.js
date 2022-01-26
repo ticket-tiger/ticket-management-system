@@ -44,7 +44,7 @@ const userSchema = new Schema({
   role: {
     type: String,
     default: 'Basic',
-    enum: ['Basic', 'Employee', 'Manager', 'Admin'],
+    enum: ['Basic', 'Engineer', 'Manager', 'Admin'],
   },
   tickets: [{
     title: { type: String, required: true, default: 'anonymous' },
@@ -166,22 +166,15 @@ export const createUser = async (userEmail, userName, userPassword) => {
 };
 
 export const createEmployee = async (employeeObject, oneTimePassword) => {
-  // const expirationDate = Date.now() + 6.048e+8;
-  const expirationDate = Date.now();
+  const expirationDate = Date.now() + 6.048e+8;
   try {
     await mongoose.connect(uri);
-    const existingEmployee = await User.findOne({ email: employeeObject.email }, 'isOneTimePassword');
+    const existingEmployee = await User.findOne({ email: employeeObject.email });
     if (existingEmployee) {
-      // The employee already exists
-      // Do they have a one-time password?
-      if (existingEmployee.isOneTimePassword) {
-        // Send a new one-time password
-        throw new Error('Send new password');
-      }
-      // Else the user already has a permanent password
-      throw new Error('Has permanent password');
+      throw new Error('User already exists');
     }
     const newEmployee = new User({
+      name: employeeObject.name,
       email: employeeObject.email,
       password: oneTimePassword,
       isOneTimePassword: true,
@@ -211,19 +204,19 @@ export const updateOneTimePassword = async (email, oneTimePassword) => {
 export const createPermanentPassword = async (email, newPassword) => {
   try {
     await mongoose.connect(uri);
-    const userObject = await User.findOne({ email }, 'passwordExpirationDate');
-    const passwordExpirationDate = Date.parse(new Date(userObject.passwordExpirationDate));
-    if (passwordExpirationDate >= Date.now()) {
-      const result = await User.updateOne({ email }, { password: newPassword, isOneTimePassword: false, $unset: { passwordExpirationDate: '' } });
-      return result;
-    }
-    throw new Error('Expired');
+    // const userObject = await User.findOne({ email }, 'passwordExpirationDate');
+    // const passwordExpirationDate = Date.parse(new Date(userObject.passwordExpirationDate));
+    // if (passwordExpirationDate >= Date.now()) {
+    const result = await User.updateOne({ email }, { password: newPassword, isOneTimePassword: false, $unset: { passwordExpirationDate: '' } });
+    return result;
+    // }
+    // throw new Error('Expired');
   } finally {
     await client.close();
   }
 };
 
-export const getUserInfo = async (userEmail) => {
+export const getLoginUserInfo = async (userEmail) => {
   try {
     await mongoose.connect(uri);
     const result = await User.findOne({ email: userEmail }, 'password isOneTimePassword passwordExpirationDate role').exec();
@@ -236,8 +229,20 @@ export const getUserInfo = async (userEmail) => {
 export const getCurrentStatusTitleEmail = async (email, objectId) => {
   try {
     await mongoose.connect(uri);
-    const result = await User.findOne({ email, 'tickets._id': objectId }, { 'tickets.$': 1 }).exec();
-    return { status: result.tickets[0].status, title: result.tickets[0].title, email: result.tickets[0].email };
+    const result = await User.findOne({ email, 'tickets._id': objectId }, { 'tickets.$': 1, name: 1 }).exec();
+    return {
+      status: result.tickets[0].status, title: result.tickets[0].title, email: result.tickets[0].email, name: result.name,
+    };
+  } finally {
+    await client.close();
+  }
+};
+
+export const getOneTimeEmployees = async () => {
+  try {
+    await mongoose.connect(uri);
+    const result = await User.find({ role: { $in: ['Engineer', 'Manager'] }, isOneTimePassword: true }, 'email name').exec();
+    return result;
   } finally {
     await client.close();
   }
