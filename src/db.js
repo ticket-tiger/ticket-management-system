@@ -98,7 +98,12 @@ export const getTickets = async (userEmail, userRole) => {
     let result;
     if (userRole === 'Engineer' || userRole === 'Manager') {
       // Grab all tickets
-      result = await User.find({}, 'tickets').exec();
+      result = await User.find({}, { _id: 0, tickets: 1 }).exec();
+      let tickets = [];
+      result.forEach((ticketsObject) => {
+        tickets = tickets.concat(ticketsObject.tickets);
+      });
+      result.tickets = tickets;
     } else {
       result = await User.findOne({ email: userEmail }, 'tickets').exec();
     }
