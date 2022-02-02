@@ -45,7 +45,7 @@ AuthProvider.propTypes = {
 export const useAuth = () => useContext(AuthContext);
 
 // Restrict certain routes if the user is not signed in
-export const RequireAuth = ({ children }) => {
+export const RequireUserAuth = ({ children }) => {
   const auth = useAuth();
   if (!auth.user.email) {
     return <Navigate to="/create-ticket" />;
@@ -53,6 +53,18 @@ export const RequireAuth = ({ children }) => {
   return children;
 };
 
-RequireAuth.propTypes = {
+export const RequireManagerAuth = ({ children }) => {
+  const auth = useAuth();
+  if (auth.user.role !== 'Manager') {
+    return <Navigate to="/create-ticket" />;
+  }
+  return children;
+};
+
+RequireUserAuth.propTypes = {
+  children: PropTypes.node.isRequired,
+};
+
+RequireManagerAuth.propTypes = {
   children: PropTypes.node.isRequired,
 };

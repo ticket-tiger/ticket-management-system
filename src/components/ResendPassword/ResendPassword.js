@@ -3,7 +3,7 @@ import axios from 'axios';
 import PropTypes from 'prop-types';
 import './ResendPassword.css';
 
-const ResendPassword = ({ employeeArray, closeModal, displayComponent }) => {
+const ResendPassword = ({ employeeArray }) => {
   const [selectedEmployee, setSelectedEmployee] = useState(null);
 
   const handleSubmit = async (e) => {
@@ -11,7 +11,6 @@ const ResendPassword = ({ employeeArray, closeModal, displayComponent }) => {
     try {
       const response = await axios.post('/users/resend-one-time-password', JSON.parse(selectedEmployee));
       console.log(response);
-      closeModal();
     } catch (error) {
       console.log(error);
     }
@@ -19,8 +18,7 @@ const ResendPassword = ({ employeeArray, closeModal, displayComponent }) => {
 
   return (
     <div>
-      <button type="button" onClick={() => displayComponent(false)}>Back</button>
-      <select onChange={(e) => setSelectedEmployee(e.target.value)}>
+      <select className="resend-password-employee-dropdown" onChange={(e) => setSelectedEmployee(e.target.value)}>
         {employeeArray.map(
           (employee) => (
             <option
@@ -32,15 +30,13 @@ const ResendPassword = ({ employeeArray, closeModal, displayComponent }) => {
           ),
         )}
       </select>
-      <button type="submit" onClick={(e) => handleSubmit(e)}>Resend One-Time Password</button>
+      <button type="submit" className="resend-password-submit-button" onClick={(e) => handleSubmit(e)}>Send</button>
     </div>
   );
 };
 
 ResendPassword.propTypes = {
   employeeArray: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)).isRequired,
-  closeModal: PropTypes.func.isRequired,
-  displayComponent: PropTypes.func.isRequired,
 };
 
 export default ResendPassword;

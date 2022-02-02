@@ -46,10 +46,6 @@ const NavBar = () => {
     setIsModalOpen(false);
   };
 
-  const openManageEmployeesModal = () => {
-    setIsEmployeeModalOpen(true);
-  };
-
   const closeEmployeeForm = () => {
     setIsEmployeeModalOpen(false);
   };
@@ -90,8 +86,8 @@ const NavBar = () => {
                 </p>
               </Link>
               {auth.user.role === 'Manager' ? (
-                <Link to="/view-tickets" className="navbar-link-button">
-                  <button type="button" onClick={openManageEmployeesModal} id="manage-employees-navbar-button" className="navbar-button">
+                <Link to="/manage-employees" className="navbar-link-button">
+                  <button type="button" id="manage-employees-navbar-button" className="navbar-button">
                     Manage Employees
                   </button>
                   <p className="manage-employees-button-description navbar-button-description">
