@@ -1,9 +1,26 @@
+.create-employee-resend-button {
+  position: absolute;
+  top: 8%;
+  left: 5%;
+  transform: translateY(-50%);
+  height: 45px;
+  width: 110px;
+  font-size: 15px;
+  font-weight: 700;
+  border: 2px solid black;
+  border-radius: 25px;
+  background-color: white;
+  color: black;
+  box-sizing: border-box;
+  /* word-break: break-all; */
+}
+
 .create-employee-form-input-group {
   position: absolute;
   top: 45%;
   left: 50%;
   transform: translate(-50%, -50%);
-  height: 35%;
+  height: 45%;
   width: 80%;
   display: flex;
   flex-direction: column;
@@ -13,7 +30,7 @@
 
 .create-employee-form-input, .create-employee-form-dropdown {
   font-size: var(--body-font-size);
-  height: 50px;
+  height: 40px;
   width: 100%;
   border: 2px solid transparent;
   border-bottom: 2px solid black;
@@ -43,12 +60,12 @@
 
 .create-employee-submit-button {
   position: absolute;
-  top: 65%;
+  top: 73%;
   left: 50%;
   transform: translate(-50%, 50%);
   height: 45px;
   width: 60%;
-  border-radius: 5px;
+  border-radius: 25px;
   border: 2px solid black;
   font-size: var(--body-font-size);
   font-weight: 700;
@@ -57,7 +74,8 @@
   /* transition: .3s; */
 }
 
-.create-employee-submit-button:hover {
+.create-employee-submit-button:hover,
+.create-employee-resend-button:hover {
   border: 3px solid var(--purple);
   color: var(--purple);
 }

@@ -14,19 +14,19 @@ export const AuthProvider = ({ children }) => {
     document.cookie
       .split('; ')
       .find((row) => row.startsWith('user='))
-      ? document.cookie
+      ? JSON.parse(document.cookie
         .split('; ')
         .find((row) => row.startsWith('user='))
-        .split('=')[1]
+        .split('=')[1])
       : { email: null, role: null },
   );
 
-  const signin = (newUser) => {
-    setUser(newUser);
+  const signin = (email, role) => {
+    setUser({ email, role });
   };
 
   const signout = () => {
-    setUser(null);
+    setUser({ email: null, role: null });
   };
 
   const value = { user, signin, signout };

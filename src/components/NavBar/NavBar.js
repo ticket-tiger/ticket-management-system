@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Link, Outlet } from 'react-router-dom';
 import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { useAuth } from '../../auth';
 import Modal from '../reusableComponents/Modal';
 import Login from '../Login/Login';
@@ -13,6 +15,12 @@ const NavBar = () => {
   const [hasAccount, setHasAccount] = useState(false);
   const [isEmployeeModalOpen, setIsEmployeeModalOpen] = useState(false);
   const [isPermanentPasswordModalOpen, setIsPermanentPasswordModalOpen] = useState(false);
+  const [navbarContainerIsVisible, setNavbarContainerIsVisible] = useState(false);
+  // const [navbarButtonDescriptionCSSClass, setNavbarButtonDescriptionCSSClass] = useState({
+  //   createAccount: 'display-none',
+  //   viewTickets: 'display-none',
+  //   manageEmployees: 'display-none',
+  // });
 
   const auth = useAuth();
   const handleLogout = async () => {
@@ -38,7 +46,7 @@ const NavBar = () => {
     setIsModalOpen(false);
   };
 
-  const openCreateEmployeeModal = () => {
+  const openManageEmployeesModal = () => {
     setIsEmployeeModalOpen(true);
   };
 
@@ -46,41 +54,68 @@ const NavBar = () => {
     setIsEmployeeModalOpen(false);
   };
 
+  const hideTabs = (bool) => {
+    setIsPermanentPasswordModalOpen(bool);
+  };
+
   return (
     <div>
       <h1 className="logo">Ticket Management System</h1>
-      <nav className="navbar">
-        {auth.user.email ? (
-          <>
-            <Link to="/create-ticket" className="navbar-button">
-              <button type="button" className="navbar-button">
-                Create A Ticket
-              </button>
-            </Link>
-            <Link to="/view-tickets" className="navbar-button">
-              <button type="button" className="navbar-button">
-                View Your Tickets
-              </button>
-            </Link>
-            <button type="button" onClick={openCreateEmployeeModal} className="navbar-button">
-              Create Employee
-            </button>
-            <button type="button" onClick={handleLogout} className="navbar-button">
-              Logout
-            </button>
-          </>
-        )
-          : (
+      <button type="button" className="navbar-menu-button" onClick={() => setNavbarContainerIsVisible(!navbarContainerIsVisible)}>
+        <FontAwesomeIcon icon={faBars} size="3x" />
+      </button>
+      <div className={`navbar-container ${navbarContainerIsVisible ? 'visibility-visible' : ''}`}>
+        <nav className="navbar">
+          {auth.user.email ? (
             <>
-              <button type="button" onClick={openLoginModal} className="navbar-button">
-                Login
-              </button>
-              <button type="button" onClick={openCreateAccountModal} className="navbar-button">
-                Sign Up
+              <Link to="/create-ticket" className="navbar-link-button">
+                <button type="button" id="create-ticket-navbar-button" className="navbar-button">
+                  Create A Ticket
+                </button>
+                <p className="create-ticket-button-description navbar-button-description">
+                  Tell us about an issue you are having.  We will work with you to resolve it
+                  as quickly as possible.
+                </p>
+              </Link>
+              <Link to="/view-tickets" className="navbar-link-button">
+                <button type="button" id="view-tickets-navbar-button" className="navbar-button">
+                  {auth.user.role === 'Basic'
+                    ? 'View Your Tickets'
+                    : 'Manage Tickets'}
+                </button>
+                <p className="view-tickets-button-description navbar-button-description">
+                  {auth.user.role === 'Basic'
+                    ? 'Check the status of tickets you already submitted.'
+                    : 'View and edit any existing tickets.'}
+                </p>
+              </Link>
+              {auth.user.role === 'Manager' ? (
+                <Link to="/view-tickets" className="navbar-link-button">
+                  <button type="button" onClick={openManageEmployeesModal} id="manage-employees-navbar-button" className="navbar-button">
+                    Manage Employees
+                  </button>
+                  <p className="manage-employees-button-description navbar-button-description">
+                    Create new employees or resend a one-time password to an existing employee.
+                  </p>
+                </Link>
+              ) : null}
+              <button type="button" onClick={handleLogout} className="navbar-button">
+                Logout
               </button>
             </>
-          )}
-      </nav>
+          )
+            : (
+              <>
+                <button type="button" onClick={openLoginModal} className="navbar-button">
+                  Login
+                </button>
+                <button type="button" onClick={openCreateAccountModal} className="navbar-button">
+                  Sign Up
+                </button>
+              </>
+            )}
+        </nav>
+      </div>
       {isModalOpen
         ? (
           <Modal hideCloseModalButton={isPermanentPasswordModalOpen} close={closeUserForm}>
@@ -90,7 +125,7 @@ const NavBar = () => {
                 <button className="user-modal-button" type="button" onClick={() => setHasAccount(false)} disabled={!hasAccount}>Sign Up</button>
               </div>
               {hasAccount
-                ? <Login hideTabs={setIsPermanentPasswordModalOpen} closeModal={closeUserForm} />
+                ? <Login hideTabs={hideTabs} closeModal={closeUserForm} />
                 : <CreateAccount closeModal={closeUserForm} />}
             </div>
           </Modal>

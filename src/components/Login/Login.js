@@ -42,11 +42,13 @@ const Login = ({ hideTabs, closeModal }) => {
     try {
       const response = await axios.post('/users/login', credentials);
       setAuthenticationStatusCSSClass('200-status');
-      auth.signin({ email: credentials.email, role: response.data.role });
+      auth.signin(credentials.email, response.data.role);
       setIsOneTimePassword(response.data.isOneTimePassword);
+      hideTabs(response.data.isOneTimePassword);
       if (!response.data.isOneTimePassword) closeModal();
     } catch (error) {
       if (error.response) {
+        console.log(error.response.status);
         if (error.response.status >= 400 && error.response.status < 500) setAuthenticationStatusCSSClass('status-400');
         else if (error.response.status >= 500) setAuthenticationStatusCSSClass('status-500');
         else setAuthenticationStatusCSSClass('status-default-error');
@@ -55,7 +57,6 @@ const Login = ({ hideTabs, closeModal }) => {
   };
 
   if (isOneTimePassword) {
-    hideTabs(true);
     return <CreatePermanentPassword closeModal={closeModal} />;
   }
 
