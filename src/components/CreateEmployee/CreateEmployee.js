@@ -11,7 +11,7 @@ const CreateEmployee = ({ closeModal }) => {
   const [resendPassword, setResendPassword] = useState(false);
   const [oneTimePasswordEmployees, setOneTimePasswordEmployees] = useState([]);
 
-  const initialEmployee = { name: '', email: '', role: 'Engineer' };
+  const initialEmployee = { name: '', email: '', role: '' };
   // To manage state of new employee fields
   const reducer = (state, action) => {
     switch (action.type) {
@@ -74,7 +74,7 @@ const CreateEmployee = ({ closeModal }) => {
 
   return (
     <>
-      <button type="button" onClick={() => setResendPassword(true)}>Resend One-Time Password</button>
+      <button className="create-employee-resend-button" type="button" onClick={() => setResendPassword(true)}>Resend Password</button>
       <div className="error-message-group">
         {accountCreationStatusCSSClass === 'status-400' ? <p>Your credentials were incorrect.  Please try again.</p> : null}
         {accountCreationStatusCSSClass === 'status-500' ? <p>There was a problem with the server.  Sorry for the inconvenience.</p> : null}
@@ -87,19 +87,25 @@ const CreateEmployee = ({ closeModal }) => {
             id="create-employee-form-name"
             onChange={(e) => dispatch({ type: 'name', payload: e.target.value })}
             className={`create-employee-form-input ${accountCreationStatusCSSClass} ${errorCSSClass}`}
+            placeholder="Name"
           />
-          <label className="create-employee-form-label" type="text" htmlFor="create-employee-form-name">Employee Name</label>
+          {/* <label className="create-employee-form-label" type="text"
+          htmlFor="create-employee-form-name">Employee Name</label> */}
           <input
             id="create-employee-form-email"
             onChange={(e) => dispatch({ type: 'email', payload: e.target.value })}
             className={`create-employee-form-input ${accountCreationStatusCSSClass} ${errorCSSClass}`}
+            placeholder="Email"
           />
-          <label className="create-employee-form-label" type="text" htmlFor="create-employee-form-email">Employee Email</label>
-          <select id="create-employee-form-role-dropdown" className="create-employee-form-dropdown" value={employee.role} onChange={(e) => dispatch({ type: 'role', payload: e.target.value })}>
+          {/* <label className="create-employee-form-label" type="text"
+          htmlFor="create-employee-form-email">Employee Email</label> */}
+          <select id="create-employee-form-role-dropdown" className="create-employee-form-dropdown" onChange={(e) => dispatch({ type: 'role', payload: e.target.value })} defaultValue="">
+            <option value="" disabled>Role</option>
             <option value="Engineer">Engineer</option>
             <option value="Manager">Manager</option>
           </select>
-          <label className="create-employee-form-label" type="text" htmlFor="create-employee-form-role-dropdown">Employee Role</label>
+          {/* <label className="create-employee-form-label" type="text"
+          htmlFor="create-employee-form-role-dropdown">Employee Role</label> */}
         </div>
         <button className="create-employee-submit-button" type="submit" onClick={(e) => handleSubmit(e)}>Create Account</button>
       </form>

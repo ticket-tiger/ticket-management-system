@@ -54,11 +54,6 @@
   border-bottom: 2px solid black;
 }
 
-.ticket-table tbody tr.active-row {
-  font-weight: bold;
-  color: #009879;
-}
-
 .ticket-table tbody {
   font-size: var(--body-font-size);
 }
@@ -92,7 +87,9 @@
   cursor: pointer;
 }
 
-.ticket-table-row:hover {
+.ticket-table tbody tr:nth-of-type(even):hover,
+.ticket-table tbody tr:nth-of-type(odd):hover {
+  background-color: lightgrey;
   color: var(--purple);
 }
 
