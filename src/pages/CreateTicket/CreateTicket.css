@@ -107,6 +107,58 @@
   background-color: white;
   border: black 2px solid;
 }
+
+
+.error-message-ticket{
+  border: orangered 4px;
+  z-index: 3;
+  position: absolute;
+  align-content: center;
+  top: 83%;
+  left: 50%;
+  transform: translate(-50%);
+  width: fit-content;
+  font-size: 15px;
+  color: red;
+}
+
+ .status409 {
+   border-color: red;
+ }
+
+ .status500 {
+  border-color: red;
+ }
+
+.noName {
+  border-color: red;
+}
+
+.noSubject {
+  border-color: red;
+  
+}
+
+.noCategory{
+  border-color: red;
+  
+}
+
+.noDescription{
+  border-color: red;
+  
+}
+ 
+ .noEmail {
+  border-color: red;
+}
+
+
+
+
+
+
+
 @media screen and (max-width: 410px) {
   .form {
     box-sizing: border-box;
