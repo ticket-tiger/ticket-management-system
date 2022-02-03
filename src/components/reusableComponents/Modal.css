@@ -18,6 +18,7 @@
   background-color: white;
   border-radius: 5px;
   border: 15px solid black;
+  border-top: 30px solid black;
   z-index: 1;
 }
 
