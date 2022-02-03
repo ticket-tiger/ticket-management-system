@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useReducer } from 'react';
+import validator from 'validator';
 import axios from 'axios';
 import { useAuth } from '../../auth';
 import './CreateTicket.css';
@@ -23,39 +24,119 @@ const CreateTicket = () => {
     });
   };
 
-  const sendPostRequest = async () => {
+  const ticketReducer = (reducerState, action) => {
+    switch (action.type) {
+      case 'subject':
+        return {
+          ...reducerState,
+          subject: action.valid ? '' : 'noSubject',
+          message: action.valid ? '' : 'Enter a subject.',
+        };
+      case 'category':
+        return {
+          ...reducerState,
+          category: action.valid ? '' : 'noCategory',
+          message: action.valid ? '' : 'Please select a category',
+        };
+      case 'description':
+        return {
+          ...reducerState,
+          description: action.valid ? '' : 'noDescription',
+          message: action.valid ? '' : 'Please describe your issue ',
+        };
+      case 'email':
+        return {
+          ...reducerState,
+          email: action.valid ? '' : 'noEmail',
+          message: action.valid ? '' : 'Please enter a valid email',
+        };
+      case 'noError':
+        return {
+          subject: '',
+          category: '',
+          description: '',
+          email: '',
+        };
+      default:
+        return {
+          ...state,
+          message: 'There was an unexpected error. Please try again later',
+        };
+    }
+  };
+
+  const intialTicketError = {
+    subject: '',
+    email: '',
+    category: '',
+    description: '',
+    message: '',
+  };
+
+  const [ticketErrorObject, ticketDispatch] = useReducer(ticketReducer, intialTicketError);
+
+  // if (!validator.isEmail(guestEmail)) {
+  //   ticketDispatch({ type: 'email', valid: false });
+  //   return;
+  // }
+  // ticketDispatch({ type: 'email', valid: true });
+
+  // const cookieValue = document.cookie
+  //   .split('; ')
+  //   .find((row) => row.startsWith('Bearer '));
+
+  // const config = {
+  //   authorization: cookieValue || null,
+  // };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
     const ticket = {
       category: state.ticketCategory,
-      title: state.subjectText,
+      subject: state.subjectText,
       description: state.descriptionText,
       priority: state.ticketPriority,
       urgency: state.ticketUrgency,
     };
-
-    // const cookieValue = document.cookie
-    //   .split('; ')
-    //   .find((row) => row.startsWith('Bearer '));
-
-    // const config = {
-    //   authorization: cookieValue || null,
-    // };
-
     try {
+      // validate if other fields are empty
       const email = guestEmail || auth.user.email;
+      if (validator.isEmpty(ticket.subject)) {
+        ticketDispatch({ type: 'subject', valid: false });
+        return;
+      }
+      ticketDispatch({ type: 'subject', valid: true });
+
+      // category validation
+      if (validator.isEmpty(ticket.category)) {
+        ticketDispatch({ type: 'category', valid: false });
+        return;
+      }
+      ticketDispatch({ type: 'category', valid: true });
+
+      // description validation
+      if (validator.isEmpty(ticket.description)) {
+        ticketDispatch({ type: 'description', valid: false });
+        return;
+      }
+      ticketDispatch({ type: 'description', valid: true });
+
+      // email validation
+      if (!validator.isEmail(guestEmail)) {
+        ticketDispatch({ type: 'email', valid: false });
+        return;
+      }
+      ticketDispatch({ type: 'email', valid: true });
+
       const response = await axios.post('/tickets/create-ticket', { email, ticket });
-      return response.status;
+      setResponseStatus(response.status);
     } catch (error) {
       console.log(error);
-      return error.response.status;
+      ticketDispatch({ type: error.response, valid: false });
     }
-  };
-
-  const clickHandler = async (event) => {
-    event.preventDefault();
-    setResponseStatus(await sendPostRequest());
+    setState({ ticketCategory: '' });
     setState({ subjectText: ' ' });
     setState({ descriptionText: ' ' });
-    setState({ ticketCategory: '' });
   };
 
   const clickHandler2 = (event) => {
@@ -66,15 +147,18 @@ const CreateTicket = () => {
     <>
       {/* <h1 className="submit-ticket-heading">Have an issue? Let us know.</h1> */}
       {responseStatus ? <p data-testid="responseStatus">{responseStatus}</p> : null}
+      <p className="error-message-ticket">
+        {ticketErrorObject.message}
+      </p>
       <form className="form">
         <div className="form-element">
-          <input id="subject-input" className="form-input" type="text" name="subjectText" value={state.subjectText || ''} onChange={handleChange} />
+          <input id="subject-input" className={`form-input ${ticketErrorObject.subject}`} type="text" name="subjectText" value={state.subjectText || ''} onChange={handleChange} />
           <label className="form-label" htmlFor="subject-input">
             <div className="label-text">Subject</div>
           </label>
         </div>
         <div className="form-element">
-          <select id="category-dropdown" className="form-input" name="ticketCategory" value={state.ticketCategory} onChange={handleChange}>
+          <select id="category-dropdown" className={`form-input ${ticketErrorObject.category}`} name="ticketCategory" value={state.ticketCategory} onChange={handleChange}>
             <option value="" disabled hidden>Select Category</option>
             <option value="Vendor Issues">Vendor Issues</option>
             <option value="Pre-Order questions">Pre-order Questions</option>
@@ -87,7 +171,7 @@ const CreateTicket = () => {
           </label>
         </div>
         <div className="form-element">
-          <textarea id="description-textarea" className="form-input form-textarea" name="descriptionText" value={state.descriptionText} onChange={handleChange} />
+          <textarea id="description-textarea" className={`form-input ${ticketErrorObject.description} form-input form-textarea`} name="descriptionText" value={state.descriptionText} onChange={handleChange} />
           <label className="form-label" htmlFor="description-textarea">
             <div className="label-text">Description</div>
           </label>
@@ -96,7 +180,7 @@ const CreateTicket = () => {
           ? null
           : (
             <div className="form-element">
-              <input id="create-ticket-email" className="form-input" onChange={(e) => setGuestEmail(e.target.value)} />
+              <input id="create-ticket-email" className={`form-input ${ticketErrorObject.email} form-input`} onChange={(e) => setGuestEmail(e.target.value)} />
               <label className="form-label" htmlFor="create-ticket-email">Email</label>
             </div>
           )}
@@ -107,7 +191,7 @@ const CreateTicket = () => {
           <button
             className="form-button form-submit-button"
             type="submit"
-            onClick={(e) => clickHandler(e)}
+            onClick={(e) => handleSubmit(e)}
           >
             Submit Your Issue
           </button>
