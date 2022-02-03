@@ -7,7 +7,6 @@ import axios from 'axios';
 import Modal from '../reusableComponents/Modal';
 import { useAuth } from '../../auth';
 import './TicketTable.css';
-// import SubmitTicket from '../SubmitTicket/SubmitTicket';
 
 const useSortableData = (items, config = null) => {
   const [sortConfig, setSortConfig] = useState(config);
@@ -41,27 +40,8 @@ const useSortableData = (items, config = null) => {
   return { sortItems, requestSort };
 };
 
-// const sampleTickets = [{
-//   _id: '1', title: 'SDcasdc', description: 'apple', status:
-// 'Submitted', priority: '10', urgency: '8', date: '12/10/21',
-// }, {
-//   _id: '2', title: 'ZSCsc', description: 'banana', status:
-// 'In Progress', priority: '1', urgency: '5', date: '5/09/21',
-// },
-// {
-//   _id: '3', title: 'anonymous', description: 'apple', status:
-// 'Resolved', priority: '10', urgency: '1', date: '12/10/21',
-// }, {
-//   _id: '4', title: 'anonymous', description: 'mandarin', status:
-// 'Submitted', priority: '2', urgency: '6', date: '01/10/19',
-// },
-// {
-//   _id: '5', title: 'Badport', description: 'apple', status:
-// 'In Progress', priority: '4', urgency: '9', date: '3/23/21',
-// }];
-
 const TicketTable = () => {
-  const [tickets, setTickets] = useState(null);
+  const [tickets, setTickets] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [ticketisEditable, setTicketisEditable] = useState(null);
   const [ticketStatusCSSClass, setTicketCreationStatusCSSClass] = useState('');
@@ -179,27 +159,27 @@ const TicketTable = () => {
           <div className="selected-ticket-data-group">
             {ticketisEditable ? (
               <>
-                <div>
+                <div className="selected-ticket-row">
                   <label className="selected-ticket-label" htmlFor="selected-ticket-title-input">Title:</label>
-                  <input id="selected-ticket-title-input" type="text" value={selectedTicket.title} onChange={(e) => dispatch({ type: 'title', payload: e.target.value })} />
+                  <input id="selected-ticket-title-input" className="selected-ticket-data" type="text" value={selectedTicket.title} onChange={(e) => dispatch({ type: 'title', payload: e.target.value })} />
                 </div>
-                <div>
+                <div className="selected-ticket-row">
                   <label className="selected-ticket-label" htmlFor="selected-ticket-status-input">Status:</label>
                   <input id="selected-ticket-status-input" className="selected-ticket-data" value={selectedTicket.status} onChange={(e) => dispatch({ type: 'status', payload: e.target.value })} />
                 </div>
-                <div>
+                <div className="selected-ticket-row">
                   <label className="selected-ticket-label" htmlFor="selected-ticket-priority-input">Priority:</label>
                   <input id="selected-ticket-priority-input" className="selected-ticket-data" value={selectedTicket.priority} onChange={(e) => dispatch({ type: 'priority', payload: e.target.value })} />
                 </div>
-                <div>
+                <div className="selected-ticket-row">
                   <label className="selected-ticket-label" htmlFor="selected-ticket-urgency-input">Urgency:</label>
                   <input id="selected-ticket-urgency-input" className="selected-ticket-data" value={selectedTicket.urgency} onChange={(e) => dispatch({ type: 'urgency', payload: e.target.value })} />
                 </div>
-                <div>
+                <div className="sselected-ticket-row">
                   <label className="selected-ticket-label" htmlFor="selected-ticket-description-input">Description:</label>
-                  <input id="selected-ticket-description-input" className="selected-ticket-data" value={selectedTicket.description} onChange={(e) => dispatch({ type: 'description', payload: e.target.value })} />
+                  <textarea id="selected-ticket-description-input" className="selected-ticket-data selected-ticket-textarea" value={selectedTicket.description} onChange={(e) => dispatch({ type: 'description', payload: e.target.value })} />
                 </div>
-                <div>
+                <div className="selected-ticket-row">
                   <label className="selected-ticket-label" htmlFor="selected-ticket-email-input">Email:</label>
                   <input id="selected-ticket-email-input" className="selected-ticket-data" value={selectedTicket.email} onChange={(e) => dispatch({ type: 'email', payload: e.target.value })} />
                 </div>
@@ -210,9 +190,10 @@ const TicketTable = () => {
                   value={selectedTicket.date.toLocaleString('en-US', { timeZone: 'America/New_York'
                 })} onChange={(e) => dispatch({ type: 'date', payload: e.target.value })} />
                 </div> */}
-                <button type="button" onClick={() => setTicketisEditable(false)}>Cancel</button>
-                <button type="submit" onClick={(e) => handleUpdate(e)}> Submit</button>
-
+                <div className="selected-ticket-button-group">
+                  <button type="button" className="selected-ticket-button" onClick={() => setTicketisEditable(false)}>Cancel</button>
+                  <button type="submit" className="selected-ticket-button" onClick={(e) => handleUpdate(e)}> Submit</button>
+                </div>
               </>
 
             )
@@ -242,20 +223,32 @@ const TicketTable = () => {
                     <label className="selected-ticket-label" htmlFor="selected-ticket-email-p">Email:</label>
                     <p id="selected-ticket-email-p" className="selected-ticket-data">{selectedTicket.email}</p>
                   </div>
+                  <div>
+                    <label className="selected-ticket-label" htmlFor="selected-ticket-date-p">Date Created:</label>
+                    <p id="selected-ticket-date-p" className="selected-ticket-data">{selectedTicket.date.toLocaleString('en-US', { timeZone: 'America/New_York' })}</p>
+                  </div>
                 </>
               )}
-            <div>
-              <label className="selected-ticket-label" htmlFor="selected-ticket-date-p">Date Created:</label>
-              <p id="selected-ticket-date-p" className="selected-ticket-data">{selectedTicket.date.toLocaleString('en-US', { timeZone: 'America/New_York' })}</p>
-            </div>
           </div>
 
         </Modal>
       ) : null }
-      {tickets
+      {tickets.length
         ? (
           <div className="ticket-table-container">
             <table className="ticket-table">
+              <colgroup>
+                <col className="ticket-table-title-column" />
+                <col className="ticket-table-status-column" />
+                {auth.user.role === 'Basic' ? null
+                  : (
+                    <>
+                      <col className="ticket-table-priority-column" />
+                      <col className="ticket-table-urgency-column" />
+                    </>
+                  ) }
+                <col className="ticket-table-date-column" />
+              </colgroup>
               <thead>
                 <tr>
                   <th className="ticket-table-header">
@@ -277,26 +270,30 @@ const TicketTable = () => {
                       Status
                     </button>
                   </th>
+                  {auth.user.role === 'Basic' ? null
+                    : (
+                      <>
+                        <th className="ticket-table-header">
+                          <button
+                            className="ticket-table-header-button"
+                            type="button"
+                            onClick={() => requestSort('priority')}
+                          >
+                            Priority
+                          </button>
+                        </th>
 
-                  <th className="ticket-table-header">
-                    <button
-                      className="ticket-table-header-button"
-                      type="button"
-                      onClick={() => requestSort('priority')}
-                    >
-                      Priority
-                    </button>
-                  </th>
-
-                  <th className="ticket-table-header">
-                    <button
-                      className="ticket-table-header-button"
-                      type="button"
-                      onClick={() => requestSort('urgency')}
-                    >
-                      Urgency
-                    </button>
-                  </th>
+                        <th className="ticket-table-header">
+                          <button
+                            className="ticket-table-header-button"
+                            type="button"
+                            onClick={() => requestSort('urgency')}
+                          >
+                            Urgency
+                          </button>
+                        </th>
+                      </>
+                    )}
 
                   <th className="ticket-table-header">
                     <button
@@ -315,8 +312,13 @@ const TicketTable = () => {
                   <tr className="ticket-table-row" onClick={() => openModal(ticket.title)} key={ticket._id}>
                     <td key="title">{ticket.title}</td>
                     <td key="status">{ticket.status}</td>
-                    <td key="priority">{ticket.priority}</td>
-                    <td key="urgency">{ticket.urgency}</td>
+                    {auth.user.role === 'Basic' ? null
+                      : (
+                        <>
+                          <td key="priority">{ticket.priority}</td>
+                          <td key="urgency">{ticket.urgency}</td>
+                        </>
+                      ) }
                     <td key="date">{ticket.date.toLocaleString('en-US', { timeZone: 'America/New_York', dateStyle: 'long', timeStyle: 'long' })}</td>
                   </tr>
                 ))}
@@ -324,7 +326,7 @@ const TicketTable = () => {
             </table>
           </div>
         )
-        : null }
+        : <h1 className="empty-ticket-table-text">You do not have any tickets.</h1> }
     </>
   );
 };

@@ -36,18 +36,18 @@
 
 .create-employee-heading {
   position: absolute;
-  top: 5%;
+  top: 7%;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translate(-50%, -50%);
   width: 80%;
   text-align: center;
 }
 
 .resend-password-heading {
   position: absolute;
-  top: 5%;
+  top: 7%;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translate(-50%, -50%);
   width: 80%;
   text-align: center;
 }
@@ -58,10 +58,16 @@
   }
 
   .create-employee-container {
+    position: relative;
     display: block;
+    height: 75vh;
+    width: 100%;
   }
 
   .resend-password-container {
+    position: relative;
     display: block;
+    height: 75vh;
+    width: 100%;
   }
 }

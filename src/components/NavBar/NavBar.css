@@ -79,6 +79,8 @@
 	line-height: 160%;
 	z-index: 1;
 	visibility: hidden;
+	text-decoration: none;
+	color: black;
 }
 
 .view-tickets-button-description {
@@ -164,6 +166,7 @@
 	.navbar-button-description {
 		margin: 0;
 		display: none;
+		width: 240px;
 	}
 
 	.navbar-button:hover + .navbar-button-description,
@@ -184,6 +187,12 @@
 
 	.visibility-visible {
 		visibility: visible;
+	}
+}
+
+@media screen and (max-width: 400px) {
+	.navbar-button-description {
+		width: 120px;
 	}
 }
 
