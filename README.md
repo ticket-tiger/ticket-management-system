@@ -1,8 +1,19 @@
 # Ticket Manangement System - Issue Tracking Web App
 
-Simple issue tracking cloud application to showcase our skills using the MERN development stack.
+Simple issue tracking cloud application that showcases our skills using the MERN development stack.
 
 ![alt text](https://github.com/Coffee-Express/ce-tms-frontend/blob/main/public/MainPage.png?raw=true) 
+
+## Table of Contents
+
+* General Info
+* Technologies
+
+## General Info
+
+Has your enterprise just released a new product?  Would you like to hear feedback from your users to ensure they have a smooth experience?  If you answered yes to these questions, then our Ticket Management System is the perfect product for you.  Ticket Management System (or TMS) is a cloud-based issue tracking application where users can communicate any bugs they found using your product.  Our user interface records an issue's title, category, and description which gives your company valuable information to resolve the bug as quickly as possible.  
+
+Employees can then login to view tickets that users have created.  
 
 ## Available Scripts
 
