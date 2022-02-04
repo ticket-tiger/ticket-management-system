@@ -1,6 +1,6 @@
-![alt text](https://github.com/Coffee-Express/ce-tms-frontend/blob/main/public/MainPage.png?raw=true) 
-
 # Ticket Manangement System - Issue Tracking Web App
+
+![alt text](https://github.com/Coffee-Express/ce-tms-frontend/blob/main/public/MainPage.png?raw=true) 
 
 ## Available Scripts
 
