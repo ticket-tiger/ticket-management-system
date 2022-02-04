@@ -1,5 +1,7 @@
 # Ticket Manangement System - Issue Tracking Web App
 
+Simple issue tracking cloud application to showcase our skills using the MERN development stack.
+
 ![alt text](https://github.com/Coffee-Express/ce-tms-frontend/blob/main/public/MainPage.png?raw=true) 
 
 ## Available Scripts
