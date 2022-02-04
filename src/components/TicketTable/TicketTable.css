@@ -57,9 +57,9 @@
   font-size: var(--body-font-size);
 }
 
-.ticket-table-header {
+/* .ticket-table-header {
   transition: .3s;
-}
+} */
 
 .ticket-table-header:hover {
   background-color: white;
@@ -73,7 +73,7 @@
   font-size: var(--body-font-size);
   font-weight: 700;
   border: 2px solid transparent;
-  transition: .3s;
+  /* transition: .3s; */
 }
 
 .ticket-table-header-button:hover {
@@ -112,7 +112,7 @@
   font-size: var(--body-font-size);
   color: black;
   font-weight: bold;
-  transition: .3s;
+  /* transition: .3s; */
 }
 
 .selected-ticket-data {
@@ -175,5 +175,15 @@
   .ticket-table-priority-column,
   .ticket-table-urgency-column {
     visibility: collapse;
+  }
+}
+
+@media screen and (min-width: 1800px) {
+  .ticket-table-header-button {
+    font-size: 32px;
+  }
+
+  .ticket-table tbody{
+    font-size: 32px;
   }
 }

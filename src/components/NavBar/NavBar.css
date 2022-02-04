@@ -202,22 +202,31 @@
 	}
 
 	.navbar-button {
-		width: 150px;
+		height: 100px;
+		width: 190px;
 		font-size: 32px;
 	}
 
-	.user-modal-button {
-		font-size: 32px;
-	}
-}
-
-/* @media screen and (max-width: 1200px) {
-	.logo {
+	.navbar-button-description {
+		width: 570px;
 		font-size: 20px;
 	}
 
-	.navbar-button {
-		width: 50px;
-		font-size: 12px;
+	.view-tickets-button-description {
+		transform: translateX(-190px);
 	}
-} */
+
+	.manage-employees-button-description {
+		transform: translateX(-380px);
+	}
+
+	.user-modal-button-group {
+		top: -40px;
+		height: 40px;
+	}
+
+	.user-modal-button {
+		width: 135px;
+		font-size: 32px;
+	}
+}
