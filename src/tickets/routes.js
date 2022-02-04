@@ -40,7 +40,7 @@ router.post('/create-ticket', async (req, res) => {
   console.log('Received POST request.');
   try {
     const ticket = {
-      title: req.body.ticket.title,
+      subject: req.body.ticket.subject,
       description: req.body.ticket.description,
       category: req.body.ticket.category,
       status: 'Submitted',
