@@ -13,7 +13,7 @@
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  height: 80vh;
+  height: 800px;
   width: 350px;
   background-color: white;
   border-radius: 5px;
@@ -67,7 +67,7 @@
 @media screen and (min-width: 1800px) {
   .modal {
     border: 22px solid black;
-    height: 70vh;
+    height: 900px;
     width: 570px;
     border-top: 40px solid black;
   }

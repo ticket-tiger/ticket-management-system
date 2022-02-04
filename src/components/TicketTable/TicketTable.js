@@ -117,12 +117,18 @@ const TicketTable = () => {
     setIsModalOpen(true);
   };
 
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setTicketisEditable(false);
+  };
+
   const handleUpdate = async (e) => {
     e.preventDefault();
     try {
       await axios.post('tickets/update-ticket', selectedTicket);
       await getTickets();
       setIsModalOpen(false);
+      setTicketisEditable(false);
       setTicketCreationStatusCSSClass('');
     } catch (error) {
       if (error.response.status === 401) setTicketCreationStatusCSSClass('status-401');
@@ -144,7 +150,7 @@ const TicketTable = () => {
   return (
     <>
       {isModalOpen ? (
-        <Modal close={() => setIsModalOpen(false)}>
+        <Modal close={closeModal}>
           <div className="error-message-group">
             {ticketStatusCSSClass === 'status-401' ? <p> 401 Unauthorized. We have notified the Feds.</p> : null}
             {ticketStatusCSSClass === 'status-500' ? <p>There was a problem with the server.  Sorry for the inconvenience.</p> : null}
@@ -160,27 +166,27 @@ const TicketTable = () => {
             {ticketisEditable ? (
               <>
                 <div className="selected-ticket-row">
-                  <label className="selected-ticket-label" htmlFor="selected-ticket-title-input">Title:</label>
+                  <label className="selected-ticket-label selected-ticket-label-input" htmlFor="selected-ticket-title-input">Title:</label>
                   <input id="selected-ticket-title-input" className="selected-ticket-data" type="text" value={selectedTicket.title} onChange={(e) => dispatch({ type: 'title', payload: e.target.value })} />
                 </div>
                 <div className="selected-ticket-row">
-                  <label className="selected-ticket-label" htmlFor="selected-ticket-status-input">Status:</label>
+                  <label className="selected-ticket-label selected-ticket-label-input" htmlFor="selected-ticket-status-input">Status:</label>
                   <input id="selected-ticket-status-input" className="selected-ticket-data" value={selectedTicket.status} onChange={(e) => dispatch({ type: 'status', payload: e.target.value })} />
                 </div>
                 <div className="selected-ticket-row">
-                  <label className="selected-ticket-label" htmlFor="selected-ticket-priority-input">Priority:</label>
+                  <label className="selected-ticket-label selected-ticket-label-input" htmlFor="selected-ticket-priority-input">Priority:</label>
                   <input id="selected-ticket-priority-input" className="selected-ticket-data" value={selectedTicket.priority} onChange={(e) => dispatch({ type: 'priority', payload: e.target.value })} />
                 </div>
                 <div className="selected-ticket-row">
-                  <label className="selected-ticket-label" htmlFor="selected-ticket-urgency-input">Urgency:</label>
+                  <label className="selected-ticket-label selected-ticket-label-input" htmlFor="selected-ticket-urgency-input">Urgency:</label>
                   <input id="selected-ticket-urgency-input" className="selected-ticket-data" value={selectedTicket.urgency} onChange={(e) => dispatch({ type: 'urgency', payload: e.target.value })} />
                 </div>
                 <div className="sselected-ticket-row">
-                  <label className="selected-ticket-label" htmlFor="selected-ticket-description-input">Description:</label>
+                  <label className="selected-ticket-label selected-ticket-label-input" htmlFor="selected-ticket-description-input">Description:</label>
                   <textarea id="selected-ticket-description-input" className="selected-ticket-data selected-ticket-textarea" value={selectedTicket.description} onChange={(e) => dispatch({ type: 'description', payload: e.target.value })} />
                 </div>
                 <div className="selected-ticket-row">
-                  <label className="selected-ticket-label" htmlFor="selected-ticket-email-input">Email:</label>
+                  <label className="selected-ticket-label selected-ticket-label-input" htmlFor="selected-ticket-email-input">Email:</label>
                   <input id="selected-ticket-email-input" className="selected-ticket-data" value={selectedTicket.email} onChange={(e) => dispatch({ type: 'email', payload: e.target.value })} />
                 </div>
                 {/* <div>

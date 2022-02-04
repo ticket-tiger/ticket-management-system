@@ -96,14 +96,16 @@
   position: absolute;
   top: 20%;
   left: 50%;
-  width: 90%;
+  height: 80%;
+  width: 95%;
   transform: translateX(-50%);
+  overflow: auto;
 }
 
 .selected-ticket-row {
-  position: relative;
+  /* position: relative;
   display: flex;
-  align-items: center;
+  align-items: center; */
 }
 
 .selected-ticket-label {
@@ -131,7 +133,7 @@
 
 .selected-ticket-button-group {
   position: absolute;
-  top: 110%;
+  top: 80%;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -185,5 +187,23 @@
 
   .ticket-table tbody{
     font-size: 32px;
+  }
+
+  .selected-ticket-label,
+  .selected-ticket-data {
+    font-size: 32px;
+  }
+
+  .selected-ticket-data {
+    margin: 10px 0 10px 0;
+    max-width: 400px;
+    word-wrap: break-word;
+  }
+  
+  .selected-ticket-textarea {
+    height: 120px;
+    max-height: 120px;
+    width: 480px;
+    max-width: 480px;
   }
 }
