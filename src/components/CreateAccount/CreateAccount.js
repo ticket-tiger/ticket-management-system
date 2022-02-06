@@ -149,10 +149,6 @@ const CreateAccount = ({ closeModal }) => {
   return (
     <>
 
-      <p className="error-message">
-        {errorObject.message}
-      </p>
-
       <form>
         <div className="create-account-form-input-group">
           <div>
@@ -191,6 +187,9 @@ const CreateAccount = ({ closeModal }) => {
           </div>
         </div>
         <button className="create-account-submit-button" type="submit" onClick={(e) => handleSubmit(e)}>Create Your Account</button>
+        <p className="error-message">
+          {errorObject.message}
+        </p>
       </form>
     </>
   );
