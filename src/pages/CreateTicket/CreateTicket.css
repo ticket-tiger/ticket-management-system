@@ -155,11 +155,6 @@
 }
 
 
-
-
-
-
-
 @media screen and (max-width: 410px) {
   .form {
     box-sizing: border-box;
@@ -185,6 +180,7 @@
   .form {
     padding: 60px;
     border: 22px solid black;
+    max-width: 1000px;
   }
 
   .form-label {

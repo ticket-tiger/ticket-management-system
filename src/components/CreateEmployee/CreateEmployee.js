@@ -1,15 +1,11 @@
-import React, { useState, useReducer, useEffect } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, useReducer } from 'react';
 import axios from 'axios';
 import validator from 'validator';
 import './CreateEmployee.css';
-import ResendPassword from '../ResendPassword/ResendPassword';
 
-const CreateEmployee = ({ closeModal }) => {
+const CreateEmployee = () => {
   const [accountCreationStatusCSSClass, setAccountCreationStatusCSSClass] = useState('');
   const [errorCSSClass, setErrorCSSClass] = useState('');
-  const [resendPassword, setResendPassword] = useState(false);
-  const [oneTimePasswordEmployees, setOneTimePasswordEmployees] = useState([]);
 
   const initialEmployee = { name: '', email: '', role: '' };
   // To manage state of new employee fields
@@ -37,14 +33,6 @@ const CreateEmployee = ({ closeModal }) => {
 
   const [employee, dispatch] = useReducer(reducer, initialEmployee);
 
-  useEffect(() => {
-    const getOneTimeEmployees = async () => {
-      const response = await axios.get('/users/get-one-time-employees');
-      setOneTimePasswordEmployees(response.data);
-    };
-    getOneTimeEmployees();
-  }, [resendPassword]);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -53,7 +41,6 @@ const CreateEmployee = ({ closeModal }) => {
     } else {
       try {
         await axios.post('/users/create-employee', employee);
-        closeModal();
       } catch (error) {
         if (error.response.status >= 400 && error.response.status < 500) setAccountCreationStatusCSSClass('status-400');
         else if (error.response.status >= 500) setAccountCreationStatusCSSClass('status-500');
@@ -62,19 +49,8 @@ const CreateEmployee = ({ closeModal }) => {
     }
   };
 
-  if (resendPassword) {
-    return (
-      <ResendPassword
-        employeeArray={oneTimePasswordEmployees}
-        closeModal={closeModal}
-        displayComponent={setResendPassword}
-      />
-    );
-  }
-
   return (
     <>
-      <button className="create-employee-resend-button" type="button" onClick={() => setResendPassword(true)}>Resend Password</button>
       <div className="error-message-group">
         {accountCreationStatusCSSClass === 'status-400' ? <p>Your credentials were incorrect.  Please try again.</p> : null}
         {accountCreationStatusCSSClass === 'status-500' ? <p>There was a problem with the server.  Sorry for the inconvenience.</p> : null}
@@ -107,14 +83,10 @@ const CreateEmployee = ({ closeModal }) => {
           {/* <label className="create-employee-form-label" type="text"
           htmlFor="create-employee-form-role-dropdown">Employee Role</label> */}
         </div>
-        <button className="create-employee-submit-button" type="submit" onClick={(e) => handleSubmit(e)}>Create Account</button>
+        <button className="create-employee-submit-button" type="submit" onClick={(e) => handleSubmit(e)}>Create</button>
       </form>
     </>
   );
-};
-
-CreateEmployee.propTypes = {
-  closeModal: PropTypes.func.isRequired,
 };
 
 export default CreateEmployee;

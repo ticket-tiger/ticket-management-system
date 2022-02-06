@@ -79,6 +79,8 @@
 	line-height: 160%;
 	z-index: 1;
 	visibility: hidden;
+	text-decoration: none;
+	color: black;
 }
 
 .view-tickets-button-description {
@@ -91,8 +93,8 @@
 
 .user-modal-button-group {
 	position: absolute;
-	top: -5%;
-	height: 5%;
+	top: -30px;
+	height: 30px;
 	width: 100%;
 }
 
@@ -164,6 +166,7 @@
 	.navbar-button-description {
 		margin: 0;
 		display: none;
+		width: 240px;
 	}
 
 	.navbar-button:hover + .navbar-button-description,
@@ -187,28 +190,43 @@
 	}
 }
 
+@media screen and (max-width: 400px) {
+	.navbar-button-description {
+		width: 120px;
+	}
+}
+
 @media screen and (min-width: 1800px) {
 	.logo {
 		font-size: 51px;
 	}
 
 	.navbar-button {
-		width: 150px;
+		height: 100px;
+		width: 190px;
 		font-size: 32px;
 	}
 
-	.user-modal-button {
-		font-size: 32px;
-	}
-}
-
-/* @media screen and (max-width: 1200px) {
-	.logo {
+	.navbar-button-description {
+		width: 570px;
 		font-size: 20px;
 	}
 
-	.navbar-button {
-		width: 50px;
-		font-size: 12px;
+	.view-tickets-button-description {
+		transform: translateX(-190px);
 	}
-} */
+
+	.manage-employees-button-description {
+		transform: translateX(-380px);
+	}
+
+	.user-modal-button-group {
+		top: -40px;
+		height: 40px;
+	}
+
+	.user-modal-button {
+		width: 135px;
+		font-size: 32px;
+	}
+}

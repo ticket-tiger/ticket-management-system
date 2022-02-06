@@ -81,20 +81,6 @@ const CreateTicket = () => {
 
   const [ticketErrorObject, ticketDispatch] = useReducer(ticketReducer, intialTicketError);
 
-  // if (!validator.isEmail(guestEmail)) {
-  //   ticketDispatch({ type: 'email', valid: false });
-  //   return;
-  // }
-  // ticketDispatch({ type: 'email', valid: true });
-
-  // const cookieValue = document.cookie
-  //   .split('; ')
-  //   .find((row) => row.startsWith('Bearer '));
-
-  // const config = {
-  //   authorization: cookieValue || null,
-  // };
-
   const handleSubmit = async (event) => {
     event.preventDefault();
     const ticket = {

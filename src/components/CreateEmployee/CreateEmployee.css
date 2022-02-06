@@ -34,7 +34,9 @@
   width: 100%;
   border: 2px solid transparent;
   border-bottom: 2px solid black;
+  border-radius: 5px 5px 0 0;
   box-sizing: border-box;
+  background-color: white;
   /* transition: .3s; */
 }
 
@@ -60,9 +62,9 @@
 
 .create-employee-submit-button {
   position: absolute;
-  top: 73%;
+  bottom: 27%;
   left: 50%;
-  transform: translate(-50%, 50%);
+  transform: translate(-50%, 150%);
   height: 45px;
   width: 60%;
   border-radius: 25px;
@@ -103,7 +105,8 @@
     font-size: 51px;
   }
 
-  .create-employee-form-input {
+  .create-employee-form-input,
+  .create-employee-form-dropdown {
    font-size: var(--heading-font-size);
    height: 75px;
    width: 100%;
@@ -111,7 +114,8 @@
    border-bottom: 3px solid black;
  }
 
- .create-employee-form-input:focus, .create-employee-form-input:hover {
+ .create-employee-form-input:focus, .create-employee-form-input:hover,
+ .create-employee-form-dropdown:focus, .create-employee-form-dropdown:hover {
    border: 3px solid var(--purple);
  }
 

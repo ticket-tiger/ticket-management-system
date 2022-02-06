@@ -1,8 +1,9 @@
 import React from 'react';
 import { Route, Routes, Navigate } from 'react-router-dom';
-import { AuthProvider, RequireAuth } from './auth';
+import { AuthProvider, RequireUserAuth, RequireManagerAuth } from './auth';
 import CreateTicket from './pages/CreateTicket/CreateTicket';
 import ViewTickets from './pages/ViewTickets/ViewTickets';
+import ManageEmployees from './pages/ManageEmployees/ManageEmployees';
 import NavBar from './components/NavBar/NavBar';
 import './App.css';
 
@@ -20,9 +21,17 @@ const App = () => (
         <Route
           path="/view-tickets"
           element={(
-            <RequireAuth>
+            <RequireUserAuth>
               <ViewTickets />
-            </RequireAuth>
+            </RequireUserAuth>
+          )}
+        />
+        <Route
+          path="/manage-employees"
+          element={(
+            <RequireManagerAuth>
+              <ManageEmployees />
+            </RequireManagerAuth>
           )}
         />
       </Route>
