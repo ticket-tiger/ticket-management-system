@@ -1,7 +1,7 @@
 import express from 'express';
 import jwt from 'jsonwebtoken';
 import { randomBytes } from 'crypto';
-import localConfig from '../localConfig.js';
+// import localConfig from '../localConfig.js';
 import { hashPassword, verifyPassword } from './argon2.js';
 import {
   createUser,
@@ -12,7 +12,7 @@ import { sendOneTimePasswordByEmail } from './email.js';
 
 const userRouter = express.Router();
 
-const generateAccessTokens = (email) => jwt.sign(email, localConfig.tokenSecret, { expiresIn: '900s' });
+const generateAccessTokens = (email) => jwt.sign(email, process.env.TOKEN_SECRET, { expiresIn: '900s' });
 
 const verifyToken = async (req, res, next) => {
   const { token } = req.cookies;
@@ -20,7 +20,7 @@ const verifyToken = async (req, res, next) => {
   if (token === undefined) {
     res.sendStatus(401);
   } else {
-    jwt.verify(token, localConfig.tokenSecret, { maxAge: '900s' }, (err, tokenUser) => {
+    jwt.verify(token, process.env.TOKEN_SECRET, { maxAge: '900s' }, (err, tokenUser) => {
       if (err) { res.sendStatus(403); } else {
         res.locals.managerEmail = tokenUser.email;
         res.locals.managerRole = tokenUser.role;
@@ -81,29 +81,39 @@ userRouter.post('/login', async (req, res, next) => {
     const userInfo = await getLoginUserInfo(req.body.email);
     // Check if the result is not null, i.e. the email exists in the db.
     if (userInfo) {
-      if (await verifyPassword(userInfo.password, req.body.password)) {
-        res.status(200);
-        res.locals.isOneTimePassword = userInfo.isOneTimePassword;
-        res.locals.passwordExpirationDate = userInfo.passwordExpirationDate;
-        res.locals.role = userInfo.role;
-        next();
+      if (userInfo.password) {
+        if (await verifyPassword(userInfo.password, req.body.password)) {
+          res.status(200);
+          res.locals.isOneTimePassword = userInfo.isOneTimePassword;
+          res.locals.passwordExpirationDate = userInfo.passwordExpirationDate;
+          res.locals.role = userInfo.role;
+          next();
+        } else {
+          res.status(401);
+          res.send('Invalid password');
+          res.end();
+        }
       } else {
         res.status(401);
+        res.send('Guest account');
         res.end();
       }
     } else {
-      res.sendStatus(401);
+      res.status(401);
+      res.send('Invalid email');
       res.end();
     }
   } catch (error) {
-    res.sendStatus(500);
+    res.status(500);
+    res.send('Server error');
     res.end();
   }
 }, (req, res, next) => {
   // Check if one-time password has expired
   const formattedPasswordExpirationDate = Date.parse(new Date(res.locals.passwordExpirationDate));
   if (formattedPasswordExpirationDate < Date.now()) {
-    res.sendStatus(403);
+    res.status(403);
+    res.send('Password expired');
     res.end();
   } else next();
 }, (req, res) => {

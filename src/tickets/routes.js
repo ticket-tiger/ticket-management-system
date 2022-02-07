@@ -1,6 +1,6 @@
 import express from 'express';
 import jwt from 'jsonwebtoken';
-import localConfig from '../localConfig.js';
+// import localConfig from '../localConfig.js';
 import {
   createTicket, getCurrentStatusTitleEmail, getTickets, updateTicket, deleteTicket,
 } from '../db.js';
@@ -8,7 +8,7 @@ import { sendStatusUpdateByEmail } from '../users/email.js';
 
 const router = express.Router();
 
-const generateAccessTokens = (email) => jwt.sign(email, localConfig.tokenSecret, { expiresIn: '900s' });
+const generateAccessTokens = (email) => jwt.sign(email, process.env.TOKEN_SECRET, { expiresIn: '900s' });
 
 const verifyToken = async (req, res, next) => {
   const { token } = req.cookies;
@@ -16,7 +16,7 @@ const verifyToken = async (req, res, next) => {
     res.sendStatus(401);
     res.end();
   } else {
-    jwt.verify(token, localConfig.tokenSecret, { maxAge: '900s' }, (err, tokenUser) => {
+    jwt.verify(token, process.env.TOKEN_SECRET, { maxAge: '900s' }, (err, tokenUser) => {
       if (err) {
         res.sendStatus(403);
         res.end();

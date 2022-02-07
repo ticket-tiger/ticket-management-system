@@ -2,8 +2,8 @@
 import { MongoClient } from 'mongodb';
 import mongoose from 'mongoose';
 import validate from 'mongoose-validator';
-import config from './config.js';
-import localConfig from './localConfig.js';
+// import config from './config.js';
+// import localConfig from './localConfig.js';
 
 const { Schema, model } = mongoose;
 
@@ -71,7 +71,7 @@ const userSchema = new Schema({
 // exporting userSchema to the user collection
 const User = model('User', userSchema, 'users');
 
-const uri = `mongodb+srv://${localConfig.mongodb.username}:${localConfig.mongodb.password}@${config.mongodb.cluster}/${config.mongodb.database}?retryWrites=true&w=majority`;
+const uri = `mongodb+srv://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@${process.env.MONGODB_CLUSTER}/${process.env.MONGODB_DATABASE}?retryWrites=true&w=majority`;
 
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
