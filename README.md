@@ -23,7 +23,7 @@ When a manager creates an employee, they will receive an email with a one-time p
 
 ## Technologies
 
-TMS was created using the MERN stack: MongoDB, ExpressJS, React, and Nodejs.  
+TMS was created using the MERN stack: MongoDB, ExpressJS, React, and NodeJS.  
 
 ## Available Scripts
 
