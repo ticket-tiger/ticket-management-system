@@ -21,6 +21,10 @@ Managers have all employee privileges in addition to the unique privileges of cr
 
 When a manager creates an employee, they will receive an email with a one-time password that expires in 7 days.  On their first login to TMS, an employee will need to create a permanent one.  
 
+## Technologies
+
+TMS was created using the MERN stack: MongoDB, ExpressJS, React, and Nodejs.  
+
 ## Available Scripts
 
 In the project directory, you can run:
