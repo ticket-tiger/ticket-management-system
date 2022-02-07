@@ -1,8 +1,6 @@
 import { randomBytes } from 'crypto';
 
-const tokenSecret = () => {
-  crypto.randomBytes(64).toString('hex');
-};
+const tokenSecret = () => randomBytes(64).toString('hex');
 
 console.log(tokenSecret());
 
