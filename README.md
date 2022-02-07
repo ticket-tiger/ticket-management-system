@@ -13,7 +13,11 @@ Simple issue tracking cloud application that showcases our skills using the MERN
 
 Has your enterprise just released a new product?  Would you like to hear feedback from your users to ensure they have a smooth experience?  If you answered yes to these questions, then our Ticket Management System is the perfect product for you.  Ticket Management System (or TMS) is a cloud-based issue tracking application where users can communicate any bugs they found using your product.  Our user interface records an issue's title, category, and description which gives your company valuable information to resolve the bug as quickly as possible.  
 
-Your employees can login to view created tickets and refine their 
+Your employees can login to view created tickets and edit them.  As the user's issue gets resolved, employees can update a ticket's status to reflect this.  Currently, the available status values are: 'Submitted', 'In Progress', and 'Resolved'.  Each time a ticket's status gets updated, the user will receive an email notification.  
+
+Managers have all employee privileges in addition to the unique privileges of creating employees and deleting tickets.  Since they can serve as valuable information for an enterprise, we only recommend deleting tickets that were mistakenly created or contain inappropriate content.  
+
+When a manager creates an employee, they will receive an email with a one-time password that expires in 7 days.  On their first login to TMS, the employee will need to create a permanent one.  
 
 ## Available Scripts
 
