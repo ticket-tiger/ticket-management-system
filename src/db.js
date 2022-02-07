@@ -47,7 +47,7 @@ const userSchema = new Schema({
     enum: ['Basic', 'Engineer', 'Manager', 'Admin'],
   },
   tickets: [{
-    title: { type: String, required: true, default: 'anonymous' },
+    subject: { type: String, required: true, default: 'anonymous' },
     description: { type: String, required: true, default: 'anonymous' },
     category: { type: String, required: true, default: 'anonymous' },
     priority: {
@@ -231,12 +231,12 @@ export const getLoginUserInfo = async (userEmail) => {
   }
 };
 
-export const getCurrentStatusTitleEmail = async (email, objectId) => {
+export const getCurrentStatusSubjectEmail = async (email, objectId) => {
   try {
     await mongoose.connect(uri);
     const result = await User.findOne({ email, 'tickets._id': objectId }, { 'tickets.$': 1, name: 1 }).exec();
     return {
-      status: result.tickets[0].status, title: result.tickets[0].title, email: result.tickets[0].email, name: result.name,
+      status: result.tickets[0].status, subject: result.tickets[0].subject, email: result.tickets[0].email, name: result.name,
     };
   } finally {
     await client.close();

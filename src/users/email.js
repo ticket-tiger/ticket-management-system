@@ -26,7 +26,7 @@ export const sendOneTimePasswordByEmail = async (name, email, password) => {
   console.log(`Preview URL: ${nodemailer.getTestMessageUrl(info)}`);
 };
 
-export const sendStatusUpdateByEmail = async (name, email, ticketTitle, oldStatus, newStatus) => {
+export const sendStatusUpdateByEmail = async (name, email, ticketSubject, oldStatus, newStatus) => {
   const transporter = nodemailer.createTransport({
     host: 'smtp.ethereal.email',
     port: 587,
@@ -41,8 +41,8 @@ export const sendStatusUpdateByEmail = async (name, email, ticketTitle, oldStatu
     from: 'delphine.waters92@ethereal.email',
     to: `${email}`,
     subject: 'Your ticket\'s status has changed!',
-    text: `Greetings ${name}, Your ticket entitled '${ticketTitle}' has a status update.  It changed from ${oldStatus} to ${newStatus}!`,
-    html: `<p>Greetings ${name},</br>Your ticket entitled <b>'${ticketTitle}'</b> has a status update.  It changed from ${oldStatus} to ${newStatus}!`,
+    text: `Greetings ${name}, Your ticket entitled '${ticketSubject}' has a status update.  It changed from ${oldStatus} to ${newStatus}!`,
+    html: `<p>Greetings ${name},</br>Your ticket entitled <b>'${ticketSubject}'</b> has a status update.  It changed from ${oldStatus} to ${newStatus}!`,
   });
 
   console.log(`Preview URL: ${nodemailer.getTestMessageUrl(info)}`);

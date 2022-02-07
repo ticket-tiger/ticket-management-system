@@ -2,7 +2,7 @@ import express from 'express';
 import jwt from 'jsonwebtoken';
 // import localConfig from '../localConfig.js';
 import {
-  createTicket, getCurrentStatusTitleEmail, getTickets, updateTicket, deleteTicket,
+  createTicket, getCurrentStatusSubjectEmail, getTickets, updateTicket, deleteTicket,
 } from '../db.js';
 import { sendStatusUpdateByEmail } from '../users/email.js';
 
@@ -73,14 +73,14 @@ router.post('/update-ticket', verifyToken, async (req, res) => {
   try {
     if (res.locals.userRole === 'Engineer' || res.locals.userRole === 'Manager') {
       const {
-        status, title, email, name,
-      } = await getCurrentStatusTitleEmail(
+        status, subject, email, name,
+      } = await getCurrentStatusSubjectEmail(
         req.body.email, req.body._id,
       );
       const result = await updateTicket(res.locals.userEmail, req.body._id, req.body);
       if (status !== req.body.status) {
         await sendStatusUpdateByEmail(
-          name, email, title, status, req.body.status,
+          name, email, subject, status, req.body.status,
         );
       }
       res.send(result);
