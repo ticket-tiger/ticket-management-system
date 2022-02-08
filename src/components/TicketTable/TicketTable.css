@@ -1,3 +1,52 @@
+.delete-ticket-verification {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  background-color: black;
+  padding: 10px;
+  border-radius: 5px;
+  z-index: 2;
+}
+
+.ticket-updated-feedback {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 200px;
+  visibility: hidden;
+  z-index: 2;
+  background-color: black;
+  border-radius: 5px;
+}
+
+.ticket-updated-check {
+  color: #89F822;
+  margin: 5px;
+}
+
+.ticket-updated-text {
+  margin: 5px;
+  color: white;
+}
+
+.fade {
+  opacity: 0;
+  visibility: visible;
+  animation: fade 4s linear;
+}
+
+@keyframes fade {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 1; }
+}
+
 .ticket-table-container {
   position: absolute;
   top: 55%;
@@ -102,12 +151,6 @@
   overflow: auto;
 }
 
-.selected-ticket-row {
-  /* position: relative;
-  display: flex;
-  align-items: center; */
-}
-
 .selected-ticket-label {
   display: inline-block;
   margin-right: 5px;
@@ -164,6 +207,41 @@
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
+}
+
+.verify-delete-text {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+}
+
+.verify-delete-button-group {
+  position: absolute;
+  top: 70%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  display: flex;
+  justify-content: space-around;
+  height: 100px;
+}
+
+.verify-delete-button {
+  height: 60px;
+  width: 150px;
+  border: 2px solid black;
+  border-radius: 5px;
+  background: white;
+  font-size: var(--body-font-size);
+  font-weight: 700;
+  color: black;
+}
+
+.verify-delete-button:hover {      
+  color: var(--purple);
+  border: 3px solid var(--purple);
 }
 
 @media screen and (max-width: 768px) {

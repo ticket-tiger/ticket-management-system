@@ -2,7 +2,7 @@ import React, {
   useEffect, useState, useMemo, useReducer,
 } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashAlt, faEdit } from '@fortawesome/free-solid-svg-icons';
+import { faTrashAlt, faEdit, faCheck } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 import Modal from '../reusableComponents/Modal';
 import { useAuth } from '../../auth';
@@ -45,6 +45,9 @@ const TicketTable = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [ticketisEditable, setTicketisEditable] = useState(null);
   const [ticketStatusCSSClass, setTicketCreationStatusCSSClass] = useState('');
+  const [ticketUpdatedResponseStatus, setTicketUpdatedResponseStatus] = useState('');
+  const [ticketDeletedResponseStatus, setTicketDeletedResponseStatus] = useState('');
+  const [verifyDelete, setVerifyDelete] = useState(false);
   const auth = useAuth();
 
   const reducer = (state, action) => {
@@ -125,11 +128,12 @@ const TicketTable = () => {
   const handleUpdate = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('tickets/update-ticket', selectedTicket);
+      const response = await axios.post('tickets/update-ticket', selectedTicket);
       await getTickets();
       setIsModalOpen(false);
       setTicketisEditable(false);
       setTicketCreationStatusCSSClass('');
+      setTicketUpdatedResponseStatus(response.status);
     } catch (error) {
       if (error.response.status === 401) setTicketCreationStatusCSSClass('status-401');
       else if (error.response.status >= 500) setTicketCreationStatusCSSClass('status-500');
@@ -137,11 +141,16 @@ const TicketTable = () => {
     }
   };
 
+  const verifyDeleteTicket = () => {
+    setVerifyDelete(true);
+  };
+
   const deleteTicket = async () => {
     try {
-      await axios.post('tickets/delete-ticket', { email: selectedTicket.email, _id: selectedTicket._id });
+      const response = await axios.post('tickets/delete-ticket', { email: selectedTicket.email, _id: selectedTicket._id });
       await getTickets();
       setIsModalOpen(false);
+      setTicketDeletedResponseStatus(response.status);
     } catch (error) {
       // Handle error
     }
@@ -149,95 +158,122 @@ const TicketTable = () => {
 
   return (
     <>
+      <div
+        className={`ticket-updated-feedback ${ticketUpdatedResponseStatus === 200 ? 'fade' : ''}`}
+        onAnimationEnd={() => setTicketUpdatedResponseStatus('')}
+      >
+        <FontAwesomeIcon className="ticket-updated-check" icon={faCheck} size="2x" />
+        <p className="ticket-updated-text">Ticket Updated</p>
+      </div>
+      <div
+        className={`ticket-updated-feedback ${ticketDeletedResponseStatus === 200 ? 'fade' : ''}`}
+        onAnimationEnd={() => setTicketDeletedResponseStatus('')}
+      >
+        <FontAwesomeIcon className="ticket-updated-check" icon={faCheck} size="2x" />
+        <p className="ticket-updated-text">Ticket Deleted</p>
+      </div>
       {isModalOpen ? (
-        <Modal close={closeModal}>
-          <div className="error-message-group">
-            {ticketStatusCSSClass === 'status-401' ? <p> 401 Unauthorized. We have notified the Feds.</p> : null}
-            {ticketStatusCSSClass === 'status-500' ? <p>There was a problem with the server.  Sorry for the inconvenience.</p> : null}
-            {ticketStatusCSSClass === 'status-default-error' ? <p>There was an unexpected error.  Please try again in a little while.</p> : null}
-          </div>
-          {auth.user.role === 'Manager' ? (
-            <div className="ticket-button-group">
-              <FontAwesomeIcon className="edit-ticket-button" icon={faEdit} size="2x" onClick={() => setTicketisEditable(true)} />
-              <FontAwesomeIcon className="delete-ticket-button" icon={faTrashAlt} size="2x" onClick={() => deleteTicket()} />
+        <>
+          <Modal close={closeModal}>
+            <div className="error-message-group">
+              {ticketStatusCSSClass === 'status-401' ? <p> 401 Unauthorized. We have notified the Feds.</p> : null}
+              {ticketStatusCSSClass === 'status-500' ? <p>There was a problem with the server.  Sorry for the inconvenience.</p> : null}
+              {ticketStatusCSSClass === 'status-default-error' ? <p>There was an unexpected error.  Please try again in a little while.</p> : null}
             </div>
-          ) : null}
-          <div className="selected-ticket-data-group">
-            {ticketisEditable ? (
-              <>
-                <div className="selected-ticket-row">
-                  <label className="selected-ticket-label selected-ticket-label-input" htmlFor="selected-ticket-title-input">Title:</label>
-                  <input id="selected-ticket-title-input" className="selected-ticket-data" type="text" value={selectedTicket.title} onChange={(e) => dispatch({ type: 'title', payload: e.target.value })} />
-                </div>
-                <div className="selected-ticket-row">
-                  <label className="selected-ticket-label selected-ticket-label-input" htmlFor="selected-ticket-status-input">Status:</label>
-                  <input id="selected-ticket-status-input" className="selected-ticket-data" value={selectedTicket.status} onChange={(e) => dispatch({ type: 'status', payload: e.target.value })} />
-                </div>
-                <div className="selected-ticket-row">
-                  <label className="selected-ticket-label selected-ticket-label-input" htmlFor="selected-ticket-priority-input">Priority:</label>
-                  <input id="selected-ticket-priority-input" className="selected-ticket-data" value={selectedTicket.priority} onChange={(e) => dispatch({ type: 'priority', payload: e.target.value })} />
-                </div>
-                <div className="selected-ticket-row">
-                  <label className="selected-ticket-label selected-ticket-label-input" htmlFor="selected-ticket-urgency-input">Urgency:</label>
-                  <input id="selected-ticket-urgency-input" className="selected-ticket-data" value={selectedTicket.urgency} onChange={(e) => dispatch({ type: 'urgency', payload: e.target.value })} />
-                </div>
-                <div className="sselected-ticket-row">
-                  <label className="selected-ticket-label selected-ticket-label-input" htmlFor="selected-ticket-description-input">Description:</label>
-                  <textarea id="selected-ticket-description-input" className="selected-ticket-data selected-ticket-textarea" value={selectedTicket.description} onChange={(e) => dispatch({ type: 'description', payload: e.target.value })} />
-                </div>
-                <div className="selected-ticket-row">
-                  <label className="selected-ticket-label selected-ticket-label-input" htmlFor="selected-ticket-email-input">Email:</label>
-                  <input id="selected-ticket-email-input" className="selected-ticket-data" value={selectedTicket.email} onChange={(e) => dispatch({ type: 'email', payload: e.target.value })} />
-                </div>
-                {/* <div>
-                  <label className="selected-ticket-label"
-                  htmlFor="selected-ticket-date-input">Date Created:</label>
-                  <input id="selected-ticket-date-input" className="selected-ticket-data"
-                  value={selectedTicket.date.toLocaleString('en-US', { timeZone: 'America/New_York'
-                })} onChange={(e) => dispatch({ type: 'date', payload: e.target.value })} />
-                </div> */}
-                <div className="selected-ticket-button-group">
-                  <button type="button" className="selected-ticket-button" onClick={() => setTicketisEditable(false)}>Cancel</button>
-                  <button type="submit" className="selected-ticket-button" onClick={(e) => handleUpdate(e)}> Submit</button>
-                </div>
-              </>
-
-            )
-              : (
+            {auth.user.role === 'Manager' ? (
+              <div className="ticket-button-group">
+                <FontAwesomeIcon className="edit-ticket-button" icon={faEdit} size="2x" onClick={() => setTicketisEditable(true)} />
+                <FontAwesomeIcon className="delete-ticket-button" icon={faTrashAlt} size="2x" onClick={verifyDeleteTicket} />
+              </div>
+            ) : null}
+            <div className="selected-ticket-data-group">
+              {ticketisEditable ? (
                 <>
-                  <div>
-                    <label className="selected-ticket-label" htmlFor="selected-ticket-title-p">Title:</label>
-                    <p id="selected-ticket-title-p" className="selected-ticket-data">{selectedTicket.title}</p>
+                  <div className="selected-ticket-row">
+                    <label className="selected-ticket-label selected-ticket-label-input" htmlFor="selected-ticket-title-input">Title:</label>
+                    <input id="selected-ticket-title-input" className="selected-ticket-data" type="text" value={selectedTicket.title} onChange={(e) => dispatch({ type: 'title', payload: e.target.value })} />
                   </div>
-                  <div>
-                    <label className="selected-ticket-label" htmlFor="selected-ticket-status-p">Status:</label>
-                    <p id="selected-ticket-status-p" className="selected-ticket-data">{selectedTicket.status}</p>
+                  <div className="selected-ticket-row">
+                    <label className="selected-ticket-label selected-ticket-label-input" htmlFor="selected-ticket-status-input">Status:</label>
+                    <input id="selected-ticket-status-input" className="selected-ticket-data" value={selectedTicket.status} onChange={(e) => dispatch({ type: 'status', payload: e.target.value })} />
                   </div>
-                  <div>
-                    <label className="selected-ticket-label" htmlFor="selected-ticket-priority-p">Priority:</label>
-                    <p id="selected-ticket-priority-p" className="selected-ticket-data">{selectedTicket.priority}</p>
+                  <div className="selected-ticket-row">
+                    <label className="selected-ticket-label selected-ticket-label-input" htmlFor="selected-ticket-priority-input">Priority:</label>
+                    <input id="selected-ticket-priority-input" className="selected-ticket-data" value={selectedTicket.priority} onChange={(e) => dispatch({ type: 'priority', payload: e.target.value })} />
                   </div>
-                  <div>
-                    <label className="selected-ticket-label" htmlFor="selected-ticket-urgency-p">Urgency:</label>
-                    <p id="selected-ticket-urgency-p" className="selected-ticket-data">{selectedTicket.urgency}</p>
+                  <div className="selected-ticket-row">
+                    <label className="selected-ticket-label selected-ticket-label-input" htmlFor="selected-ticket-urgency-input">Urgency:</label>
+                    <input id="selected-ticket-urgency-input" className="selected-ticket-data" value={selectedTicket.urgency} onChange={(e) => dispatch({ type: 'urgency', payload: e.target.value })} />
                   </div>
-                  <div>
-                    <label className="selected-ticket-label" htmlFor="selected-ticket-description-p">Description:</label>
-                    <p id="selected-ticket-description-p" className="selected-ticket-data">{selectedTicket.description}</p>
+                  <div className="sselected-ticket-row">
+                    <label className="selected-ticket-label selected-ticket-label-input" htmlFor="selected-ticket-description-input">Description:</label>
+                    <textarea id="selected-ticket-description-input" className="selected-ticket-data selected-ticket-textarea" value={selectedTicket.description} onChange={(e) => dispatch({ type: 'description', payload: e.target.value })} />
                   </div>
-                  <div>
-                    <label className="selected-ticket-label" htmlFor="selected-ticket-email-p">Email:</label>
-                    <p id="selected-ticket-email-p" className="selected-ticket-data">{selectedTicket.email}</p>
+                  <div className="selected-ticket-row">
+                    <label className="selected-ticket-label selected-ticket-label-input" htmlFor="selected-ticket-email-input">Email:</label>
+                    <input id="selected-ticket-email-input" className="selected-ticket-data" value={selectedTicket.email} onChange={(e) => dispatch({ type: 'email', payload: e.target.value })} />
                   </div>
-                  <div>
-                    <label className="selected-ticket-label" htmlFor="selected-ticket-date-p">Date Created:</label>
-                    <p id="selected-ticket-date-p" className="selected-ticket-data">{selectedTicket.date.toLocaleString('en-US', { timeZone: 'America/New_York' })}</p>
+                  {/* <div>
+                    <label className="selected-ticket-label"
+                    htmlFor="selected-ticket-date-input">Date Created:</label>
+                    <input id="selected-ticket-date-input" className="selected-ticket-data"
+                    value={selectedTicket.date.toLocaleString('en-US',
+                    { timeZone: 'America/New_York'
+                  })} onChange={(e) => dispatch({ type: 'date', payload: e.target.value })} />
+                  </div> */}
+                  <div className="selected-ticket-button-group">
+                    <button type="button" className="selected-ticket-button" onClick={() => setTicketisEditable(false)}>Cancel</button>
+                    <button type="submit" className="selected-ticket-button" onClick={(e) => handleUpdate(e)}> Submit</button>
                   </div>
                 </>
-              )}
-          </div>
-
-        </Modal>
+              )
+                : (
+                  <>
+                    <div>
+                      <label className="selected-ticket-label" htmlFor="selected-ticket-title-p">Title:</label>
+                      <p id="selected-ticket-title-p" className="selected-ticket-data">{selectedTicket.title}</p>
+                    </div>
+                    <div>
+                      <label className="selected-ticket-label" htmlFor="selected-ticket-status-p">Status:</label>
+                      <p id="selected-ticket-status-p" className="selected-ticket-data">{selectedTicket.status}</p>
+                    </div>
+                    <div>
+                      <label className="selected-ticket-label" htmlFor="selected-ticket-priority-p">Priority:</label>
+                      <p id="selected-ticket-priority-p" className="selected-ticket-data">{selectedTicket.priority}</p>
+                    </div>
+                    <div>
+                      <label className="selected-ticket-label" htmlFor="selected-ticket-urgency-p">Urgency:</label>
+                      <p id="selected-ticket-urgency-p" className="selected-ticket-data">{selectedTicket.urgency}</p>
+                    </div>
+                    <div>
+                      <label className="selected-ticket-label" htmlFor="selected-ticket-description-p">Description:</label>
+                      <p id="selected-ticket-description-p" className="selected-ticket-data">{selectedTicket.description}</p>
+                    </div>
+                    <div>
+                      <label className="selected-ticket-label" htmlFor="selected-ticket-email-p">Email:</label>
+                      <p id="selected-ticket-email-p" className="selected-ticket-data">{selectedTicket.email}</p>
+                    </div>
+                    <div>
+                      <label className="selected-ticket-label" htmlFor="selected-ticket-date-p">Date Created:</label>
+                      <p id="selected-ticket-date-p" className="selected-ticket-data">{selectedTicket.date.toLocaleString('en-US', { timeZone: 'America/New_York' })}</p>
+                    </div>
+                  </>
+                )}
+            </div>
+          </Modal>
+          {verifyDelete ? (
+            <Modal close={closeModal}>
+              <div className="verify-delete-container">
+                <h2 className="verify-delete-text">Are you sure you want to delete this ticket?</h2>
+                <div className="verify-delete-button-group">
+                  <button type="button" className="verify-delete-button" onClick={() => setVerifyDelete(false)}>Cancel</button>
+                  <button type="button" className="verify-delete-button" onClick={deleteTicket}>Delete Ticket</button>
+                </div>
+              </div>
+            </Modal>
+          )
+            : null }
+        </>
       ) : null }
       {tickets.length
         ? (

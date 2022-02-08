@@ -1,3 +1,40 @@
+.employee-created-feedback {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: fit-content;
+  visibility: hidden;
+  z-index: 1;
+  background-color: black;
+  border-radius: 5px;
+}
+
+.employee-created-check {
+  color: #89F822;
+  margin: 5px;
+}
+
+.employee-created-text {
+  margin: 5px;
+  color: white;
+}
+
+.fade {
+  opacity: 0;
+  visibility: visible;
+  animation: fade 4s linear;
+}
+
+@keyframes fade {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 1; }
+}
+
 .create-employee-resend-button {
   position: absolute;
   top: 8%;

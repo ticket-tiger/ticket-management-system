@@ -139,8 +139,8 @@ const CreateAccount = ({ closeModal }) => {
     errorDispatch({ type: 'Password', valid: true });
 
     try {
-      await axios.post('/users/create-account', credentials);
-      closeModal();
+      const response = await axios.post('/users/create-account', credentials);
+      closeModal(response.status);
     } catch (error) {
       errorDispatch({ type: error.response.status, valid: false });
     }
@@ -148,7 +148,6 @@ const CreateAccount = ({ closeModal }) => {
 
   return (
     <>
-
       <p className="error-message">
         {errorObject.message}
       </p>

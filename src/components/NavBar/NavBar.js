@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, Outlet } from 'react-router-dom';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faCheck } from '@fortawesome/free-solid-svg-icons';
 import { useAuth } from '../../auth';
 import Modal from '../reusableComponents/Modal';
 import Login from '../Login/Login';
@@ -16,6 +16,7 @@ const NavBar = () => {
   const [isEmployeeModalOpen, setIsEmployeeModalOpen] = useState(false);
   const [isPermanentPasswordModalOpen, setIsPermanentPasswordModalOpen] = useState(false);
   const [navbarContainerIsVisible, setNavbarContainerIsVisible] = useState(false);
+  const [responseStatus, setResponseStatus] = useState('');
   // const [navbarButtonDescriptionCSSClass, setNavbarButtonDescriptionCSSClass] = useState({
   //   createAccount: 'display-none',
   //   viewTickets: 'display-none',
@@ -46,6 +47,11 @@ const NavBar = () => {
     setIsModalOpen(false);
   };
 
+  const closeCreateAccountForm = (httpStatus) => {
+    setIsModalOpen(false);
+    setResponseStatus(httpStatus);
+  };
+
   const closeEmployeeForm = () => {
     setIsEmployeeModalOpen(false);
   };
@@ -56,6 +62,13 @@ const NavBar = () => {
 
   return (
     <div>
+      <div
+        className={`account-created-feedback ${responseStatus === 200 ? 'fade' : ''}`}
+        onAnimationEnd={() => setResponseStatus('')}
+      >
+        <FontAwesomeIcon className="account-created-check" icon={faCheck} size="2x" />
+        <p className="account-created-text">Account Created</p>
+      </div>
       <h1 className="logo">Ticket Management System</h1>
       <button type="button" className="navbar-menu-button" onClick={() => setNavbarContainerIsVisible(!navbarContainerIsVisible)}>
         <FontAwesomeIcon icon={faBars} size="3x" />
@@ -122,7 +135,7 @@ const NavBar = () => {
               </div>
               {hasAccount
                 ? <Login hideTabs={hideTabs} closeModal={closeUserForm} />
-                : <CreateAccount closeModal={closeUserForm} />}
+                : <CreateAccount closeModal={closeCreateAccountForm} />}
             </div>
           </Modal>
         ) : null}

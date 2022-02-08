@@ -1,4 +1,6 @@
 import React, { useState, useReducer } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import validator from 'validator';
 import axios from 'axios';
 import { useAuth } from '../../auth';
@@ -108,7 +110,7 @@ const CreateTicket = () => {
       ticketDispatch({ type: 'description', valid: true });
 
       // email validation
-      if (!validator.isEmail(guestEmail)) {
+      if (!validator.isEmail(guestEmail || auth.user.email)) {
         ticketDispatch({ type: 'email', valid: false });
         return;
       }
@@ -131,8 +133,14 @@ const CreateTicket = () => {
 
   return (
     <>
+      <div
+        className={`ticket-submitted-feedback ${responseStatus === 200 ? 'fade' : ''}`}
+        onAnimationEnd={() => setResponseStatus('')}
+      >
+        <FontAwesomeIcon className="ticket-submitted-check" icon={faCheck} size="2x" />
+        <p className="ticket-submitted-text">Ticket Sent</p>
+      </div>
       {/* <h1 className="submit-ticket-heading">Have an issue? Let us know.</h1> */}
-      {responseStatus ? <p data-testid="responseStatus">{responseStatus}</p> : null}
       <p className="error-message-ticket">
         {ticketErrorObject.message}
       </p>

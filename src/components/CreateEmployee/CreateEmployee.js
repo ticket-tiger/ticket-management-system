@@ -1,4 +1,6 @@
 import React, { useState, useReducer } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 import validator from 'validator';
 import './CreateEmployee.css';
@@ -6,6 +8,7 @@ import './CreateEmployee.css';
 const CreateEmployee = () => {
   const [accountCreationStatusCSSClass, setAccountCreationStatusCSSClass] = useState('');
   const [errorCSSClass, setErrorCSSClass] = useState('');
+  const [responseStatus, setResponseStatus] = useState('');
 
   const initialEmployee = { name: '', email: '', role: '' };
   // To manage state of new employee fields
@@ -40,7 +43,8 @@ const CreateEmployee = () => {
       setErrorCSSClass('invalid-email');
     } else {
       try {
-        await axios.post('/users/create-employee', employee);
+        const response = await axios.post('/users/create-employee', employee);
+        setResponseStatus(response.status);
       } catch (error) {
         if (error.response.status >= 400 && error.response.status < 500) setAccountCreationStatusCSSClass('status-400');
         else if (error.response.status >= 500) setAccountCreationStatusCSSClass('status-500');
@@ -51,6 +55,13 @@ const CreateEmployee = () => {
 
   return (
     <>
+      <div
+        className={`employee-created-feedback ${responseStatus === 200 ? 'fade' : ''}`}
+        onAnimationEnd={() => setResponseStatus('')}
+      >
+        <FontAwesomeIcon className="employee-created-check" icon={faCheck} size="2x" />
+        <p className="employee-created-text">One-Time Password Sent</p>
+      </div>
       <div className="error-message-group">
         {accountCreationStatusCSSClass === 'status-400' ? <p>Your credentials were incorrect.  Please try again.</p> : null}
         {accountCreationStatusCSSClass === 'status-500' ? <p>There was a problem with the server.  Sorry for the inconvenience.</p> : null}
