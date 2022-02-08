@@ -5,6 +5,7 @@ import axios from 'axios';
 import CreatePermanentPassword from '../CreatePermanentPassword/CreatePermanentPassword';
 import './Login.css';
 import { useAuth } from '../../auth';
+// import validator from 'validator';
 
 const Login = ({ hideTabs, closeModal }) => {
   const [authenticationStatusCSSClass, setAuthenticationStatusCSSClass] = useState('');
@@ -66,7 +67,7 @@ const Login = ({ hideTabs, closeModal }) => {
 
   return (
     <>
-      <div className="error-message-group">
+      <div className="error-message-group-login">
         {authenticationStatusCSSClass === 'status-400' ? <p>Your credentials were incorrect.  Please try again.</p> : null}
         {authenticationStatusCSSClass === 'status-500' ? <p>There was a problem with the server.  Sorry for the inconvenience.</p> : null}
         {authenticationStatusCSSClass === 'status-default-error' ? <p>There was an unexpected error.  Please try again in a little while.</p> : null}

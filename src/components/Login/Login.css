@@ -66,13 +66,16 @@
   color: var(--purple);
 }
 
-.error-message-group {
+.error-message-group-login {
   position: absolute;
-  top: 15%;
+  top: 85%;
   left: 50%;
   transform: translate(-50%);
-  width: 80%;
-  font-size: var(--heading-font-size);
+  width: 70%;
+  align-content: center;
+  font-size: 15px;
+  z-index: 3;
+  color: red;
 }
 
  .status-400 {

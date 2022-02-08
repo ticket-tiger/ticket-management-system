@@ -52,6 +52,11 @@ const CreateTicket = () => {
           email: action.valid ? '' : 'noEmail',
           message: action.valid ? '' : 'Please enter a valid email',
         };
+      case 401:
+        return {
+          ...reducerState,
+          message: action.valid ? '' : 'This email is in use.',
+        };
       case 'noError':
         return {
           subject: '',
@@ -59,9 +64,10 @@ const CreateTicket = () => {
           description: '',
           email: '',
         };
+
       default:
         return {
-          ...state,
+          ...reducerState,
           message: 'There was an unexpected error. Please try again later',
         };
     }
@@ -118,17 +124,26 @@ const CreateTicket = () => {
 
       const response = await axios.post('/tickets/create-ticket', { email, ticket });
       setResponseStatus(response.status);
+      ticketDispatch({ type: 'noError' });
+      console.log(response);
     } catch (error) {
-      console.log(error);
-      ticketDispatch({ type: error.response, valid: false });
+      ticketDispatch({ type: error.response.status });
     }
     setState({ ticketCategory: '' });
     setState({ subjectText: ' ' });
     setState({ descriptionText: ' ' });
   };
 
-  const clickHandler2 = (event) => {
+  const clearClickHandler = (event) => {
     event.preventDefault();
+    ticketDispatch({ type: 'noError' });
+    setState({
+      ticketCategory: '',
+      ticketPriority: 'Low',
+      ticketUrgency: 'Low',
+      subjectText: '',
+      descriptionText: '',
+    });
   };
 
   return (
@@ -179,7 +194,7 @@ const CreateTicket = () => {
             </div>
           )}
         <div className="form-button-group">
-          <button className="form-button form-clear-button" type="button" onClick={(e) => clickHandler2(e)}>
+          <button className="form-button form-clear-button" type="button" onClick={(e) => clearClickHandler(e)}>
             Clear
           </button>
           <button
@@ -189,6 +204,10 @@ const CreateTicket = () => {
           >
             Submit Your Issue
           </button>
+          <p className="error-message-ticket">
+            {ticketErrorObject.message}
+          </p>
+
         </div>
       </form>
     </>
