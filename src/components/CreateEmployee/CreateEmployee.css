@@ -1,0 +1,173 @@
+.employee-created-feedback {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: fit-content;
+  visibility: hidden;
+  z-index: 1;
+  background-color: black;
+  border-radius: 5px;
+}
+
+.employee-created-check {
+  color: #89F822;
+  margin: 5px;
+}
+
+.employee-created-text {
+  margin: 5px;
+  color: white;
+}
+
+.fade {
+  opacity: 0;
+  visibility: visible;
+  animation: fade 4s linear;
+}
+
+@keyframes fade {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 1; }
+}
+
+.create-employee-resend-button {
+  position: absolute;
+  top: 8%;
+  left: 5%;
+  transform: translateY(-50%);
+  height: 45px;
+  width: 110px;
+  font-size: 15px;
+  font-weight: 700;
+  border: 2px solid black;
+  border-radius: 25px;
+  background-color: white;
+  color: black;
+  box-sizing: border-box;
+  /* word-break: break-all; */
+}
+
+.create-employee-form-input-group {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 45%;
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  /* border: 5px solid black; */
+}
+
+.create-employee-form-input, .create-employee-form-dropdown {
+  font-size: var(--body-font-size);
+  height: 40px;
+  width: 100%;
+  border: 2px solid transparent;
+  border-bottom: 2px solid black;
+  border-radius: 5px 5px 0 0;
+  box-sizing: border-box;
+  background-color: white;
+  /* transition: .3s; */
+}
+
+.create-employee-form-label {
+  font-size: var(--heading-font-size);
+  color: black;
+  display: block;
+  font-weight: bold;
+  /* transition: .3s; */
+}
+
+.create-employee-form-input:focus, .create-employee-form-input:hover,
+.create-employee-form-dropdown:focus, .create-employee-form-dropdown:hover {
+  outline-color: var(--purple);
+  border-radius: 5px;
+  border: 2px solid var(--purple);
+}
+
+.create-employee-form-input:focus + label, .create-employee-form-input:hover + label,
+.create-employee-form-dropdown:focus + label, .create-employee-form-dropdown:hover + label {
+  color: var(--purple);
+}
+
+.create-employee-submit-button {
+  position: absolute;
+  bottom: 27%;
+  left: 50%;
+  transform: translate(-50%, 150%);
+  height: 45px;
+  width: 60%;
+  border-radius: 25px;
+  border: 2px solid black;
+  font-size: var(--body-font-size);
+  font-weight: 700;
+  background-color: white;
+  color: black;
+  /* transition: .3s; */
+}
+
+.create-employee-submit-button:hover,
+.create-employee-resend-button:hover {
+  border: 3px solid var(--purple);
+  color: var(--purple);
+}
+
+.error-message-group {
+  position: absolute;
+  top: 15%;
+  left: 50%;
+  transform: translate(-50%);
+  width: 80%;
+  font-size: var(--heading-font-size);
+}
+
+.status-400 {
+  border-color: red;
+}
+
+.invalid-email {
+  border-radius: 5px;
+  border-color: red;
+}
+
+@media screen and (min-width: 1800px) {
+  .create-employee-form-label {
+    font-size: 51px;
+  }
+
+  .create-employee-form-input,
+  .create-employee-form-dropdown {
+   font-size: var(--heading-font-size);
+   height: 75px;
+   width: 100%;
+   border: 3px solid transparent;
+   border-bottom: 3px solid black;
+ }
+
+ .create-employee-form-input:focus, .create-employee-form-input:hover,
+ .create-employee-form-dropdown:focus, .create-employee-form-dropdown:hover {
+   border: 3px solid var(--purple);
+ }
+
+ .create-employee-submit-button {
+   height: 67px;
+   border: 3px solid black;
+   font-size: 32px;
+ }
+
+ .create-employee-submit-button:hover {
+   border: 5px solid var(--purple);
+ }
+
+ .invalid-email {
+    border-radius: 5px;
+    border-color: red;
+  }
+}

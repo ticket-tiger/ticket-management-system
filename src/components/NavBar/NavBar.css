@@ -1,0 +1,269 @@
+.account-created-feedback {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 200px;
+  visibility: hidden;
+  z-index: 1;
+  background-color: black;
+  border-radius: 5px;
+}
+
+.account-created-check {
+  color: #89F822;
+  margin: 5px;
+}
+
+.account-created-text {
+  margin: 5px;
+  color: white;
+}
+
+.fade {
+  opacity: 0;
+  visibility: visible;
+  animation: fade 4s linear;
+}
+
+@keyframes fade {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 1; }
+}
+
+.logo {
+	position: absolute;
+	top: 1vh;
+	left: 7vw;
+	width: 1px;
+	font-size: var(--heading-font-size);
+}
+
+.navbar-container {
+	position: absolute;
+	top: 5vh;
+	right: 7vw;
+	width: fit-content;
+}
+
+.navbar-menu-button {
+	visibility: hidden;
+	position: absolute;
+	top: 50px;
+	left: 50px;
+	height: 50px;
+	background-color: white;
+	border: 3px solid black;
+	border-radius: 5px;
+}
+
+.navbar-menu-button:hover {
+	color: var(--purple);
+	border: 3px solid var(--purple);
+}
+
+.navbar {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-evenly;
+	align-items: center;
+}
+
+.navbar-link-button {
+	position: relative;
+	height: fit-content;
+	width: fit-content;
+}
+
+.navbar-button {
+	position: relative;
+	height: 50px;
+	width: 120px;
+	min-width: 50px;
+	background-color: transparent;
+	font-size: var(--body-font-size);
+	font-weight: 700;
+	border: 2px solid transparent;
+	box-sizing: border-box;
+	/* transition: .3s; */
+}
+
+.navbar-button:hover {
+	color: var(--purple);
+	border: 2px solid var(--purple);
+	border-radius: 5px;
+}
+
+#create-ticket-navbar-button:hover + .create-ticket-button-description,
+#view-tickets-navbar-button:hover + .view-tickets-button-description,
+#manage-employees-navbar-button:hover + .manage-employees-button-description {
+	visibility: visible;
+}
+
+.navbar-button-description {
+	position: absolute;
+	height: fit-content;
+	width: 360px;
+	border: 5px solid black;
+	border-radius: 5px;
+	box-sizing: border-box;
+	background-color: white;
+	padding: 7px;
+	line-height: 160%;
+	z-index: 1;
+	visibility: hidden;
+	text-decoration: none;
+	color: black;
+}
+
+.view-tickets-button-description {
+	transform: translateX(-120px);
+}
+
+.manage-employees-button-description {
+	transform: translateX(-240px);
+}
+
+.user-modal-button-group {
+	position: absolute;
+	top: -30px;
+	height: 30px;
+	width: 100%;
+}
+
+.user-modal-button {
+	height: 100%;
+	width: 80px;
+	background-color: black;
+	color: white;
+	transition: .3s;
+	border: none;
+	font-size: var(--body-font-size);
+	white-space: nowrap;
+}
+
+.user-modal-button:hover {
+	background-color: white;
+	color: var(--purple);
+	border: none;
+}
+
+.user-modal-button:disabled {
+	background-color: white;
+	color: black;
+	cursor: auto;
+}
+
+.display-none {
+	display: none;
+}
+
+@media screen and (max-width: 768px) {
+	.logo {
+		top: 12vh;
+		left: 0;
+		text-align: center;
+		width: 100vw;
+	}
+
+	.navbar-container {
+		visibility: hidden;
+		top: 100px;
+		left: 50px;
+		z-index: 1;
+		background-color: white;
+	}
+
+	.navbar-menu-button {
+		visibility: visible;
+	}
+
+	.navbar {
+		float: none;
+		padding: 0;
+		margin: 0;
+		flex-direction: column;
+		border: 5px solid black;
+		border-radius: 5px;
+	}
+
+	.navbar-menu-button:hover + .navbar-container,
+	.navbar-container:hover {
+		visibility: visible;
+	}
+
+	.navbar-button {
+		border-bottom: 1px solid black;
+	}
+
+	.navbar-button-description {
+		margin: 0;
+		display: none;
+		width: 240px;
+	}
+
+	.navbar-button:hover + .navbar-button-description,
+	.navbar-button-description:hover {
+		display: block;
+		visibility: visible;
+		overflow: visible;
+		transform: translate(120px, -50px);
+	}
+
+	.view-tickets-button-description {
+		transform: translateX(0);
+	}
+	
+	.manage-employees-button-description {
+		transform: translateX(0);
+	}
+
+	.visibility-visible {
+		visibility: visible;
+	}
+}
+
+@media screen and (max-width: 400px) {
+	.navbar-button-description {
+		width: 120px;
+	}
+}
+
+@media screen and (min-width: 1800px) {
+	.logo {
+		font-size: 51px;
+	}
+
+	.navbar-button {
+		height: 100px;
+		width: 190px;
+		font-size: 32px;
+	}
+
+	.navbar-button-description {
+		width: 570px;
+		font-size: 20px;
+	}
+
+	.view-tickets-button-description {
+		transform: translateX(-190px);
+	}
+
+	.manage-employees-button-description {
+		transform: translateX(-380px);
+	}
+
+	.user-modal-button-group {
+		top: -40px;
+		height: 40px;
+	}
+
+	.user-modal-button {
+		width: 135px;
+		font-size: 32px;
+	}
+}

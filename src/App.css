@@ -1,0 +1,13 @@
+:root {
+  --purple: rgb(145, 34, 248);
+  --heading-font-size: 32px;
+  --body-font-size: 20px;
+}
+
+body {
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+button {
+  cursor: pointer;
+}

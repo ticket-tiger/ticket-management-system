@@ -1,0 +1,257 @@
+.ticket-submitted-feedback {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 200px;
+  visibility: hidden;
+  z-index: 1;
+  background-color: black;
+  border-radius: 5px;
+}
+
+.ticket-submitted-check {
+  color: #89F822;
+  margin: 5px;
+}
+
+.ticket-submitted-text {
+  margin: 5px;
+  color: white;
+}
+
+.fade {
+  opacity: 0;
+  visibility: visible;
+  animation: fade 4s linear;
+}
+
+@keyframes fade {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 1; }
+}
+
+.form {
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  justify-content: center;
+  align-items: center;
+  /* width: 350px; */
+  max-width: 350px;
+  /* box-sizing: border-box; */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  margin: auto;
+  padding: 40px;
+  border-radius: 5px;
+  border: 15px solid black;
+  background-color: white;
+  font-size: var(--heading-font-size);
+}
+
+.form-element {
+  margin-bottom: 2vh;
+}
+
+.form-label {
+  display: block;
+  text-align: left;
+  font-size: var(--heading-font-size);
+  font-weight: 700;
+  width: fit-content;
+  color: black;
+}
+
+.form-input {
+  background-color: white;
+  text-align: left;
+  margin: 0;
+  padding: 0;
+  height: 40px;
+  width: 100%;
+  border: 2px solid transparent;
+  border-bottom: 2px solid black;
+  box-sizing: border-box;
+  font-size: var(--body-font-size);
+}
+
+.form-input:focus, .form-input:hover {
+  outline-color: var(--purple);
+  border-radius: 5px;
+  border: 2px solid var(--purple);
+}
+
+.form-input:focus + label, .form-input:hover + label {
+  color: var(--purple);
+}
+
+#category-dropdown {
+  background: none;
+}
+
+.form-textarea {
+  height: 100px;
+}
+
+.form-button-group {
+  text-align: center;
+  display: flex;
+  justify-content: space-around;
+  height: 100px;
+  margin-top: 5vh;
+}
+
+.form-button {
+  height: 60px;
+  width: 150px;
+  border: 2px solid black;
+  border-radius: 5px;
+  background: white;
+  font-size: var(--body-font-size);
+  font-weight: 700;
+  color: black;
+}
+
+.form-button:hover {      
+  color: var(--purple);
+  border: 3px solid var(--purple);
+}
+
+.textarea {
+   border:1px solid #999999;
+   width:100%;
+   margin:5px 0;
+   padding:3px;
+}
+
+.submit-ticket {
+  position: absolute;
+  top: 50%; right: 50%;
+  transform: translate(50%,-50%);
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+  width: 40%;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  padding: 0.5rem;
+  margin: 1rem 0;
+  border-radius: 12px;
+  background-color: white;
+  border: black 2px solid;
+}
+
+
+.error-message-ticket{
+  /* border: groove rgba(255, 0, 0, 0.445) 2px; */
+  padding: 5px 10px;
+  z-index: 3;
+  position: absolute;
+  align-content: center;
+  top: 90%;
+  left: 50%;
+  transform: translate(-50%);
+  width: fit-content;
+  font-size: 15px;
+  color:  red;
+}
+
+ .status409 {
+   border-color: red;
+ }
+
+ .status500 {
+  border-color: red;
+ }
+
+.noName {
+  border-color: red;
+}
+
+.noSubject {
+  border-color: red;
+  
+}
+
+.noCategory{
+  border-color: red;
+  
+}
+
+.noDescription{
+  border-color: red;
+  
+}
+ 
+ .noEmail {
+  border-color: red;
+}
+
+
+@media screen and (max-width: 410px) {
+  .form {
+    box-sizing: border-box;
+    padding: auto;
+  }
+}
+
+
+
+@media screen and (max-width: 1000px) {
+  .form {
+    top: 30vh;
+    transform: translate(-50%);
+  }
+  .error-message-ticket{
+    padding: auto;
+    top: 90%;
+  }
+  
+ }
+
+@media screen and (min-width: 1800px) {
+  .form {
+    padding: 60px;
+    border: 22px solid black;
+    max-width: 1000px;
+  }
+
+  .form-label {
+    font-size: 51px;
+  }
+
+  .form-input {
+    height: 60px;
+    font-size: 32px;
+    border: 3px solid transparent;
+    border-bottom: 3px solid black;
+  }
+
+  .form-input:focus, .form-input:hover {
+    border: 3px solid var(--purple);
+  }
+
+  .form-textarea {
+    height: 150px;
+  }
+
+  .form-button-group {
+    height: 150px;
+  }
+
+  .form-button {
+    height: 90px;
+    width: 225px;
+    border: 3px solid black;
+    font-size: 32px;
+  }
+
+  .form-button:hover {      
+    color: var(--purple);
+    /* border: 2px solid var(--purple); */
+  }
+}

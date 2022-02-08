@@ -1,0 +1,111 @@
+.login-heading {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  white-space: nowrap;
+  font-weight: normal;
+}
+
+.login-form-input-group {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 25%;
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.login-form-label {
+  font-size: var(--heading-font-size);
+  color: black;
+  display: block;
+  font-weight: bold;
+}
+
+.login-form-input {
+  font-size: var(--body-font-size);
+  height: 50px;
+  width: 100%;
+  border: 2px solid transparent;
+  border-bottom: 2px solid black;
+  box-sizing: border-box;
+
+}
+
+.login-form-input:focus, .login-form-input:hover {
+  outline-color: var(--purple);
+  border-radius: 5px;
+  border: 2px solid var(--purple);
+}
+
+.login-form-input:focus + label, .login-form-input:hover + label {
+  color: var(--purple);
+}
+
+.login-submit-button {
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, 50%);
+  height: 45px;
+  width: 60%;
+  border-radius: 5px;
+  border: 2px solid black;
+  font-size: var(--body-font-size);
+  font-weight: 700;
+  background-color: white;
+  color: black;
+}
+
+.login-submit-button:hover {
+  border: 3px solid var(--purple);
+  color: var(--purple);
+}
+
+.error-message-group-login {
+  position: absolute;
+  top: 85%;
+  left: 50%;
+  transform: translate(-50%);
+  width: 70%;
+  align-content: center;
+  font-size: 15px;
+  z-index: 3;
+  color: red;
+}
+
+ .status-400 {
+   border-color: red;
+ }
+
+ @media screen and (min-width: 1800px) {
+   .login-form-label {
+     font-size: 51px;
+   }
+
+   .login-form-input {
+    font-size: 32px;
+    height: 75px;
+    width: 100%;
+    border: 3px solid transparent;
+    border-bottom: 3px solid black;
+  }
+
+  .login-form-input:focus, .login-form-input:hover {
+    border: 3px solid var(--purple);
+  }
+
+  .login-submit-button {
+    height: 67px;
+    border: 3px solid black;
+    font-size: 32px;
+  }
+
+  .login-submit-button:hover {
+    border: 5px solid var(--purple);
+  }
+ }
