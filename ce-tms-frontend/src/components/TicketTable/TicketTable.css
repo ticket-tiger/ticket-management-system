@@ -127,7 +127,7 @@
 
 .ticket-table-header-button:hover {
   background: white;
-  color: var(--purple);
+  color: var(--orange);
   border: 2px solid black;
 }
 
@@ -138,7 +138,7 @@
 .ticket-table tbody tr:nth-of-type(even):hover,
 .ticket-table tbody tr:nth-of-type(odd):hover {
   background-color: lightgrey;
-  color: var(--purple);
+  color: var(--orange);
 }
 
 .selected-ticket-data-group {
@@ -197,8 +197,8 @@
 }
 
 .selected-ticket-button:hover {      
-  color: var(--purple);
-  border: 3px solid var(--purple);
+  color: var(--orange);
+  border: 3px solid var(--orange);
 }
 
 .empty-ticket-table-text {
@@ -240,8 +240,8 @@
 }
 
 .verify-delete-button:hover {      
-  color: var(--purple);
-  border: 3px solid var(--purple);
+  color: var(--orange);
+  border: 3px solid var(--orange);
 }
 
 @media screen and (max-width: 768px) {

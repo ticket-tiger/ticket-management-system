@@ -69,7 +69,7 @@ const NavBar = () => {
         <FontAwesomeIcon className="account-created-check" icon={faCheck} size="2x" />
         <p className="account-created-text">Account Created</p>
       </div>
-      <h1 className="logo">Ticket Management System</h1>
+      <h1 className="logo">Ticket Tiger</h1>
       <button type="button" className="navbar-menu-button" onClick={() => setNavbarContainerIsVisible(!navbarContainerIsVisible)}>
         <FontAwesomeIcon icon={faBars} size="3x" />
       </button>

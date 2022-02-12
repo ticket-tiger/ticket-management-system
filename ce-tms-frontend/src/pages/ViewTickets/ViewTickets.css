@@ -17,5 +17,5 @@
 
 .edit-ticket-button:hover,
 .delete-ticket-button:hover {
-   color: var(--purple);
+   color: var(--orange);
 }

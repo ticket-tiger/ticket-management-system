@@ -87,14 +87,14 @@
 
 .create-employee-form-input:focus, .create-employee-form-input:hover,
 .create-employee-form-dropdown:focus, .create-employee-form-dropdown:hover {
-  outline-color: var(--purple);
+  outline-color: var(--orange);
   border-radius: 5px;
-  border: 2px solid var(--purple);
+  border: 2px solid var(--orange);
 }
 
 .create-employee-form-input:focus + label, .create-employee-form-input:hover + label,
 .create-employee-form-dropdown:focus + label, .create-employee-form-dropdown:hover + label {
-  color: var(--purple);
+  color: var(--orange);
 }
 
 .create-employee-submit-button {
@@ -115,8 +115,8 @@
 
 .create-employee-submit-button:hover,
 .create-employee-resend-button:hover {
-  border: 3px solid var(--purple);
-  color: var(--purple);
+  border: 3px solid var(--orange);
+  color: var(--orange);
 }
 
 .error-message-group {
@@ -153,7 +153,7 @@
 
  .create-employee-form-input:focus, .create-employee-form-input:hover,
  .create-employee-form-dropdown:focus, .create-employee-form-dropdown:hover {
-   border: 3px solid var(--purple);
+   border: 3px solid var(--orange);
  }
 
  .create-employee-submit-button {
@@ -163,7 +163,7 @@
  }
 
  .create-employee-submit-button:hover {
-   border: 5px solid var(--purple);
+   border: 5px solid var(--orange);
  }
 
  .invalid-email {
