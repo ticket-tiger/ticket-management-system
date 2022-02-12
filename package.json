@@ -1,0 +1,19 @@
+{
+  "name": "ce-tms",
+  "version": "1.0.0",
+  "description": "Simple issue tracking cloud application that showcases our skills using the MERN development stack.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Coffee-Express/ce-tms.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Coffee-Express/ce-tms/issues"
+  },
+  "homepage": "https://github.com/Coffee-Express/ce-tms#readme"
+}
