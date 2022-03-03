@@ -1,8 +1,19 @@
+<style> 
+  
+  orange {
+          color: #4CAF50;
+  }
+  
+
+</style>
+
+
+
 <p align="center">
   <img src="ce-tms-frontend/public/tiger.svg" width="350"  height="200"title="hover text">
 </p>
 
-<h1>Ticket Tiger - Issue Tracking Web App </h1>
+<h1> <span class='orange'>T </span> icket <span class='orange'>T<s/pan>iger - Issue Tracking Web App </h1>
 
 Issue tracking cloud applicationusing the MERN tech stack.
 
