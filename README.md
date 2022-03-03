@@ -2,8 +2,8 @@
 
 Issue tracking cloud applicationusing the MERN tech stack.
 
-<p align="center">
-  <img src="ce-tms-frontend/public/tiger.svg" width="350"  height="150"title="hover text">
+<p float="left">
+  <img src="ce-tms-frontend/public/tiger.svg" width="350"  height="250"title="hover text">
 </p>
 
 
