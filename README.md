@@ -1,4 +1,4 @@
-# Ticket Manangement System - Issue Tracking Web App
+#  Ticket Tiger- Issue Tracking Web App
 
 Simple issue tracking cloud application that showcases our skills using the MERN development stack.
 
