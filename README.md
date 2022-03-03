@@ -2,7 +2,7 @@
   <img src="ce-tms-frontend/public/tiger.svg" width="350"  height="200"title="hover text">
 </p>
 
-#  Ticket Tiger- Issue Tracking Web App
+<h1>Ticket Tiger - Issue Tracking Web App </h1>
 
 Issue tracking cloud applicationusing the MERN tech stack.
 
