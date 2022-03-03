@@ -1,8 +1,11 @@
 #  Ticket Tiger- Issue Tracking Web App
 
-Simple issue tracking cloud application that showcases our skills using the MERN development stack.
+Issue tracking cloud applicationusing the MERN tech stack.
 
-![alt text](ce-tms-frontend/public/tiger.svg) 
+<p align="center">
+  <img src="ce-tms-frontend/public/tiger.svg" width="350" title="hover text">
+</p>
+
 
 ## Table of Contents
 
