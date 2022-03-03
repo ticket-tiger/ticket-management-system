@@ -6,7 +6,7 @@
   <img src="ce-tms-frontend/public/tiger.svg" width="350"  height="200"title="hover text">
 </p>
 
-<h1> <span style="color:orange;">T</span>icket <span style="color:orange;">T</span>iger - Issue Tracking Web App </h1>
+<h1> <span style="color: green">T</span>icket <span style="color:orange;">T</span>iger - Issue Tracking Web App </h1>
 
 Issue tracking cloud applicationusing the MERN tech stack.
 
