@@ -2,7 +2,7 @@
 
 Simple issue tracking cloud application that showcases our skills using the MERN development stack.
 
-![alt text](https://github.com/Coffee-Express/ce-tms-frontend/blob/main/public/MainPage.png?raw=true) 
+![alt text](ce-tms-frontend/public/tiger.svg) 
 
 ## Table of Contents
 
