@@ -2,7 +2,7 @@
 
 
 
-<p align="center">
+<p align="left">
   <img src="ce-tms-frontend/public/tiger.svg" width="350"  height="200"title="hover text">
 </p>
 
