@@ -1,13 +1,16 @@
 
-<h1> <span style="color: green">T</span>icket <span style="color:orange;">T</span>iger - Issue Tracking Web App </h1>
-
-
 <p align="center">
-  <img src="ce-tms-frontend/public/tiger.svg" width="350"  height="200"title="hover text">
+  <img src="ce-tms-frontend/public/tiger.svg" width="350"  height="100"title="hover text">
 </p>
 
 
-Issue tracking cloud applicationusing the MERN tech stack.
+
+<h1> <span style="color: green">T</span>icket <span style="color:orange;">T</span>iger - Issue Tracking Web App </h1>
+
+
+
+
+Issue tracking cloud application using the MERN tech stack.
 
 
 
