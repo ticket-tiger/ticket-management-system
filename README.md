@@ -22,7 +22,7 @@ Issue tracking cloud application using the MERN tech stack.
 
 ## General Info
 
-This Ticket Management System (or TMS) is a cloud-based issue tracking application where users can communicate any bugs found within the product. User interface records the issue’s title, category, and the description which gives the company valuable information to resolve the bugs as quickly as possible.
+This Ticket Management System (or TMS) is a cloud-based issue tracking application where users can alert and track bugs found within the product. User interface records the issue’s title, category, and the description which gives the company valuable information to resolve the bugs as quickly as possible.
 
 Users can create accounts to create new tickets and view their existing ones, however creating an account is not required to submit a ticket.  Instead, the user just records their email address so you have a way of reaching them.  
 
