@@ -1,6 +1,6 @@
 
 <p align="center">
-  <img src="ce-tms-frontend/public/tiger.svg" width="350"  height="100"title="hover text">
+  <img src="tms-frontend/public/tiger.svg" width="350"  height="100"title="hover text">
 </p>
 
 
