@@ -1,2 +1,0 @@
- REACT_APP_TICKETS_URL=http://localhost:3001/tickets
- REACT_APP_USERS_URL=http://localhost:3001/users
