@@ -1,7 +1,7 @@
 import React, { useState, useReducer } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
-import {reactComponent as Img} from 'src/pages/CreateTicket/tiger.svg';
+import {tiger} from './tiger.svg';
 import validator from 'validator';
 import axios from 'axios';
 import { useAuth } from '../../auth';
@@ -149,7 +149,7 @@ const CreateTicket = () => {
 
   return (
     <>
-    <Img></Img>
+      <img src = "tiger.svg" alt="tiger logo"/>
       <div
         className={`ticket-submitted-feedback ${responseStatus === 200 ? 'fade' : ''}`}
         onAnimationEnd={() => setResponseStatus('')}
