@@ -30,7 +30,7 @@ Your employees can login to view created tickets and edit them.  As the user's i
 
 Managers have all employee privileges in addition to the unique privileges of creating employees and deleting tickets.  Since they can serve as valuable information for an enterprise, we only recommend deleting tickets that were mistakenly created or contain inappropriate content.  
 
-When a manager creates an employee, they will receive an email with a one-time password that expires in 7 days.  On their first login to TMS, an employee will need to create a permanent one.  
+When a manager creates an employee, they will receive an email with a one-time password that expires in 7 days.  On their first login to TMS, an employee will need to create a permanent password.  
 
 ## Technologies
 
