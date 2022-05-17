@@ -1,6 +1,7 @@
 import React, { useState, useReducer } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
+import {reactComponent as Img} from 'src/pages/CreateTicket/tiger.svg';
 import validator from 'validator';
 import axios from 'axios';
 import { useAuth } from '../../auth';
@@ -148,6 +149,7 @@ const CreateTicket = () => {
 
   return (
     <>
+    <Img></Img>
       <div
         className={`ticket-submitted-feedback ${responseStatus === 200 ? 'fade' : ''}`}
         onAnimationEnd={() => setResponseStatus('')}
@@ -204,10 +206,6 @@ const CreateTicket = () => {
           >
             Submit Your Issue
           </button>
-          <p className="error-message-ticket">
-            {ticketErrorObject.message}
-          </p>
-
         </div>
       </form>
     </>
