@@ -14,8 +14,8 @@ Issue tracking cloud application using the MERN tech stack.
 
 
 
+<img src="tms-frontend/public/homepage.png" width="850"  height="470">
 
-![alt text](https://github.com/ticket-tiger/ticket-management-system/blob/main/public/homepage.png?raw=true) 
 
 ## Table of Contents
 
