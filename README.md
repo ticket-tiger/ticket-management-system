@@ -10,7 +10,7 @@
 
 
 
-Issue tracking cloud application using the MERN tech stack.
+Issue tracking cloud application.
 
 
 <div align="center">
