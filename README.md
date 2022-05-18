@@ -15,6 +15,8 @@ Issue tracking cloud application using the MERN tech stack.
 
 
 
+![alt text](https://github.com/ticket-tiger/ticket-management-system/blob/main/public/homepage.png?raw=true) 
+
 ## Table of Contents
 
 * General Info
