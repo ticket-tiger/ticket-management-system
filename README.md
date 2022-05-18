@@ -10,8 +10,6 @@
 
 
 
-Issue tracking cloud application.
-
 
 <div align="center">
   <img src="tms-frontend/public/homepage.png" width="850" height="470">
