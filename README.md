@@ -12,7 +12,7 @@
 
 
 <div align="center">
-  <img src="tms-frontend/public/homepage.png" width="850" height="370">
+  <img src="tms-frontend/public/homepage.png" width="100%" height="auto">
 </div>
 
                                                                       
