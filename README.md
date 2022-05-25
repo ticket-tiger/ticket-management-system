@@ -1,7 +1,7 @@
 
-<p align="center">
+<!-- <p align="center">
   <img src="tms-frontend/public/tiger.svg" width="350"  height="100"title="hover text">
-</p>
+</p> -->
 
 
 
