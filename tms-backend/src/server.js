@@ -1,7 +1,7 @@
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import express from 'express';
-// import config from './config.js';
+import config from './config.js';
 import ticketsRouter from './tickets/routes.js';
 import userRouter from './users/routes.js';
 

@@ -1,7 +1,7 @@
 import React, { useState, useReducer } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
-import {tiger} from './tiger.svg';
+//import {tiger} from './tiger.svg';
 import validator from 'validator';
 import axios from 'axios';
 import { useAuth } from '../../auth';
